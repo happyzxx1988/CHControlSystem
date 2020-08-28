@@ -32,9 +32,9 @@ MainWindow::MainWindow(QString u, QString p, QWidget *parent) :
 
 //    ui->sys_img->hide();
 //    ui->sys_name->hide();
-//    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
-//    ui->sys_name->setText("长虹智能空压站房系统");
-//    setWindowTitle("长虹智能空压站房系统");
+    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
+    ui->sys_name->setText("长虹智能空压站房系统");
+    setWindowTitle("长虹智能空压站房系统");
 }
 
 MainWindow::~MainWindow()
