@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>config.xml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/log.png</file>
+        <file>images/btncheckoff1.png</file>
+        <file>images/btncheckoff2.png</file>
+        <file>images/btncheckoff3.png</file>
+        <file>images/btncheckon1.png</file>
+        <file>images/btncheckon2.png</file>
+        <file>images/btncheckon3.png</file>
+        <file>images/log.ico</file>
+    </qresource>
+</RCC>

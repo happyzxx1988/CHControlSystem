@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<layout>
+                <Node label="主界面"></Node>
+		<Node label="设备状态"></Node>
+                <Node label="设备控制"></Node>
+		<Node label="操作日志"></Node>
+                <Node label="系统报警"></Node>
+                <Node label="历史数据"></Node>
+                <Node label="用户管理"></Node>
+	</layout>
+</root>
