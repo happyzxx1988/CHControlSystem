@@ -26,12 +26,6 @@ MainWindow::MainWindow(QString u, QString p, QWidget *parent) :
 
     SaveLog::Instance()->start();
 
-
-    //增加调试信息3
-    //增加调试信息4         444444444
-
-
-
 //    ui->sys_img->hide();
 //    ui->sys_name->hide();
 //    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
