@@ -302,7 +302,7 @@ QGroupBox::title {
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="main_p">
          <layout class="QVBoxLayout" name="verticalLayout_9" stretch="2,1">

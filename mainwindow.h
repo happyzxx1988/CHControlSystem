@@ -61,12 +61,14 @@ private:
     void initForm();
     void clearTable(QTableWidget *table);
     void initTable();
-    void dealCompressor1(QVector<quint16> compressor);
-    void dealCompressor2(QVector<quint16> compressor);
-    void dealCompressor3(QVector<quint16> compressor);
+    void dealCompressor1(QVector<quint16> compressor, QVector<quint16> dryer);
+    void dealCompressor2(QVector<quint16> compressor, QVector<quint16> dryer);
+    void dealCompressor3(QVector<quint16> compressor, QVector<quint16> dryer);
     void initChart();
     QVector<bool> dec2BinTrans(unsigned int data);
     void saveWarning(quint16 warningInfo, int compressorNo, int runState);
+    void saveWarningDryer(quint16 warningInfo, int dryerNo, int runState);
+
 private:
     Ui::MainWindow *ui;
     QString userName;
@@ -99,8 +101,6 @@ private:
     QChart        *pd_chart;
 
     QLabel        *m_valueLabel;
-
-
 
 };
 

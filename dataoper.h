@@ -32,6 +32,9 @@ public:
     void saveReadCompressor1(QVector<quint16> compressor, QString storageTime);
     void saveReadCompressor2(QVector<quint16> compressor, QString storageTime);
     void saveReadCompressor3(QVector<quint16> compressor, QString storageTime);
+    void saveReadDryer1(QVector<quint16> dryer, QString storageTime);
+    void saveReadDryer2(QVector<quint16> dryer, QString storageTime);
+    void saveReadDryer3(QVector<quint16> dryer, QString storageTime);
     void saveWarningInfo(Warning warning);
     void getCompressorInfo(vector<Compressor> &compressors, int CompressorNo, QString s_start, QString e_time);
 
