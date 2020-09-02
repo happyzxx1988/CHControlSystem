@@ -362,147 +362,87 @@ void DataOper::saveReadCompressor3(QVector<quint16> compressor, QString storageT
 void DataOper::saveReadDryer1(QVector<quint16> dryer, QString storageTime)
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO dryer1(runTimeL,runTimeH,loadTimeL,loadTimeH,electricityType,airDemand,jointControlMode,"
-                  "voltageDeviation,hostCurrent,dewPointTemperature,EnvironmentalTemperature,T1,T2,P1,P2,T3,T4,P3,P4,T5,T6,"
-                  "runMode1,runMode2,runMode3,dp1,pressureDiff,uninstallPressure,MaxManifoldPressure,MinManifoldPressure,"
-                  "MinimalPressure,StartLoadDelayTime,StopTime,OrderTime,RotateTime,TransitionTime,date) VALUES (?,?,?,?,?,?,?,?,?,?,"
-                  "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    query.addBindValue(compressor.at(0));
-    query.addBindValue(compressor.at(1));
-    query.addBindValue(compressor.at(2));
-    query.addBindValue(compressor.at(3));
-    query.addBindValue(compressor.at(4));
-    query.addBindValue(compressor.at(5));
-    query.addBindValue(compressor.at(6));
-    query.addBindValue(compressor.at(7));
-    query.addBindValue(compressor.at(8));
-    query.addBindValue(compressor.at(9));
-    query.addBindValue(compressor.at(10));
-    query.addBindValue(compressor.at(11));
-    query.addBindValue(compressor.at(12));
-    query.addBindValue(compressor.at(13));
-    query.addBindValue(compressor.at(14));
-    query.addBindValue(compressor.at(15));
-    query.addBindValue(compressor.at(16));
-    query.addBindValue(compressor.at(17));
-    query.addBindValue(compressor.at(18));
-    query.addBindValue(compressor.at(19));
-    query.addBindValue(compressor.at(20));
-    query.addBindValue(compressor.at(21));
-    query.addBindValue(compressor.at(22));
-    query.addBindValue(compressor.at(23));
-    query.addBindValue(compressor.at(24));
-    query.addBindValue(compressor.at(25));
-    query.addBindValue(compressor.at(26));
-    query.addBindValue(compressor.at(27));
-    query.addBindValue(compressor.at(28));
-    query.addBindValue(compressor.at(29));
-    query.addBindValue(compressor.at(30));
-    query.addBindValue(compressor.at(31));
-    query.addBindValue(compressor.at(32));
-    query.addBindValue(compressor.at(33));
-    query.addBindValue(compressor.at(34));
+    query.prepare("INSERT INTO dryer1(runHint,faultHint,compressor,drainer,phaseOrderFault,overloadSave,sysHighVoltage,"
+                  "sysLowVoltage,dewPointProbeFault,dewPointH,dewPointL,faultWarn,faultStop,countDown,dewPointT,runTimeH,runTimeM,date)"
+                  " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    query.addBindValue(dryer.at(0));
+    query.addBindValue(dryer.at(1));
+    query.addBindValue(dryer.at(2));
+    query.addBindValue(dryer.at(3));
+    query.addBindValue(dryer.at(4));
+    query.addBindValue(dryer.at(5));
+    query.addBindValue(dryer.at(6));
+    query.addBindValue(dryer.at(7));
+    query.addBindValue(dryer.at(8));
+    query.addBindValue(dryer.at(9));
+    query.addBindValue(dryer.at(10));
+    query.addBindValue(dryer.at(11));
+    query.addBindValue(dryer.at(12));
+    query.addBindValue(dryer.at(13));
+    query.addBindValue(dryer.at(14));
+    query.addBindValue(dryer.at(15));
+    query.addBindValue(dryer.at(16));
     query.addBindValue(storageTime);
     if (!query.exec()){
-        qDebug() << tr("保存存储读取的空压机数据失败: ") + query.lastError().text();
+        qDebug() << tr("保存存储读取的1#冷干机数据失败: ") + query.lastError().text();
     }
 }
 //存储读取的空压机数据
 void DataOper::saveReadDryer2(QVector<quint16> dryer, QString storageTime)
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO dryer2(runTimeL,runTimeH,loadTimeL,loadTimeH,electricityType,airDemand,jointControlMode,"
-                  "voltageDeviation,hostCurrent,dewPointTemperature,EnvironmentalTemperature,T1,T2,P1,P2,T3,T4,P3,P4,T5,T6,"
-                  "runMode1,runMode2,runMode3,dp1,pressureDiff,uninstallPressure,MaxManifoldPressure,MinManifoldPressure,"
-                  "MinimalPressure,StartLoadDelayTime,StopTime,OrderTime,RotateTime,TransitionTime,date) VALUES (?,?,?,?,?,?,?,?,?,?,"
-                  "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    query.addBindValue(compressor.at(0));
-    query.addBindValue(compressor.at(1));
-    query.addBindValue(compressor.at(2));
-    query.addBindValue(compressor.at(3));
-    query.addBindValue(compressor.at(4));
-    query.addBindValue(compressor.at(5));
-    query.addBindValue(compressor.at(6));
-    query.addBindValue(compressor.at(7));
-    query.addBindValue(compressor.at(8));
-    query.addBindValue(compressor.at(9));
-    query.addBindValue(compressor.at(10));
-    query.addBindValue(compressor.at(11));
-    query.addBindValue(compressor.at(12));
-    query.addBindValue(compressor.at(13));
-    query.addBindValue(compressor.at(14));
-    query.addBindValue(compressor.at(15));
-    query.addBindValue(compressor.at(16));
-    query.addBindValue(compressor.at(17));
-    query.addBindValue(compressor.at(18));
-    query.addBindValue(compressor.at(19));
-    query.addBindValue(compressor.at(20));
-    query.addBindValue(compressor.at(21));
-    query.addBindValue(compressor.at(22));
-    query.addBindValue(compressor.at(23));
-    query.addBindValue(compressor.at(24));
-    query.addBindValue(compressor.at(25));
-    query.addBindValue(compressor.at(26));
-    query.addBindValue(compressor.at(27));
-    query.addBindValue(compressor.at(28));
-    query.addBindValue(compressor.at(29));
-    query.addBindValue(compressor.at(30));
-    query.addBindValue(compressor.at(31));
-    query.addBindValue(compressor.at(32));
-    query.addBindValue(compressor.at(33));
-    query.addBindValue(compressor.at(34));
+    query.prepare("INSERT INTO dryer2(runHint,faultHint,compressor,drainer,phaseOrderFault,overloadSave,sysHighVoltage,"
+                  "sysLowVoltage,dewPointProbeFault,dewPointH,dewPointL,faultWarn,faultStop,countDown,dewPointT,runTimeH,runTimeM,date)"
+                  " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    query.addBindValue(dryer.at(0));
+    query.addBindValue(dryer.at(1));
+    query.addBindValue(dryer.at(2));
+    query.addBindValue(dryer.at(3));
+    query.addBindValue(dryer.at(4));
+    query.addBindValue(dryer.at(5));
+    query.addBindValue(dryer.at(6));
+    query.addBindValue(dryer.at(7));
+    query.addBindValue(dryer.at(8));
+    query.addBindValue(dryer.at(9));
+    query.addBindValue(dryer.at(10));
+    query.addBindValue(dryer.at(11));
+    query.addBindValue(dryer.at(12));
+    query.addBindValue(dryer.at(13));
+    query.addBindValue(dryer.at(14));
+    query.addBindValue(dryer.at(15));
+    query.addBindValue(dryer.at(16));
     query.addBindValue(storageTime);
     if (!query.exec()){
-        qDebug() << tr("保存存储读取的空压机数据失败: ") + query.lastError().text();
+        qDebug() << tr("保存存储读取的2#冷干机数据失败: ") + query.lastError().text();
     }
 }
 //存储读取的空压机数据
 void DataOper::saveReadDryer3(QVector<quint16> dryer, QString storageTime)
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO dryer3(runTimeL,runTimeH,loadTimeL,loadTimeH,electricityType,airDemand,jointControlMode,"
-                  "voltageDeviation,hostCurrent,dewPointTemperature,EnvironmentalTemperature,T1,T2,P1,P2,T3,T4,P3,P4,T5,T6,"
-                  "runMode1,runMode2,runMode3,dp1,pressureDiff,uninstallPressure,MaxManifoldPressure,MinManifoldPressure,"
-                  "MinimalPressure,StartLoadDelayTime,StopTime,OrderTime,RotateTime,TransitionTime,date) VALUES (?,?,?,?,?,?,?,?,?,?,"
-                  "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    query.addBindValue(compressor.at(0));
-    query.addBindValue(compressor.at(1));
-    query.addBindValue(compressor.at(2));
-    query.addBindValue(compressor.at(3));
-    query.addBindValue(compressor.at(4));
-    query.addBindValue(compressor.at(5));
-    query.addBindValue(compressor.at(6));
-    query.addBindValue(compressor.at(7));
-    query.addBindValue(compressor.at(8));
-    query.addBindValue(compressor.at(9));
-    query.addBindValue(compressor.at(10));
-    query.addBindValue(compressor.at(11));
-    query.addBindValue(compressor.at(12));
-    query.addBindValue(compressor.at(13));
-    query.addBindValue(compressor.at(14));
-    query.addBindValue(compressor.at(15));
-    query.addBindValue(compressor.at(16));
-    query.addBindValue(compressor.at(17));
-    query.addBindValue(compressor.at(18));
-    query.addBindValue(compressor.at(19));
-    query.addBindValue(compressor.at(20));
-    query.addBindValue(compressor.at(21));
-    query.addBindValue(compressor.at(22));
-    query.addBindValue(compressor.at(23));
-    query.addBindValue(compressor.at(24));
-    query.addBindValue(compressor.at(25));
-    query.addBindValue(compressor.at(26));
-    query.addBindValue(compressor.at(27));
-    query.addBindValue(compressor.at(28));
-    query.addBindValue(compressor.at(29));
-    query.addBindValue(compressor.at(30));
-    query.addBindValue(compressor.at(31));
-    query.addBindValue(compressor.at(32));
-    query.addBindValue(compressor.at(33));
-    query.addBindValue(compressor.at(34));
+    query.prepare("INSERT INTO dryer3(runHint,faultHint,compressor,drainer,phaseOrderFault,overloadSave,sysHighVoltage,"
+                  "sysLowVoltage,dewPointProbeFault,dewPointH,dewPointL,faultWarn,faultStop,countDown,dewPointT,runTimeH,runTimeM,date)"
+                  " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    query.addBindValue(dryer.at(0));
+    query.addBindValue(dryer.at(1));
+    query.addBindValue(dryer.at(2));
+    query.addBindValue(dryer.at(3));
+    query.addBindValue(dryer.at(4));
+    query.addBindValue(dryer.at(5));
+    query.addBindValue(dryer.at(6));
+    query.addBindValue(dryer.at(7));
+    query.addBindValue(dryer.at(8));
+    query.addBindValue(dryer.at(9));
+    query.addBindValue(dryer.at(10));
+    query.addBindValue(dryer.at(11));
+    query.addBindValue(dryer.at(12));
+    query.addBindValue(dryer.at(13));
+    query.addBindValue(dryer.at(14));
+    query.addBindValue(dryer.at(15));
+    query.addBindValue(dryer.at(16));
     query.addBindValue(storageTime);
     if (!query.exec()){
-        qDebug() << tr("保存存储读取的空压机数据失败: ") + query.lastError().text();
+        qDebug() << tr("保存存储读取的3#冷干机数据失败: ") + query.lastError().text();
     }
 }
 //保存报警信息

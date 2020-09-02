@@ -250,15 +250,15 @@ void DeviceCommunication::compressorSwitch3(bool off)
 }
 void DeviceCommunication::dryerSwitch1(bool off)
 {
-    writeUint16(224, (off ? 1 : 2));
+    writeUint16(53, (off ? 1 : 2));
 }
 void DeviceCommunication::dryerSwitch2(bool off)
 {
-    writeUint16(224, (off ? 0x100 : 0));
+    writeUint16(54, (off ? 1 : 2));
 }
 void DeviceCommunication::dryerSwitch3(bool off)
 {
-    writeUint16(224, (off ? 0x100 : 0));
+    writeUint16(55, (off ? 1 : 2));
 }
 
 void DeviceCommunication::resetOperation()
@@ -312,7 +312,7 @@ void DeviceCommunication::readCompressor(QVector<quint16> &data1,QVector<quint16
 }
 void DeviceCommunication::readDryer(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3)
 {
-    QModbusDataUnit readUnit(registerType4, 100, 105);/*类型、首地址、长度*///13
+    QModbusDataUnit readUnit(registerType4, 250, 51);/*类型、首地址、长度*///13
     readRequest(readUnit, [this,&data1,&data2,&data3](QModbusDataUnit unit){
         for (uint i = 0; i < unit.valueCount(); i++) {
             QString adress_str = tr("%1").arg(unit.startAddress() + i);
@@ -322,13 +322,13 @@ void DeviceCommunication::readDryer(QVector<quint16> &data1,QVector<quint16> &da
             quint16 value = unit.value(i);
             int currentAddres = unit.startAddress() + i;
 
-            if(currentAddres <=134 && currentAddres >=100){
+            if(currentAddres <=266 && currentAddres >=250){
                 data1.append(value);
             }
-            if(currentAddres <=184 && currentAddres >=150){
+            if(currentAddres <=316 && currentAddres >=300){
                 data2.append(value);
             }
-            if(currentAddres <=234 && currentAddres >=200){
+            if(currentAddres <=366 && currentAddres >=350){
                 data3.append(value);
             }
         }

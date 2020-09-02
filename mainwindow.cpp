@@ -876,56 +876,39 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         ui->controlUninstallPressure1->setText(QString::number(uninstallPressure));//卸载压力
     }
     if(dryer_size != 0){
-        quint16 runTimeL_dryer = dryer.at(0);//累计运行时间 L
-        quint16 runTimeH_dryer = dryer.at(1);//累计运行时间 H
-        quint16 loadTimeL_dryer = dryer.at(2);//累计加载时间 L
-        quint16 loadTimeH_dryer = dryer.at(3);//累计加载时间 H
-        quint16 electricityType_dryer = dryer.at(4);//机型（电流类型）
-        quint16 airDemand_dryer = dryer.at(5);//供气量
-        quint16 jointControlMode_dryer = dryer.at(6);//联控模式
-        quint16 voltageDeviation_dryer = dryer.at(7);//电压偏差
-        quint16 hostCurrent_dryer = dryer.at(8);//主电机电流 Ic
-        quint16 dewPointTemperature_dryer = dryer.at(9);//露点温度 Td
-        quint16 EnvironmentalTemperature_dryer = dryer.at(10);//环境温度
-        quint16 T1_dryer = dryer.at(11);//T1
-        quint16 T2_dryer = dryer.at(12);//T2
-        quint16 P1_dryer = dryer.at(13);//P1
-        quint16 P2_dryer = dryer.at(14);//P2
-        quint16 T3_dryer = dryer.at(15);//T3
-        quint16 T4_dryer = dryer.at(16);//T4
-        quint16 P3_dryer = dryer.at(17);//P3
-        quint16 P4_dryer = dryer.at(18);//P4
-        quint16 T5_dryer = dryer.at(19);//T5
-        quint16 T6_dryer = dryer.at(20);//T6
-        quint16 runMode1_dryer = dryer.at(21);//运行状态 1 （注 1）
-        quint16 runMode2_dryer = dryer.at(22);//运行状态 2 （注 2）
-        quint16 runMode3_dryer = dryer.at(23);//运行状态 3 （注 3）
-        quint16 dp1_dryer = dryer.at(24);//dp1（06－3－13 >v2.49）
-        quint16 pressureDiff_dryer = dryer.at(25);//加载压差
-        quint16 uninstallPressure_dryer = dryer.at(26);//卸载压力
-        quint16 MaxManifoldPressure_dryer = dryer.at(27);//最高总管压力
-        quint16 MinManifoldPressure_dryer = dryer.at(28);//最低总管压力
-        quint16 MinimalPressure_dryer = dryer.at(29);//最低压力
-        quint16 StartLoadDelayTime_dryer = dryer.at(30);//启动加载延时时间
-        quint16 StopTime_dryer = dryer.at(31);//卸载停机时间
-        quint16 OrderTime_dryer = dryer.at(32);//顺序时间
-        quint16 RotateTime_dryer = dryer.at(33);//轮换时间
-        quint16 TransitionTime_dryer = dryer.at(34);//Y-△转换时间
-        saveWarningDryer(runMode1_dryer, 1,1);
-        saveWarningDryer(runMode2_dryer, 1,2);
-        saveWarningDryer(runMode3_dryer, 1,3);
+        quint16 runHint = dryer.at(0);//运行提示
+        quint16 faultHint = dryer.at(1);//故障提示
+        quint16 compressor = dryer.at(2);//压缩机
+        quint16 drainer = dryer.at(3);//排水器
+        quint16 phaseOrderFault = dryer.at(4);//相序故障
+        quint16 overloadSave = dryer.at(5);//故障保护
+        quint16 sysHighVoltage = dryer.at(6);//系统高压
+        quint16 sysLowVoltage = dryer.at(7);//系统低压
+        quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
+        quint16 dewPointH = dryer.at(9);//露点偏高
+        quint16 dewPointL = dryer.at(10);//露点偏低
+        quint16 faultWarn = dryer.at(11);//故障报警
+        quint16 faultStop = dryer.at(12);//故障停机
+        quint16 countDown = dryer.at(13);//倒计时
+        quint16 dewPointT = dryer.at(14);//露点温度
+        quint16 runTimeH = dryer.at(15);//运行计时（时）
+        quint16 runTimeM = dryer.at(16);//运行计时（分）
 
-        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
+//        saveWarningDryer(runMode1_dryer, 3,1);
+//        saveWarningDryer(runMode2_dryer, 3,2);
+//        saveWarningDryer(runMode3_dryer, 3,3);
+
+//        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
 
         //主界面
-        ui->valveState1->setText(QString::number(runTimeL_dryer));//阀门状态
-        ui->refrigerantH1->setText(QString::number(runTimeL_dryer));//冷媒高压
-        ui->refrigerantL1->setText(QString::number(runTimeL_dryer));//冷媒低压
+        ui->valveState1->setText(QString::number(runHint));//阀门状态
+        ui->refrigerantH1->setText(QString::number(sysHighVoltage));//冷媒高压
+        ui->refrigerantL1->setText(QString::number(sysLowVoltage));//冷媒低压
         //设备状态
-        ui->dryerRunState1->setText(aa_dryer.at(9) ? "开机" : "关机");//是否开机
+        ui->dryerRunState1->setText(runHint ? "开机" : "关机");//是否开机
         //设备控制
-        ui->dryerBtn1->setIcon(aa_dryer.at(9) ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
-        dryerSwitch1 = aa_dryer.at(9) ? true : false;
+        ui->dryerBtn1->setIcon(runHint ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
+        dryerSwitch1 = runHint ? true : false;
     }
 }
 //显示1#空压机读取的数据
@@ -992,56 +975,40 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         ui->controlUninstallPressure2->setText(QString::number(uninstallPressure));//卸载压力
     }
     if(dryer_size != 0){
-        quint16 runTimeL_dryer = dryer.at(0);//累计运行时间 L
-        quint16 runTimeH_dryer = dryer.at(1);//累计运行时间 H
-        quint16 loadTimeL_dryer = dryer.at(2);//累计加载时间 L
-        quint16 loadTimeH_dryer = dryer.at(3);//累计加载时间 H
-        quint16 electricityType_dryer = dryer.at(4);//机型（电流类型）
-        quint16 airDemand_dryer = dryer.at(5);//供气量
-        quint16 jointControlMode_dryer = dryer.at(6);//联控模式
-        quint16 voltageDeviation_dryer = dryer.at(7);//电压偏差
-        quint16 hostCurrent_dryer = dryer.at(8);//主电机电流 Ic
-        quint16 dewPointTemperature_dryer = dryer.at(9);//露点温度 Td
-        quint16 EnvironmentalTemperature_dryer = dryer.at(10);//环境温度
-        quint16 T1_dryer = dryer.at(11);//T1
-        quint16 T2_dryer = dryer.at(12);//T2
-        quint16 P1_dryer = dryer.at(13);//P1
-        quint16 P2_dryer = dryer.at(14);//P2
-        quint16 T3_dryer = dryer.at(15);//T3
-        quint16 T4_dryer = dryer.at(16);//T4
-        quint16 P3_dryer = dryer.at(17);//P3
-        quint16 P4_dryer = dryer.at(18);//P4
-        quint16 T5_dryer = dryer.at(19);//T5
-        quint16 T6_dryer = dryer.at(20);//T6
-        quint16 runMode1_dryer = dryer.at(21);//运行状态 1 （注 1）
-        quint16 runMode2_dryer = dryer.at(22);//运行状态 2 （注 2）
-        quint16 runMode3_dryer = dryer.at(23);//运行状态 3 （注 3）
-        quint16 dp1_dryer = dryer.at(24);//dp1（06－3－13 >v2.49）
-        quint16 pressureDiff_dryer = dryer.at(25);//加载压差
-        quint16 uninstallPressure_dryer = dryer.at(26);//卸载压力
-        quint16 MaxManifoldPressure_dryer = dryer.at(27);//最高总管压力
-        quint16 MinManifoldPressure_dryer = dryer.at(28);//最低总管压力
-        quint16 MinimalPressure_dryer = dryer.at(29);//最低压力
-        quint16 StartLoadDelayTime_dryer = dryer.at(30);//启动加载延时时间
-        quint16 StopTime_dryer = dryer.at(31);//卸载停机时间
-        quint16 OrderTime_dryer = dryer.at(32);//顺序时间
-        quint16 RotateTime_dryer = dryer.at(33);//轮换时间
-        quint16 TransitionTime_dryer = dryer.at(34);//Y-△转换时间
-        saveWarningDryer(runMode1_dryer, 2,1);
-        saveWarningDryer(runMode2_dryer, 2,2);
-        saveWarningDryer(runMode3_dryer, 2,3);
+        quint16 runHint = dryer.at(0);//运行提示
+        quint16 faultHint = dryer.at(1);//故障提示
+        quint16 compressor = dryer.at(2);//压缩机
+        quint16 drainer = dryer.at(3);//排水器
+        quint16 phaseOrderFault = dryer.at(4);//相序故障
+        quint16 overloadSave = dryer.at(5);//故障保护
+        quint16 sysHighVoltage = dryer.at(6);//系统高压
+        quint16 sysLowVoltage = dryer.at(7);//系统低压
+        quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
+        quint16 dewPointH = dryer.at(9);//露点偏高
+        quint16 dewPointL = dryer.at(10);//露点偏低
+        quint16 faultWarn = dryer.at(11);//故障报警
+        quint16 faultStop = dryer.at(12);//故障停机
+        quint16 countDown = dryer.at(13);//倒计时
+        quint16 dewPointT = dryer.at(14);//露点温度
+        quint16 runTimeH = dryer.at(15);//运行计时（时）
+        quint16 runTimeM = dryer.at(16);//运行计时（分）
 
-        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
+//        saveWarningDryer(runMode1_dryer, 3,1);
+//        saveWarningDryer(runMode2_dryer, 3,2);
+//        saveWarningDryer(runMode3_dryer, 3,3);
+
+//        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
 
         //主界面
-        ui->valveState2->setText(QString::number(runTimeL_dryer));//阀门状态
-        ui->refrigerantH2->setText(QString::number(runTimeL_dryer));//冷媒高压
-        ui->refrigerantL2->setText(QString::number(runTimeL_dryer));//冷媒低压
+        ui->valveState2->setText(QString::number(runHint));//阀门状态
+        ui->refrigerantH2->setText(QString::number(sysHighVoltage));//冷媒高压
+        ui->refrigerantL2->setText(QString::number(sysLowVoltage));//冷媒低压
         //设备状态
-        ui->dryerRunState2->setText(aa_dryer.at(9) ? "开机" : "关机");//是否开机
+        ui->dryerRunState2->setText(runHint ? "开机" : "关机");//是否开机
         //设备控制
-        ui->dryerBtn1->setIcon(aa_dryer.at(9) ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
-        dryerSwitch1 = aa_dryer.at(9) ? true : false;
+        ui->dryerBtn2->setIcon(runHint ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
+        dryerSwitch2 = runHint ? true : false;
+
     }
 
 }
@@ -1109,56 +1076,39 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         ui->controlUninstallPressure3->setText(QString::number(uninstallPressure));//卸载压力
     }
     if(dryer_size != 0){
-        quint16 runTimeL_dryer = dryer.at(0);//累计运行时间 L
-        quint16 runTimeH_dryer = dryer.at(1);//累计运行时间 H
-        quint16 loadTimeL_dryer = dryer.at(2);//累计加载时间 L
-        quint16 loadTimeH_dryer = dryer.at(3);//累计加载时间 H
-        quint16 electricityType_dryer = dryer.at(4);//机型（电流类型）
-        quint16 airDemand_dryer = dryer.at(5);//供气量
-        quint16 jointControlMode_dryer = dryer.at(6);//联控模式
-        quint16 voltageDeviation_dryer = dryer.at(7);//电压偏差
-        quint16 hostCurrent_dryer = dryer.at(8);//主电机电流 Ic
-        quint16 dewPointTemperature_dryer = dryer.at(9);//露点温度 Td
-        quint16 EnvironmentalTemperature_dryer = dryer.at(10);//环境温度
-        quint16 T1_dryer = dryer.at(11);//T1
-        quint16 T2_dryer = dryer.at(12);//T2
-        quint16 P1_dryer = dryer.at(13);//P1
-        quint16 P2_dryer = dryer.at(14);//P2
-        quint16 T3_dryer = dryer.at(15);//T3
-        quint16 T4_dryer = dryer.at(16);//T4
-        quint16 P3_dryer = dryer.at(17);//P3
-        quint16 P4_dryer = dryer.at(18);//P4
-        quint16 T5_dryer = dryer.at(19);//T5
-        quint16 T6_dryer = dryer.at(20);//T6
-        quint16 runMode1_dryer = dryer.at(21);//运行状态 1 （注 1）
-        quint16 runMode2_dryer = dryer.at(22);//运行状态 2 （注 2）
-        quint16 runMode3_dryer = dryer.at(23);//运行状态 3 （注 3）
-        quint16 dp1_dryer = dryer.at(24);//dp1（06－3－13 >v2.49）
-        quint16 pressureDiff_dryer = dryer.at(25);//加载压差
-        quint16 uninstallPressure_dryer = dryer.at(26);//卸载压力
-        quint16 MaxManifoldPressure_dryer = dryer.at(27);//最高总管压力
-        quint16 MinManifoldPressure_dryer = dryer.at(28);//最低总管压力
-        quint16 MinimalPressure_dryer = dryer.at(29);//最低压力
-        quint16 StartLoadDelayTime_dryer = dryer.at(30);//启动加载延时时间
-        quint16 StopTime_dryer = dryer.at(31);//卸载停机时间
-        quint16 OrderTime_dryer = dryer.at(32);//顺序时间
-        quint16 RotateTime_dryer = dryer.at(33);//轮换时间
-        quint16 TransitionTime_dryer = dryer.at(34);//Y-△转换时间
-        saveWarningDryer(runMode1_dryer, 3,1);
-        saveWarningDryer(runMode2_dryer, 3,2);
-        saveWarningDryer(runMode3_dryer, 3,3);
+        quint16 runHint = dryer.at(0);//运行提示
+        quint16 faultHint = dryer.at(1);//故障提示
+        quint16 compressor = dryer.at(2);//压缩机
+        quint16 drainer = dryer.at(3);//排水器
+        quint16 phaseOrderFault = dryer.at(4);//相序故障
+        quint16 overloadSave = dryer.at(5);//故障保护
+        quint16 sysHighVoltage = dryer.at(6);//系统高压
+        quint16 sysLowVoltage = dryer.at(7);//系统低压
+        quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
+        quint16 dewPointH = dryer.at(9);//露点偏高
+        quint16 dewPointL = dryer.at(10);//露点偏低
+        quint16 faultWarn = dryer.at(11);//故障报警
+        quint16 faultStop = dryer.at(12);//故障停机
+        quint16 countDown = dryer.at(13);//倒计时
+        quint16 dewPointT = dryer.at(14);//露点温度
+        quint16 runTimeH = dryer.at(15);//运行计时（时）
+        quint16 runTimeM = dryer.at(16);//运行计时（分）
 
-        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
+//        saveWarningDryer(runMode1_dryer, 3,1);
+//        saveWarningDryer(runMode2_dryer, 3,2);
+//        saveWarningDryer(runMode3_dryer, 3,3);
+
+//        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
 
         //主界面
-        ui->valveState3->setText(QString::number(runTimeL_dryer));//阀门状态
-        ui->refrigerantH3->setText(QString::number(runTimeL_dryer));//冷媒高压
-        ui->refrigerantL3->setText(QString::number(runTimeL_dryer));//冷媒低压
+        ui->valveState3->setText(QString::number(runHint));//阀门状态
+        ui->refrigerantH3->setText(QString::number(sysHighVoltage));//冷媒高压
+        ui->refrigerantL3->setText(QString::number(sysLowVoltage));//冷媒低压
         //设备状态
-        ui->dryerRunState3->setText(aa_dryer.at(9) ? "开机" : "关机");//是否开机
+        ui->dryerRunState3->setText(runHint ? "开机" : "关机");//是否开机
         //设备控制
-        ui->dryerBtn3->setIcon(aa_dryer.at(9) ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
-        dryerSwitch3 = aa_dryer.at(9) ? true : false;
+        ui->dryerBtn3->setIcon(runHint ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
+        dryerSwitch3 = runHint ? true : false;
     }
 }
 //存储空压机报警数据
