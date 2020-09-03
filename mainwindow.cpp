@@ -25,7 +25,7 @@ MainWindow::MainWindow(QString u, QString p, QWidget *parent) :
 
     SaveLog::Instance()->setPath(qApp->applicationDirPath());
 
-    SaveLog::Instance()->start();
+//    SaveLog::Instance()->start();
 
 //    ui->sys_img->hide();
 //    ui->sys_name->hide();
@@ -819,51 +819,40 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
     int dryer_size = dryer.size();
     if(compressor_size != 0){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
-        quint16 runTimeH = compressor.at(1);//累计运行时间 H
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
-        quint16 loadTimeH = compressor.at(3);//累计加载时间 H
-        quint16 electricityType = compressor.at(4);//机型（电流类型）
-        quint16 airDemand = compressor.at(5);//供气量
-        quint16 jointControlMode = compressor.at(6);//联控模式
-        quint16 voltageDeviation = compressor.at(7);//电压偏差
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
-        quint16 dewPointTemperature = compressor.at(9);//露点温度 Td
-        quint16 EnvironmentalTemperature = compressor.at(10);//环境温度
         quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
-        quint16 P1 = compressor.at(13);//P1
         quint16 P2 = compressor.at(14);//P2
-        quint16 T3 = compressor.at(15);//T3
-        quint16 T4 = compressor.at(16);//T4
-        quint16 P3 = compressor.at(17);//P3
-        quint16 P4 = compressor.at(18);//P4
-        quint16 T5 = compressor.at(19);//T5
-        quint16 T6 = compressor.at(20);//T6
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
         quint16 runMode2 = compressor.at(22);//运行状态 2 （注 2）
         quint16 runMode3 = compressor.at(23);//运行状态 3 （注 3）
-        quint16 dp1 = compressor.at(24);//dp1（06－3－13 >v2.49）
         quint16 pressureDiff = compressor.at(25);//加载压差
         quint16 uninstallPressure = compressor.at(26);//卸载压力
-        quint16 MaxManifoldPressure = compressor.at(27);//最高总管压力
-        quint16 MinManifoldPressure = compressor.at(28);//最低总管压力
-        quint16 MinimalPressure = compressor.at(29);//最低压力
-        quint16 StartLoadDelayTime = compressor.at(30);//启动加载延时时间
-        quint16 StopTime = compressor.at(31);//卸载停机时间
-        quint16 OrderTime = compressor.at(32);//顺序时间
-        quint16 RotateTime = compressor.at(33);//轮换时间
-        quint16 TransitionTime = compressor.at(34);//Y-△转换时间
         saveWarning(runMode1, 1,1);
         saveWarning(runMode2, 1,2);
-        saveWarning(runMode3, 1,3);
+//        saveWarning(runMode3, 1,3);
         QVector<bool> aa = dec2BinTrans(runMode3);
         //主界面
-        ui->runningState1->setText(aa.at(9) ? "运行中" : "停止");//运行状态
-        ui->ventingPressure1->setText(QString::number(P2));//排气压力
-        ui->ventingT1->setText(QString::number(T2));//排气温度
+        if(aa.at(9)){
+            ui->runningState1->setText("运行中");//运行状态
+        }else{
+            if(!aa.at(10) && !aa.at(11)){
+                ui->runningState1->setText("停止");//运行状态
+            }
+        }
+        if(aa.at(10)){
+            ui->runningState1->setText("记载");//运行状态
+        }
+        if(aa.at(11)){
+            ui->runningState1->setText("满载");//运行状态
+        }
+        ui->powerStatus1->setText(aa.at(8) ? "上电" : "断电");//电源
+        ui->ventingPressure1->setText(QString::number(P2/142));//排气压力
+        ui->ventingT1->setText(QString::number(T1));//排气温度
         ui->runningT1->setText(QString::number(runTimeL));//运行时间
         ui->hostA1->setText(QString::number(hostCurrent));//主机电流
-        ui->sysT1->setText(QString::number(runTimeL));//系统温度
+        ui->sysT1->setText(QString::number(T2));//系统温度
         ui->uploadT1->setText(QString::number(loadTimeL));//加载时间
         //设备状态
         ui->compressorRunState1->setText(aa.at(9) ? "运行中" : "停止");//运行状态
@@ -877,31 +866,34 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
     }
     if(dryer_size != 0){
         quint16 runHint = dryer.at(0);//运行提示
-        quint16 faultHint = dryer.at(1);//故障提示
-        quint16 compressor = dryer.at(2);//压缩机
-        quint16 drainer = dryer.at(3);//排水器
-        quint16 phaseOrderFault = dryer.at(4);//相序故障
-        quint16 overloadSave = dryer.at(5);//故障保护
+        quint16 faultHint = dryer.at(1);//故障提示 1
+        quint16 phaseOrderFault = dryer.at(4);//相序故障 2
+        quint16 overloadSave = dryer.at(5);//故障保护 3
         quint16 sysHighVoltage = dryer.at(6);//系统高压
         quint16 sysLowVoltage = dryer.at(7);//系统低压
-        quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
-        quint16 dewPointH = dryer.at(9);//露点偏高
-        quint16 dewPointL = dryer.at(10);//露点偏低
-        quint16 faultWarn = dryer.at(11);//故障报警
-        quint16 faultStop = dryer.at(12);//故障停机
-        quint16 countDown = dryer.at(13);//倒计时
-        quint16 dewPointT = dryer.at(14);//露点温度
-        quint16 runTimeH = dryer.at(15);//运行计时（时）
-        quint16 runTimeM = dryer.at(16);//运行计时（分）
-
-//        saveWarningDryer(runMode1_dryer, 3,1);
-//        saveWarningDryer(runMode2_dryer, 3,2);
-//        saveWarningDryer(runMode3_dryer, 3,3);
-
-//        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
-
+        quint16 dewPointProbeFault = dryer.at(8);//露点探头故障 4
+        quint16 faultWarn = dryer.at(11);//故障报警 5
+        quint16 faultStop = dryer.at(12);//故障停机 6
+        if(faultHint){
+            saveWarningDryer(1,1);
+        }
+        if(phaseOrderFault){
+            saveWarningDryer(1,2);
+        }
+        if(overloadSave){
+            saveWarningDryer(1,3);
+        }
+        if(dewPointProbeFault){
+            saveWarningDryer(1,4);
+        }
+        if(faultWarn){
+            saveWarningDryer(1,5);
+        }
+        if(faultStop){
+            saveWarningDryer(1,6);
+        }
         //主界面
-        ui->valveState1->setText(QString::number(runHint));//阀门状态
+        ui->valveState1->setText(runHint ? "运行中" : "停机状态");//运行状态
         ui->refrigerantH1->setText(QString::number(sysHighVoltage));//冷媒高压
         ui->refrigerantL1->setText(QString::number(sysLowVoltage));//冷媒低压
         //设备状态
@@ -918,46 +910,34 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
     int dryer_size = dryer.size();
     if(compressor_size != 0){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
-        quint16 runTimeH = compressor.at(1);//累计运行时间 H
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
-        quint16 loadTimeH = compressor.at(3);//累计加载时间 H
-        quint16 electricityType = compressor.at(4);//机型（电流类型）
-        quint16 airDemand = compressor.at(5);//供气量
-        quint16 jointControlMode = compressor.at(6);//联控模式
-        quint16 voltageDeviation = compressor.at(7);//电压偏差
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
-        quint16 dewPointTemperature = compressor.at(9);//露点温度 Td
-        quint16 EnvironmentalTemperature = compressor.at(10);//环境温度
-        quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
-        quint16 P1 = compressor.at(13);//P1
         quint16 P2 = compressor.at(14);//P2
-        quint16 T3 = compressor.at(15);//T3
-        quint16 T4 = compressor.at(16);//T4
-        quint16 P3 = compressor.at(17);//P3
-        quint16 P4 = compressor.at(18);//P4
-        quint16 T5 = compressor.at(19);//T5
-        quint16 T6 = compressor.at(20);//T6
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
         quint16 runMode2 = compressor.at(22);//运行状态 2 （注 2）
         quint16 runMode3 = compressor.at(23);//运行状态 3 （注 3）
-        quint16 dp1 = compressor.at(24);//dp1（06－3－13 >v2.49）
         quint16 pressureDiff = compressor.at(25);//加载压差
         quint16 uninstallPressure = compressor.at(26);//卸载压力
-        quint16 MaxManifoldPressure = compressor.at(27);//最高总管压力
-        quint16 MinManifoldPressure = compressor.at(28);//最低总管压力
-        quint16 MinimalPressure = compressor.at(29);//最低压力
-        quint16 StartLoadDelayTime = compressor.at(30);//启动加载延时时间
-        quint16 StopTime = compressor.at(31);//卸载停机时间
-        quint16 OrderTime = compressor.at(32);//顺序时间
-        quint16 RotateTime = compressor.at(33);//轮换时间
-        quint16 TransitionTime = compressor.at(34);//Y-△转换时间
         saveWarning(runMode1, 2,1);
         saveWarning(runMode2, 2,2);
-        saveWarning(runMode3, 2,3);
+//        saveWarning(runMode3, 2,3);
         QVector<bool> aa = dec2BinTrans(runMode3);
         //主界面
-        ui->runningState2->setText(aa.at(9) ? "运行中" : "停止");//运行状态
+        if(aa.at(9)){
+            ui->runningState2->setText("运行中");//运行状态
+        }else{
+            if(!aa.at(10) && !aa.at(11)){
+                ui->runningState2->setText("停止");//运行状态
+            }
+        }
+        if(aa.at(10)){
+            ui->runningState2->setText("记载");//运行状态
+        }
+        if(aa.at(11)){
+            ui->runningState2->setText("满载");//运行状态
+        }
+        ui->powerStatus2->setText(aa.at(8) ? "上电" : "断电");//电源
         ui->ventingPressure2->setText(QString::number(P2));//排气压力
         ui->ventingT2->setText(QString::number(T2));//排气温度
         ui->runningT2->setText(QString::number(runTimeL));//运行时间
@@ -977,30 +957,34 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
     if(dryer_size != 0){
         quint16 runHint = dryer.at(0);//运行提示
         quint16 faultHint = dryer.at(1);//故障提示
-        quint16 compressor = dryer.at(2);//压缩机
-        quint16 drainer = dryer.at(3);//排水器
         quint16 phaseOrderFault = dryer.at(4);//相序故障
         quint16 overloadSave = dryer.at(5);//故障保护
         quint16 sysHighVoltage = dryer.at(6);//系统高压
         quint16 sysLowVoltage = dryer.at(7);//系统低压
         quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
-        quint16 dewPointH = dryer.at(9);//露点偏高
-        quint16 dewPointL = dryer.at(10);//露点偏低
         quint16 faultWarn = dryer.at(11);//故障报警
         quint16 faultStop = dryer.at(12);//故障停机
-        quint16 countDown = dryer.at(13);//倒计时
-        quint16 dewPointT = dryer.at(14);//露点温度
-        quint16 runTimeH = dryer.at(15);//运行计时（时）
-        quint16 runTimeM = dryer.at(16);//运行计时（分）
-
-//        saveWarningDryer(runMode1_dryer, 3,1);
-//        saveWarningDryer(runMode2_dryer, 3,2);
-//        saveWarningDryer(runMode3_dryer, 3,3);
-
-//        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
+        if(faultHint){
+            saveWarningDryer(2,1);
+        }
+        if(phaseOrderFault){
+            saveWarningDryer(2,2);
+        }
+        if(overloadSave){
+            saveWarningDryer(2,3);
+        }
+        if(dewPointProbeFault){
+            saveWarningDryer(2,4);
+        }
+        if(faultWarn){
+            saveWarningDryer(2,5);
+        }
+        if(faultStop){
+            saveWarningDryer(2,6);
+        }
 
         //主界面
-        ui->valveState2->setText(QString::number(runHint));//阀门状态
+        ui->valveState2->setText(runHint ? "运行中" : "停机状态");//阀门状态
         ui->refrigerantH2->setText(QString::number(sysHighVoltage));//冷媒高压
         ui->refrigerantL2->setText(QString::number(sysLowVoltage));//冷媒低压
         //设备状态
@@ -1019,46 +1003,34 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
     int dryer_size = dryer.size();
     if(compressor_size != 0){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
-        quint16 runTimeH = compressor.at(1);//累计运行时间 H
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
-        quint16 loadTimeH = compressor.at(3);//累计加载时间 H
-        quint16 electricityType = compressor.at(4);//机型（电流类型）
-        quint16 airDemand = compressor.at(5);//供气量
-        quint16 jointControlMode = compressor.at(6);//联控模式
-        quint16 voltageDeviation = compressor.at(7);//电压偏差
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
-        quint16 dewPointTemperature = compressor.at(9);//露点温度 Td
-        quint16 EnvironmentalTemperature = compressor.at(10);//环境温度
-        quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
-        quint16 P1 = compressor.at(13);//P1
         quint16 P2 = compressor.at(14);//P2
-        quint16 T3 = compressor.at(15);//T3
-        quint16 T4 = compressor.at(16);//T4
-        quint16 P3 = compressor.at(17);//P3
-        quint16 P4 = compressor.at(18);//P4
-        quint16 T5 = compressor.at(19);//T5
-        quint16 T6 = compressor.at(20);//T6
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
         quint16 runMode2 = compressor.at(22);//运行状态 2 （注 2）
         quint16 runMode3 = compressor.at(23);//运行状态 3 （注 3）
-        quint16 dp1 = compressor.at(24);//dp1（06－3－13 >v2.49）
         quint16 pressureDiff = compressor.at(25);//加载压差
         quint16 uninstallPressure = compressor.at(26);//卸载压力
-        quint16 MaxManifoldPressure = compressor.at(27);//最高总管压力
-        quint16 MinManifoldPressure = compressor.at(28);//最低总管压力
-        quint16 MinimalPressure = compressor.at(29);//最低压力
-        quint16 StartLoadDelayTime = compressor.at(30);//启动加载延时时间
-        quint16 StopTime = compressor.at(31);//卸载停机时间
-        quint16 OrderTime = compressor.at(32);//顺序时间
-        quint16 RotateTime = compressor.at(33);//轮换时间
-        quint16 TransitionTime = compressor.at(34);//Y-△转换时间
         saveWarning(runMode1, 3,1);
         saveWarning(runMode2, 3,2);
-        saveWarning(runMode3, 3,3);
+//        saveWarning(runMode3, 3,3);
         QVector<bool> aa = dec2BinTrans(runMode3);
         //主界面
-        ui->runningState3->setText(aa.at(9) ? "运行中" : "停止");//运行状态
+        if(aa.at(9)){
+            ui->runningState3->setText("运行中");//运行状态
+        }else{
+            if(!aa.at(10) && !aa.at(11)){
+                ui->runningState3->setText("停止");//运行状态
+            }
+        }
+        if(aa.at(10)){
+            ui->runningState3->setText("记载");//运行状态
+        }
+        if(aa.at(11)){
+            ui->runningState3->setText("满载");//运行状态
+        }
+        ui->powerStatus3->setText(aa.at(8) ? "上电" : "断电");//电源
         ui->ventingPressure3->setText(QString::number(P2));//排气压力
         ui->ventingT3->setText(QString::number(T2));//排气温度
         ui->runningT3->setText(QString::number(runTimeL));//运行时间
@@ -1078,30 +1050,34 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
     if(dryer_size != 0){
         quint16 runHint = dryer.at(0);//运行提示
         quint16 faultHint = dryer.at(1);//故障提示
-        quint16 compressor = dryer.at(2);//压缩机
-        quint16 drainer = dryer.at(3);//排水器
         quint16 phaseOrderFault = dryer.at(4);//相序故障
         quint16 overloadSave = dryer.at(5);//故障保护
         quint16 sysHighVoltage = dryer.at(6);//系统高压
         quint16 sysLowVoltage = dryer.at(7);//系统低压
         quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
-        quint16 dewPointH = dryer.at(9);//露点偏高
-        quint16 dewPointL = dryer.at(10);//露点偏低
         quint16 faultWarn = dryer.at(11);//故障报警
         quint16 faultStop = dryer.at(12);//故障停机
-        quint16 countDown = dryer.at(13);//倒计时
-        quint16 dewPointT = dryer.at(14);//露点温度
-        quint16 runTimeH = dryer.at(15);//运行计时（时）
-        quint16 runTimeM = dryer.at(16);//运行计时（分）
-
-//        saveWarningDryer(runMode1_dryer, 3,1);
-//        saveWarningDryer(runMode2_dryer, 3,2);
-//        saveWarningDryer(runMode3_dryer, 3,3);
-
-//        QVector<bool> aa_dryer = dec2BinTrans(runMode3_dryer);
+        if(faultHint){
+            saveWarningDryer(3,1);
+        }
+        if(phaseOrderFault){
+            saveWarningDryer(3,2);
+        }
+        if(overloadSave){
+            saveWarningDryer(3,3);
+        }
+        if(dewPointProbeFault){
+            saveWarningDryer(3,4);
+        }
+        if(faultWarn){
+            saveWarningDryer(3,5);
+        }
+        if(faultStop){
+            saveWarningDryer(3,6);
+        }
 
         //主界面
-        ui->valveState3->setText(QString::number(runHint));//阀门状态
+        ui->valveState3->setText(runHint ? "运行中" : "停机状态");//阀门状态
         ui->refrigerantH3->setText(QString::number(sysHighVoltage));//冷媒高压
         ui->refrigerantL3->setText(QString::number(sysLowVoltage));//冷媒低压
         //设备状态
@@ -1345,237 +1321,33 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
     }
 }
 //存储冷干机报警信息
-void MainWindow::saveWarningDryer(quint16 warningInfo, int dryerNo, int runState)
+void MainWindow::saveWarningDryer(int dryerNo, int runState)
 {
     Warning warning;
-    QVector<bool> aa = dec2BinTrans(warningInfo);
     warning.address = STATION_HOUSE;
     warning.deviceName = QString("%1#冷干机").arg(dryerNo);
     warning.date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    if(aa.at(0)){
-        switch (runState) {
-        case 1:
-            warning.info = "紧急停机";
-            break;
-        case 2:
-            warning.info = "空滤堵塞";
-            break;
-        case 3:
-            warning.info = "高压侧报警";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
+    switch (runState) {
+    case 1:
+        warning.info = "故障提示";
+        break;
+    case 2:
+        warning.info = "相序故障";
+        break;
+    case 3:
+        warning.info = "故障保护";
+        break;
+    case 4:
+        warning.info = "露点探头故障";
+        break;
+    case 5:
+        warning.info = "故障报警";
+        break;
+    case 6:
+        warning.info = "故障停机";
+        break;
     }
-    if(aa.at(1)){
-        switch (runState) {
-        case 1:
-            warning.info = "主机过载";
-            break;
-        case 2:
-            warning.info = "油滤堵塞";
-            break;
-        case 3:
-            warning.info = "316 报警停机";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(2)){
-        switch (runState) {
-        case 1:
-            warning.info = "风机过载";
-            break;
-        case 2:
-            warning.info = "△ P1报警";
-            break;
-        case 3:
-            warning.info = "";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(3)){
-        switch (runState) {
-        case 1:
-            warning.info = "电源异常";
-            break;
-        case 2:
-            warning.info = "△ P2报警";
-            break;
-        case 3:
-            warning.info = "";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(4)){
-        switch (runState) {
-        case 1:
-            warning.info = "水压异常";
-            break;
-        case 2:
-            warning.info = "T5 报警";
-            break;
-        case 3:
-            warning.info = "T1 LOW";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(5)){
-        switch (runState) {
-        case 1:
-            warning.info = "P1 停机";
-            break;
-        case 2:
-            warning.info = "P1 报警";
-            break;
-        case 3:
-            warning.info = "温度传感器故障";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(6)){
-        switch (runState) {
-        case 1:
-            warning.info = "Ic 停机";
-            break;
-        case 2:
-            warning.info = "P2 报警";
-            break;
-        case 3:
-            warning.info = "压力传感器故障";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(7)){
-        switch (runState) {
-        case 1:
-            warning.info = "T1 停机";
-            break;
-        case 2:
-            warning.info = "T1 报警";
-            break;
-        case 3:
-            warning.info = "210 报警停机";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(8)){
-        switch (runState) {
-        case 1:
-            warning.info = "T2 停机";
-            break;
-        case 2:
-            warning.info = "T2 报警";
-            break;
-        case 3:
-            warning.info = "电源";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(9)){
-        switch (runState) {
-        case 1:
-            warning.info = "T4 停机";
-            break;
-        case 2:
-            warning.info = "T4 报警";
-            break;
-        case 3:
-            warning.info = "运行";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(10)){
-        switch (runState) {
-        case 1:
-            warning.info = "环境温度过高停机";
-            break;
-        case 2:
-            warning.info = "△ T3报警";
-            break;
-        case 3:
-            warning.info = "加载";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(11)){
-        switch (runState) {
-        case 1:
-            warning.info = "电压异常";
-            break;
-        case 2:
-            warning.info = "△T2 报警";
-            break;
-        case 3:
-            warning.info = "满载";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(12)){
-        switch (runState) {
-        case 1:
-            warning.info = "△ P3 停机";
-            break;
-        case 2:
-            warning.info = "△ T1 报警";
-            break;
-        case 3:
-            warning.info = "轻故障";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(13)){
-        switch (runState) {
-        case 1:
-            warning.info = "P1 LOW";
-            break;
-        case 2:
-            warning.info = "环境温度报警";
-            break;
-        case 3:
-            warning.info = "重故障";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(14)){
-        switch (runState) {
-        case 1:
-            warning.info = "P1 HIGH";
-            break;
-        case 2:
-            warning.info = "SRC报警(208)";
-            break;
-        case 3:
-            warning.info = "";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
-    if(aa.at(15)){
-        switch (runState) {
-        case 1:
-            warning.info = "P3 LOW";
-            break;
-        case 2:
-            warning.info = "SPR 报警(209)";
-            break;
-        case 3:
-            warning.info = "";
-            break;
-        }
-        dataOper.saveWarningInfo(warning);
-    }
+    dataOper.saveWarningInfo(warning);
 }
 
 

@@ -67,7 +67,7 @@ private:
     void initChart();
     QVector<bool> dec2BinTrans(unsigned int data);
     void saveWarning(quint16 warningInfo, int compressorNo, int runState);
-    void saveWarningDryer(quint16 warningInfo, int dryerNo, int runState);
+    void saveWarningDryer(int dryerNo, int runState);
 
 private:
     Ui::MainWindow *ui;

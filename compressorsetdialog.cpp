@@ -17,8 +17,8 @@ CompressorSetDialog::CompressorSetDialog(QString user, int type, AppCore *core, 
 
     CompressorSet compressorSet;
     dataOper.getLastCompressorSet(compressorSet,compressorNo);
-    ui->uninstallPressure->setText(QString::number(compressorSet.uninstallPressure,'f',4));
-    ui->pressureDiff->setText(QString::number(compressorSet.pressureDiff,'f',4));
+    ui->uninstallPressure->setText(QString::number(compressorSet.uninstallPressure,'f',1));
+    ui->pressureDiff->setText(QString::number(compressorSet.pressureDiff,'f',1));
 
 }
 
