@@ -36,8 +36,7 @@ SOURCES += \
     pressuresetdialog.cpp \
     devicecommunication.cpp \
     compressorsetdialog.cpp \
-    appcore.cpp \
-    savelog.cpp
+    appcore.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,8 +50,7 @@ HEADERS += \
     pressuresetdialog.h \
     devicecommunication.h \
     compressorsetdialog.h \
-    appcore.h \
-    savelog.h
+    appcore.h
 
 FORMS += \
         mainwindow.ui \

@@ -7,7 +7,6 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "mainwindow.h"
-#include "savelog.h"
 
 #define STATION_HOUSE   "G11"        //站房
 #define STORE_TIME      60000      //储存读取数据的时间间隔  暂定1分钟
@@ -23,12 +22,6 @@ MainWindow::MainWindow(QString u, QString p, QWidget *parent) :
     this->initTable();
     this->initChart();
 
-    SaveLog::Instance()->setPath(qApp->applicationDirPath());
-
-//    SaveLog::Instance()->start();
-
-//    ui->sys_img->hide();
-//    ui->sys_name->hide();
     ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
     ui->sys_name->setText("长虹智能空压站房系统");
     setWindowTitle("长虹智能空压站房系统");
@@ -46,11 +39,6 @@ MainWindow::~MainWindow()
     process->start("taskkill", QStringList() << "/f" << "/im" << "CHControlSystem.exe");
 }
 
-//窗口关闭事件
-//void MainWindow::closeEvent(QCloseEvent *event)
-//{
-
-//}
 
 void MainWindow::initForm()
 {
@@ -60,8 +48,20 @@ void MainWindow::initForm()
     ui->listView->setColorLine(QColor(193, 193, 193));
     ui->listView->setColorBg(QColor(255, 255, 255), QColor(232, 236, 245), QColor(242, 242, 242));
     ui->listView->setColorText(QColor(19, 36, 62), QColor(19, 36, 62), QColor(19, 36, 62));
-    //加载xml文件形式
-    ui->listView->readData(":/image/config.xml");
+
+    //设置数据方式
+    QStringList listItem;
+    listItem.append("主界面||1|");
+    listItem.append("设备状态||1|");
+    listItem.append("设备控制||1|");
+    listItem.append("操作日志||1|");
+    listItem.append("系统报警||1|");
+    listItem.append("历史数据||1|");
+    listItem.append("用户管理||1|");
+//    ui->listView->setData(listItem);
+//    ui->listView->readData(":/image/config.xml");//这句话windows7下可以发布，windows10下不能发布
+    ui->listView->setVisible(false);
+
     ui->warningStartime->setDate(date);
     ui->warningEndTime->setDate(date);
     ui->logStartime->setDate(date);
@@ -80,9 +80,8 @@ void MainWindow::initForm()
     compressorSwitch3 = false;
     storageInterval = 0;
 
-    QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
-    timer->start(1000);
+    connect(&timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
+    timer.start(1000);
 
     connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readCompressorTimer()));
 
@@ -123,6 +122,13 @@ void MainWindow::initForm()
     connect(&appcore, &AppCore::infoMessage, this, [this](const QString& info){
         qDebug() << "emit infoMessage(info):" << info;
     });
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_5, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_6, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_7, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
 
     // Initialize settings
     appcore.initSettings();
@@ -299,17 +305,11 @@ void MainWindow::on_loadDataBtn_clicked()
 }
 void MainWindow::on_listView_pressed()
 {
-    QModelIndex index = ui->listView->currentIndex();
-    QString text = index.data().toString();
+//    QModelIndex index = ui->listView->currentIndex();
+//    QString text = index.data().toString();
 
-//    <Node label="主界面"></Node>
-//<Node label="设备状态"></Node>
-//    <Node label="设备控制"></Node>
-//<Node label="操作日志"></Node>
-//    <Node label="系统报警"></Node>
-//    <Node label="历史数据"></Node>
-//    <Node label="用户管理"></Node>
-
+    QPushButton *b = (QPushButton *)sender();
+    QString text = b->text();
 
     if (text == "主界面") {
         ui->stackedWidget->setCurrentIndex(0);
@@ -322,7 +322,7 @@ void MainWindow::on_listView_pressed()
         on_logResetBtn_clicked();
     } else if (text == "系统报警") {
         ui->stackedWidget->setCurrentIndex(4);
-        on_warningResetBtn_clicked();
+//        on_warningResetBtn_clicked();
     } else if (text == "历史数据") {
         ui->stackedWidget->setCurrentIndex(5);
     } else if (text == "用户管理") {

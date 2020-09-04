@@ -68,7 +68,7 @@ void Login::on_LoginBtn_clicked()
             dataOper.saveLog("G11","","用户登录",u,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
             this->hide();
             m = new MainWindow(u,p);
-            m->setAttribute(Qt::WA_DeleteOnClose);
+//            m->setAttribute(Qt::WA_DeleteOnClose);
             m->show();
         }
     }

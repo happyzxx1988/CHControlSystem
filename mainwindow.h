@@ -59,10 +59,6 @@ private slots:
 
     void on_connectPLCBtn_clicked();
 
-protected:
-//    void closeEvent(QCloseEvent *event);
-
-
 private:
     void initForm();
     void clearTable(QTableWidget *table);
@@ -95,6 +91,7 @@ private:
     int storageInterval;//存储读取数据的时间间隔
     int READ_TIME;
     QTimer compressorTimer;
+    QTimer timer;
 
 
     QDateTimeAxis *up_x;
