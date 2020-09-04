@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
     font.setFamily("Microsoft YaHei");//微软雅黑字体
     a.setFont(font);
 
-
-//    MainWindow w;
     Login w;
 
     w.show();

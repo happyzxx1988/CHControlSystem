@@ -57,6 +57,12 @@ private slots:
     void on_loadDataBtn_clicked();
     void slotPointHoverd(const QPointF &point, bool state);
 
+    void on_connectPLCBtn_clicked();
+
+protected:
+//    void closeEvent(QCloseEvent *event);
+
+
 private:
     void initForm();
     void clearTable(QTableWidget *table);
@@ -88,6 +94,7 @@ private:
     AppCore appcore;
     int storageInterval;//存储读取数据的时间间隔
     int READ_TIME;
+    QTimer compressorTimer;
 
 
     QDateTimeAxis *up_x;

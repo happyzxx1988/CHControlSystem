@@ -29,14 +29,15 @@ public slots:
 
 protected:
     QSettings*          settings;
-    QTimer              statusQueryTimer;
     DeviceCommunication dc;
 
 public:
     QSettings*          appSettings()       { return settings; }
     bool                deviceIsConnected();
+    void                disconnectDevice();
     QSettings*          initSettings();
     void                initDevice();
+    void connectPLC();
 
     void setMaxAndMinPressure(int max, int min);
     void setEquipmentSwitch(int equipmentType, bool off);
@@ -51,6 +52,7 @@ public:
                         QVector<quint16> &dryer3);
     void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
     void sleep(unsigned int msec);
+
 
 };
 

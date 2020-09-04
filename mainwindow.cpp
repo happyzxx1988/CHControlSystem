@@ -29,19 +29,33 @@ MainWindow::MainWindow(QString u, QString p, QWidget *parent) :
 
 //    ui->sys_img->hide();
 //    ui->sys_name->hide();
-//    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
-//    ui->sys_name->setText("长虹智能空压站房系统");
-//    setWindowTitle("长虹智能空压站房系统");
+    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
+    ui->sys_name->setText("长虹智能空压站房系统");
+    setWindowTitle("长虹智能空压站房系统");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    if(compressorTimer.isActive()){
+        compressorTimer.stop();
+    }
+//    system("taskkill /f /t /im CHControlSystem.exe");
+
+    QProcess *process = new QProcess;
+    process->start("taskkill", QStringList() << "/f" << "/im" << "CHControlSystem.exe");
 }
+
+//窗口关闭事件
+//void MainWindow::closeEvent(QCloseEvent *event)
+//{
+
+//}
+
 void MainWindow::initForm()
 {
     QDate date = QDate::currentDate();   //获取当前日期
-    READ_TIME =      5000;    //定时读取间隔时间
+    READ_TIME =      1000;    //定时读取间隔时间
     ui->listView->setIcoColorBg(false);
     ui->listView->setColorLine(QColor(193, 193, 193));
     ui->listView->setColorBg(QColor(255, 255, 255), QColor(232, 236, 245), QColor(242, 242, 242));
@@ -70,81 +84,50 @@ void MainWindow::initForm()
     connect(timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
     timer->start(1000);
 
-    QTimer *compressorTimer = new QTimer(this);//读取空压机定时器 5秒钟读取一次
-    connect(compressorTimer,SIGNAL(timeout()),this,SLOT(readCompressorTimer()));
+    connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readCompressorTimer()));
 
     connect(ui->userTable,SIGNAL(cellClicked(int,int)),this,SLOT(checkRowSlot(int,int)));
     /*数据处理的消息传输*/
     connect(&dataOper, &DataOper::sendDataMessage, this, [this](const QString& info){
         QMessageBox::information(this, tr("提示"), info,tr("确定"));
     });
-    connect(&appcore, &AppCore::deviceConnected, this, [this,compressorTimer](){
+    connect(&appcore, &AppCore::deviceConnected, this, [this](){
         qDebug() << "emit deviceConnected()";
+
+        ui->connectPLCBtn->setText("已连接");
+        ui->connectPLCBtn->setStyleSheet("background-color: rgb(85, 255, 0);");
+        ui->connectPLCBtn->setEnabled(false);
+
         //设备启动，设置手动模式
         appcore.setRunMode(ManualMode);
         ui->runningMode->setText("手动");
         ui->manualOper->setChecked(true);
 
-        if(!compressorTimer->isActive()){
-            compressorTimer->start(READ_TIME);
+        if(!compressorTimer.isActive()){
+            compressorTimer.start(READ_TIME);
         }
     });
-    connect(&appcore, &AppCore::deviceDisconnected, this, [this,compressorTimer](){
+    connect(&appcore, &AppCore::deviceDisconnected, this, [this](){
         qDebug() << "emit deviceDisconnected()";
-        if(compressorTimer->isActive()){
-            compressorTimer->stop();
+        ui->connectPLCBtn->setText("已断开");
+        ui->connectPLCBtn->setStyleSheet("background-color: rgb(255, 0, 0);");
+        ui->connectPLCBtn->setEnabled(true);
+        if(compressorTimer.isActive()){
+            compressorTimer.stop();
         }
     });
     connect(&appcore, &AppCore::errorMessage, this, [this](const QString& error){
         qDebug() << "emit errorMessage(error):" << error;
+        ui->statusBar->showMessage(error);
     });
     connect(&appcore, &AppCore::infoMessage, this, [this](const QString& info){
         qDebug() << "emit infoMessage(info):" << info;
     });
 
-//    connect(&appcore, &AppCore::sendReadData, this, [this](
-//            const QVector<quint16> compressor1,
-//            const QVector<quint16> compressor2,
-//            const QVector<quint16> compressor3,
-//            const QVector<quint16> dryer1,
-//            const QVector<quint16> dryer2,
-//            const QVector<quint16> dryer3){
-//        dealCompressor1(compressor1,dryer1);
-//        dealCompressor2(compressor2,dryer2);
-//        dealCompressor3(compressor3,dryer3);
-//        if(storageInterval == STORE_TIME){
-//            storageInterval = 0;
-//            QString storageTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-//            //存储读取数据导数据
-//            if(compressor1.size() == 35){
-//                dataOper.saveReadCompressor1(compressor1,storageTime);
-//            }
-//            if(compressor2.size() == 35){
-//                dataOper.saveReadCompressor2(compressor2,storageTime);
-//            }
-//            if(compressor3.size() == 35){
-//                dataOper.saveReadCompressor3(compressor3,storageTime);
-//            }
-//            if(dryer1.size() == 17){
-//                dataOper.saveReadDryer1(dryer1,storageTime);
-//            }
-//            if(dryer2.size() == 17){
-//                dataOper.saveReadDryer2(dryer2,storageTime);
-//            }
-//            if(dryer3.size() == 17){
-//                dataOper.saveReadDryer3(dryer3,storageTime);
-//            }
-//        }
-//        storageInterval += READ_TIME;
-//    });
-
-
     // Initialize settings
     appcore.initSettings();
     // Connect to Device
     appcore.initDevice();
-
-
 
 }
 void MainWindow::initTable()
@@ -347,7 +330,11 @@ void MainWindow::on_listView_pressed()
         on_userClearBtn_clicked();
     }
 }
-
+//连接PLC
+void MainWindow::on_connectPLCBtn_clicked()
+{
+    appcore.connectPLC();
+}
 
 //用户管理--增加用户
 void MainWindow::on_userAddBtn_clicked()
@@ -1424,8 +1411,4 @@ QVector<bool> MainWindow::dec2BinTrans(unsigned int data)
     }
     return bintemp;
 }
-
-
-
-
 

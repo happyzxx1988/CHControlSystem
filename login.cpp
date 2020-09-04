@@ -17,8 +17,8 @@ Login::Login(QWidget *parent) :
         return;
     }
 
-    ui->logLabel->hide();
-//    this->setWindowTitle("长虹智能空压站房系统");
+//    ui->logLabel->hide();
+    this->setWindowTitle("长虹智能空压站房系统");
 
 }
 
@@ -65,15 +65,8 @@ void Login::on_LoginBtn_clicked()
             ui->userName->setFocus();
             return;
         }else{
-//            Log l;
-//            l.address = "";
-//            l.device = "";
-//            l.operType = "用户登录";
-//            l.userName = u;
-//            l.date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-//            dataOper.saveLog(l);
             dataOper.saveLog("G11","","用户登录",u,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
-            this->close();
+            this->hide();
             m = new MainWindow(u,p);
             m->setAttribute(Qt::WA_DeleteOnClose);
             m->show();

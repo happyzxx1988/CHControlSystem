@@ -71,29 +71,36 @@ void AppCore::initDevice()
         emit sendReadData(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
     });
 
+//    QString IP = settings->value("DevicePLC/IP").toString();
+//    int port = settings->value("DevicePLC/port").toInt();
+//    int Timeout = settings->value("DevicePLC/Timeout").toInt();
+//    int Retries = settings->value("DevicePLC/Retries").toInt();
+//    int ServerId = settings->value("DevicePLC/ServerId").toInt();
+//    dc.connectPLC(QString("%1:%2").arg(IP).arg(port),Timeout,Retries,ServerId);
 
 
+    emit infoMessage(tr("Device initialized."));
+}
+
+void AppCore::connectPLC()
+{
     QString IP = settings->value("DevicePLC/IP").toString();
     int port = settings->value("DevicePLC/port").toInt();
     int Timeout = settings->value("DevicePLC/Timeout").toInt();
     int Retries = settings->value("DevicePLC/Retries").toInt();
     int ServerId = settings->value("DevicePLC/ServerId").toInt();
-
     dc.connectPLC(QString("%1:%2").arg(IP).arg(port),Timeout,Retries,ServerId);
-
-    connect(&statusQueryTimer, &QTimer::timeout, this, [this](){
-//        dc.exceptionQuery();
-//        dc.actionStatusQuery();
-    });
-    statusQueryTimer.start(1000);
-
-    emit infoMessage(tr("Device initialized."));
 }
+
 bool AppCore::deviceIsConnected()
 {
     return dc.isConnected();
 }
 
+void AppCore::disconnectDevice()
+{
+    dc.disconnectDevice();
+}
 
 void AppCore::setMaxAndMinPressure(int max,int min)
 {
