@@ -33,12 +33,12 @@ void PressureSetDialog::on_setPressureBtn_clicked()
     }
     float maxPressure = ui->maxPressure->text().toFloat();
     float minPressure = ui->minPressure->text().toFloat();
-    maxPressure = QString::number(maxPressure,'f',1).toFloat() * 10;
-    minPressure = QString::number(minPressure,'f',1).toFloat() * 10;
+    int maxPressure_int = QString::number(maxPressure,'f',1).toFloat() * 10;
+    int minPressure_int = QString::number(minPressure,'f',1).toFloat() * 10;
 
 
-    appcore->setMaxAndMinPressure(maxPressure,minPressure);
+    appcore->setMaxAndMinPressure(maxPressure_int,minPressure_int);
 
-    emit closeCurrentDialog(maxPressure,minPressure);
+    emit closeCurrentDialog(maxPressure_int,maxPressure_int);
     this->close();
 }

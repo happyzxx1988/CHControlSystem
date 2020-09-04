@@ -18,7 +18,7 @@ public:
     ~CompressorSetDialog();
 
 signals:
-    void closeCurrentDialog(int compressorNo,float uninstallPressure,float pressureDiff);
+    void closeCurrentDialog(int compressorNo,int uninstallPressure,int pressureDiff);
 
 private slots:
     void on_setCompressorBtn_clicked();

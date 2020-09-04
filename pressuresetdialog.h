@@ -17,7 +17,7 @@ public:
     ~PressureSetDialog();
 
 signals:
-    void closeCurrentDialog(float maxPressure,float minPressure);
+    void closeCurrentDialog(int maxPressure,int minPressure);
 
 private slots:
     void on_setPressureBtn_clicked();

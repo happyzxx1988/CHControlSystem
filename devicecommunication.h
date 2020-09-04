@@ -48,12 +48,30 @@ signals:
     void deviceConnected();
     void modbusError(const QString& error);
 
+    void sendReadData(const QVector<quint16> compressor1,
+                      const QVector<quint16> compressor2,
+                      const QVector<quint16> compressor3,
+                      const QVector<quint16> dryer1,
+                      const QVector<quint16> dryer2,
+                      const QVector<quint16> dryer3);
+
+    void readALLOverData();
+
+    void readDryerData();
+
+    void readOverCompressorData1();
+    void readOverCompressorData2();
+    void readOverCompressorData3();
+    void readOverDryer1Data1();
+    void readOverDryer1Data2();
+    void readOverDryer1Data3();
+
 private:
     QModbusClient *modbusDevice;
     int             srvId;
 
 public:
-    void setMaxAndMinPressure(float max,float min);
+    void setMaxAndMinPressure(int max, int min);
     void compressorSwitch1(bool off);
     void compressorSwitch2(bool off);
     void compressorSwitch3(bool off);
@@ -62,11 +80,28 @@ public:
     void dryerSwitch3(bool off);
     void resetOperation();
     void setRunMode(DeviceRunMode mode);
-    void setUninstallPressureAndPressureDiff1(float uninstallPressure,float pressureDiff);
-    void setUninstallPressureAndPressureDiff2(float uninstallPressure,float pressureDiff);
-    void setUninstallPressureAndPressureDiff3(float uninstallPressure,float pressureDiff);
-    void readCompressor(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3);
-    void readDryer(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3);
+    void setUninstallPressureAndPressureDiff1(int uninstallPressure,int pressureDiff);
+    void setUninstallPressureAndPressureDiff2(int uninstallPressure,int pressureDiff);
+    void setUninstallPressureAndPressureDiff3(int uninstallPressure,int pressureDiff);
+    void readCompressor(QVector<quint16> &compressor1,
+                        QVector<quint16> &compressor2,
+                        QVector<quint16> &compressor3,
+                        QVector<quint16> &dryer1,
+                        QVector<quint16> &dryer2,
+                        QVector<quint16> &dryer3);
+
+    void readCompressor_old(QVector<quint16> &compressor1,
+                        QVector<quint16> &compressor2,
+                        QVector<quint16> &compressor3,
+                        QVector<quint16> &dryer1,
+                        QVector<quint16> &dryer2,
+                        QVector<quint16> &dryer3);
+
+    void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
+
+    void writeAddress26();
+    void writeAddress410(int val);
+
 
 };
 

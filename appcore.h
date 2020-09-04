@@ -18,6 +18,13 @@ signals:
     void errorMessage(const QString& error);
     void infoMessage(const QString& info);
 
+    void sendReadData(const QVector<quint16> compressor1,
+                      const QVector<quint16> compressor2,
+                      const QVector<quint16> compressor3,
+                      const QVector<quint16> dryer1,
+                      const QVector<quint16> dryer2,
+                      const QVector<quint16> dryer3);
+
 public slots:
 
 protected:
@@ -31,13 +38,19 @@ public:
     QSettings*          initSettings();
     void                initDevice();
 
-    void setMaxAndMinPressure(float max,float min);
+    void setMaxAndMinPressure(int max, int min);
     void setEquipmentSwitch(int equipmentType, bool off);
     void resetOperation();
     void setRunMode(DeviceRunMode mode);
-    void setUninstallPressureAndPressureDiff(float uninstallPressure,float pressureDiff,int compressorNo);
-    void readCompressor(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3);
-    void readDryer(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3);
+    void setUninstallPressureAndPressureDiff(int uninstallPressure,int pressureDiff,int compressorNo);
+    void readCompressor(QVector<quint16> &compressor1,
+                        QVector<quint16> &compressor2,
+                        QVector<quint16> &compressor3,
+                        QVector<quint16> &dryer1,
+                        QVector<quint16> &dryer2,
+                        QVector<quint16> &dryer3);
+    void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
+    void sleep(unsigned int msec);
 
 };
 

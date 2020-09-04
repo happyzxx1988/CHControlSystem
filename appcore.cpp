@@ -1,6 +1,9 @@
 ﻿#include "appcore.h"
 #include <QDir>
 #include <QFileInfo>
+#include <QEventLoop>
+#include <QCoreApplication>
+#include <QTime>
 
 #define SETTINGS_VERSION                    "1.8"
 #define DEFAULT_SETTINGS_FILENAME           "Settings.ini"
@@ -58,6 +61,18 @@ void AppCore::initDevice()
         emit errorMessage(error);
     });
 
+    connect(&dc, &DeviceCommunication::sendReadData, this, [this](
+            const QVector<quint16> compressor1,
+            const QVector<quint16> compressor2,
+            const QVector<quint16> compressor3,
+            const QVector<quint16> dryer1,
+            const QVector<quint16> dryer2,
+            const QVector<quint16> dryer3){
+        emit sendReadData(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
+    });
+
+
+
     QString IP = settings->value("DevicePLC/IP").toString();
     int port = settings->value("DevicePLC/port").toInt();
     int Timeout = settings->value("DevicePLC/Timeout").toInt();
@@ -80,12 +95,12 @@ bool AppCore::deviceIsConnected()
 }
 
 
-void AppCore::setMaxAndMinPressure(float max,float min)
+void AppCore::setMaxAndMinPressure(int max,int min)
 {
     dc.setMaxAndMinPressure(max,min);
 }
 
-void AppCore::setUninstallPressureAndPressureDiff(float uninstallPressure,float pressureDiff,int compressorNo)
+void AppCore::setUninstallPressureAndPressureDiff(int uninstallPressure, int pressureDiff, int compressorNo)
 {
     switch (compressorNo) {
     case 1:
@@ -98,22 +113,34 @@ void AppCore::setUninstallPressureAndPressureDiff(float uninstallPressure,float 
         dc.setUninstallPressureAndPressureDiff3(uninstallPressure,pressureDiff);
         break;
     }
+    dc.writeAddress26();
+    this->sleep(200);
+    dc.writeAddress410(compressorNo);
+
 }
 //批量一次性读取3台空压机数据
-void AppCore::readCompressor(QVector<quint16> &data1, QVector<quint16> &data2, QVector<quint16> &data3)
+void AppCore::readCompressor(QVector<quint16> &compressor1,
+                             QVector<quint16> &compressor2,
+                             QVector<quint16> &compressor3,
+                             QVector<quint16> &dryer1,
+                             QVector<quint16> &dryer2,
+                             QVector<quint16> &dryer3)
 {
-    dc.readCompressor(data1,data2,data3);
+    dc.readCompressor(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
 }
 //批量一次性读取3台冷干机数据
-void AppCore::readDryer(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3)
+void AppCore::readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3)
 {
-    dc.readDryer(data1,data2,data3);
+    dc.readDryer(dryer1,dryer2,dryer3);
 }
 
 
 //设备开关设置 1-1#空压机，2-2#空压机，3-3#空压机，4-1#冷干机，5-2#冷干机，6-3#冷干机
 void AppCore::setEquipmentSwitch(int equipmentType,bool off)
 {
+    dc.writeAddress26();
+    this->sleep(200);
+
     switch (equipmentType) {
     case 1:
         dc.compressorSwitch1(off);
@@ -146,3 +173,10 @@ void AppCore::setRunMode(DeviceRunMode mode)
     dc.setRunMode(mode);
 }
 
+//以毫秒为单位的延时函数
+void AppCore::sleep(unsigned int msec)
+{
+    QTime dieTime = QTime::currentTime().addMSecs(msec);
+    while( QTime::currentTime() < dieTime )
+       QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}

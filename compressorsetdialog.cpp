@@ -1,6 +1,7 @@
 ﻿#pragma execution_character_set("utf-8")  //加了这句话之后，就不用QStringLiteral了
 #include "compressorsetdialog.h"
 #include "ui_compressorsetdialog.h"
+#include <QMessageBox>
 
 CompressorSetDialog::CompressorSetDialog(QString user, int type, AppCore *core, QWidget *parent) :
     QDialog(parent),
@@ -29,11 +30,19 @@ CompressorSetDialog::~CompressorSetDialog()
 
 void CompressorSetDialog::on_setCompressorBtn_clicked()
 {
-    float uninstallPressure = ui->uninstallPressure->text().isEmpty() ? 0 : ui->uninstallPressure->text().toFloat();
-    float pressureDiff = ui->pressureDiff->text().isEmpty() ? 0 : ui->pressureDiff->text().toFloat();
+    if(ui->uninstallPressure->text().isEmpty() || ui->pressureDiff->text().isEmpty()){
+        QMessageBox::information(this, tr("提示"), tr("请输入值！"),tr("确定"));
+        return;
+    }
 
-    appcore->setUninstallPressureAndPressureDiff(uninstallPressure,pressureDiff,compressorNo);
+    float uninstallPressure = ui->uninstallPressure->text().toFloat();
+    float pressureDiff = ui->pressureDiff->text().toFloat();
 
-    emit closeCurrentDialog(compressorNo,uninstallPressure,pressureDiff);
+    int uninstallPressure_int = QString::number(uninstallPressure,'f',1).toFloat() * 10;
+    int pressureDiff_int = QString::number(pressureDiff,'f',1).toFloat() * 10;
+
+    appcore->setUninstallPressureAndPressureDiff(uninstallPressure_int,pressureDiff_int,compressorNo);
+
+    emit closeCurrentDialog(compressorNo,uninstallPressure_int,pressureDiff_int);
     this->close();
 }

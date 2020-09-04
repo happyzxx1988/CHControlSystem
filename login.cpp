@@ -18,6 +18,7 @@ Login::Login(QWidget *parent) :
     }
 
     ui->logLabel->hide();
+//    this->setWindowTitle("长虹智能空压站房系统");
 
 }
 

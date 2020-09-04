@@ -80,6 +80,11 @@ void MainWindow::initForm()
     });
     connect(&appcore, &AppCore::deviceConnected, this, [this,compressorTimer](){
         qDebug() << "emit deviceConnected()";
+        //设备启动，设置手动模式
+        appcore.setRunMode(ManualMode);
+        ui->runningMode->setText("手动");
+        ui->manualOper->setChecked(true);
+
         if(!compressorTimer->isActive()){
             compressorTimer->start(READ_TIME);
         }
@@ -96,10 +101,50 @@ void MainWindow::initForm()
     connect(&appcore, &AppCore::infoMessage, this, [this](const QString& info){
         qDebug() << "emit infoMessage(info):" << info;
     });
+
+//    connect(&appcore, &AppCore::sendReadData, this, [this](
+//            const QVector<quint16> compressor1,
+//            const QVector<quint16> compressor2,
+//            const QVector<quint16> compressor3,
+//            const QVector<quint16> dryer1,
+//            const QVector<quint16> dryer2,
+//            const QVector<quint16> dryer3){
+//        dealCompressor1(compressor1,dryer1);
+//        dealCompressor2(compressor2,dryer2);
+//        dealCompressor3(compressor3,dryer3);
+//        if(storageInterval == STORE_TIME){
+//            storageInterval = 0;
+//            QString storageTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+//            //存储读取数据导数据
+//            if(compressor1.size() == 35){
+//                dataOper.saveReadCompressor1(compressor1,storageTime);
+//            }
+//            if(compressor2.size() == 35){
+//                dataOper.saveReadCompressor2(compressor2,storageTime);
+//            }
+//            if(compressor3.size() == 35){
+//                dataOper.saveReadCompressor3(compressor3,storageTime);
+//            }
+//            if(dryer1.size() == 17){
+//                dataOper.saveReadDryer1(dryer1,storageTime);
+//            }
+//            if(dryer2.size() == 17){
+//                dataOper.saveReadDryer2(dryer2,storageTime);
+//            }
+//            if(dryer3.size() == 17){
+//                dataOper.saveReadDryer3(dryer3,storageTime);
+//            }
+//        }
+//        storageInterval += READ_TIME;
+//    });
+
+
     // Initialize settings
     appcore.initSettings();
     // Connect to Device
     appcore.initDevice();
+
+
 
 }
 void MainWindow::initTable()
@@ -609,7 +654,7 @@ void MainWindow::on_pressureSetBtn_clicked()
     pressureSetDialog->show();
 }
 //设备控制---压力设置回调函数
-void MainWindow::pressure_call_back(float maxPressure,float minPressure)
+void MainWindow::pressure_call_back(int maxPressure, int minPressure)
 {
     dataOper.saveLog(STATION_HOUSE,"运行模式压力设置",QString("最大压力:%1,最小压力:%2").arg(maxPressure).arg(minPressure),
                      userName,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -643,7 +688,7 @@ void MainWindow::on_compressorSetBtn3_clicked()
     compressorSetDialog->show();
 }
 //设备控制---空压机设置完毕，回调函数
-void MainWindow::compressor_call_back(int compressorNO,float uninstallPressure,float pressureDiff)
+void MainWindow::compressor_call_back(int compressorNO,int uninstallPressure,int pressureDiff)
 {
     QString currentTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     CompressorSet compressorSet;
@@ -654,22 +699,6 @@ void MainWindow::compressor_call_back(int compressorNO,float uninstallPressure,f
     dataOper.saveCompressorSet(compressorSet);//保存设置参数
     dataOper.saveLog(STATION_HOUSE,QString("%1#空压机").arg(compressorNO),
                      QString("参数,加载压差:%1,卸载压力:%2").arg(pressureDiff).arg(uninstallPressure),userName,currentTime);
-//    switch (compressorNO) {
-//    case 1:
-//        qDebug() << "on_compressor_call_back1";
-//        dataOper.saveLog(STATION_HOUSE,"1#空压机","压差设置",userName,currentTime);
-//        break;
-//    case 2:
-//        qDebug() << "on_compressor_call_back2";
-//        dataOper.saveLog(STATION_HOUSE,"2#空压机","压差设置",userName,currentTime);
-//        break;
-//    case 3:
-//        qDebug() << "on_compressor_call_back3";
-//        dataOper.saveLog(STATION_HOUSE,"3#空压机","压差设置",userName,currentTime);
-//        break;
-//    default:
-//        break;
-//    }
 }
 //设备控制---运行模式复位按钮
 void MainWindow::on_runResetBtn_clicked()
@@ -771,40 +800,32 @@ void MainWindow::readCompressorTimer()
     QVector<quint16> dryer1;
     QVector<quint16> dryer2;
     QVector<quint16> dryer3;
-    appcore.readCompressor(compressor1,compressor2,compressor3);
-    appcore.readDryer(dryer1,dryer2,dryer3);
-
-    int data1_size = compressor1.size();
-    int data2_size = compressor2.size();
-    int data3_size = compressor3.size();
-    int dryerData1_size = dryer1.size();
-    int dryerData2_size = dryer2.size();
-    int dryerData3_size = dryer3.size();
+    appcore.readCompressor(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
 
     dealCompressor1(compressor1,dryer1);
     dealCompressor2(compressor2,dryer2);
-    dealCompressor3(compressor3,dryer2);
+    dealCompressor3(compressor3,dryer3);
 
     if(storageInterval == STORE_TIME){
         storageInterval = 0;
         QString storageTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
         //存储读取数据导数据
-        if(data1_size != 0){
+        if(compressor1.size() == 35){
             dataOper.saveReadCompressor1(compressor1,storageTime);
         }
-        if(data2_size != 0){
+        if(compressor2.size() == 35){
             dataOper.saveReadCompressor2(compressor2,storageTime);
         }
-        if(data3_size != 0){
+        if(compressor3.size() == 35){
             dataOper.saveReadCompressor3(compressor3,storageTime);
         }
-        if(dryerData1_size != 0){
+        if(dryer1.size() == 17){
             dataOper.saveReadDryer1(dryer1,storageTime);
         }
-        if(dryerData2_size != 0){
+        if(dryer2.size() == 17){
             dataOper.saveReadDryer2(dryer2,storageTime);
         }
-        if(dryerData3_size != 0){
+        if(dryer3.size() == 17){
             dataOper.saveReadDryer3(dryer3,storageTime);
         }
 
@@ -815,9 +836,7 @@ void MainWindow::readCompressorTimer()
 //显示1#空压机读取的数据
 void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> dryer)
 {
-    int compressor_size = compressor.size();
-    int dryer_size = dryer.size();
-    if(compressor_size != 0){
+    if(compressor.size() == 35){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
@@ -864,7 +883,7 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         ui->controlPressureDiff1->setText(QString::number(pressureDiff));//加载压差
         ui->controlUninstallPressure1->setText(QString::number(uninstallPressure));//卸载压力
     }
-    if(dryer_size != 0){
+    if(dryer.size() == 17){
         quint16 runHint = dryer.at(0);//运行提示
         quint16 faultHint = dryer.at(1);//故障提示 1
         quint16 phaseOrderFault = dryer.at(4);//相序故障 2
@@ -906,9 +925,7 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
 //显示1#空压机读取的数据
 void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> dryer)
 {
-    int compressor_size = compressor.size();
-    int dryer_size = dryer.size();
-    if(compressor_size != 0){
+    if(compressor.size() == 35){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
@@ -938,7 +955,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState2->setText("满载");//运行状态
         }
         ui->powerStatus2->setText(aa.at(8) ? "上电" : "断电");//电源
-        ui->ventingPressure2->setText(QString::number(P2));//排气压力
+        ui->ventingPressure2->setText(QString::number(P2/142));//排气压力
         ui->ventingT2->setText(QString::number(T2));//排气温度
         ui->runningT2->setText(QString::number(runTimeL));//运行时间
         ui->hostA2->setText(QString::number(hostCurrent));//主机电流
@@ -954,7 +971,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         ui->controlPressureDiff2->setText(QString::number(pressureDiff));//加载压差
         ui->controlUninstallPressure2->setText(QString::number(uninstallPressure));//卸载压力
     }
-    if(dryer_size != 0){
+    if(dryer.size() == 17){
         quint16 runHint = dryer.at(0);//运行提示
         quint16 faultHint = dryer.at(1);//故障提示
         quint16 phaseOrderFault = dryer.at(4);//相序故障
@@ -999,9 +1016,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
 //显示1#空压机读取的数据
 void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> dryer)
 {
-    int compressor_size = compressor.size();
-    int dryer_size = dryer.size();
-    if(compressor_size != 0){
+    if(compressor.size() == 35){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
@@ -1031,7 +1046,7 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState3->setText("满载");//运行状态
         }
         ui->powerStatus3->setText(aa.at(8) ? "上电" : "断电");//电源
-        ui->ventingPressure3->setText(QString::number(P2));//排气压力
+        ui->ventingPressure3->setText(QString::number(P2/142));//排气压力
         ui->ventingT3->setText(QString::number(T2));//排气温度
         ui->runningT3->setText(QString::number(runTimeL));//运行时间
         ui->hostA3->setText(QString::number(hostCurrent));//主机电流
@@ -1047,7 +1062,7 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         ui->controlPressureDiff3->setText(QString::number(pressureDiff));//加载压差
         ui->controlUninstallPressure3->setText(QString::number(uninstallPressure));//卸载压力
     }
-    if(dryer_size != 0){
+    if(dryer.size() == 17){
         quint16 runHint = dryer.at(0);//运行提示
         quint16 faultHint = dryer.at(1);//故障提示
         quint16 phaseOrderFault = dryer.at(4);//相序故障

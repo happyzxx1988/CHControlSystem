@@ -50,8 +50,8 @@ private slots:
     void on_compressorSetBtn3_clicked();
     void on_manualOper_clicked();
     void on_autoOper_clicked();
-    void compressor_call_back(int compressorNO, float uninstallPressure, float pressureDiff);
-    void pressure_call_back(float maxPressure, float minPressure);
+    void compressor_call_back(int compressorNO, int uninstallPressure, int pressureDiff);
+    void pressure_call_back(int maxPressure, int minPressure);
     void userEdit_call_back(int userEditType);
     void readCompressorTimer();
     void on_loadDataBtn_clicked();

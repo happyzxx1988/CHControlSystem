@@ -4,6 +4,7 @@
 #include <QUrl>
 #include <QVariant>
 #include <QDebug>
+#include <QEventLoop>
 
 
 const static QModbusDataUnit::RegisterType registerType1 = QModbusDataUnit::Coils;
@@ -195,58 +196,38 @@ void DeviceCommunication::writeFloat32(int address, float f, std::function<void 
 }
 
 
-void DeviceCommunication::setMaxAndMinPressure(float max,float min)
+void DeviceCommunication::setMaxAndMinPressure(int max,int min)
 {
-    writeFloat32(13, max, [max](){
-        qDebug() << "Device: Manual Move Speed Changed:" << max;
-    });
-
-    writeFloat32(12, min, [min](){
-        qDebug() << "Device: Manual Move Speed Changed:" << min;
-    });
+    writeUint16(60, max);
+    writeUint16(61, min);
 }
 
-void DeviceCommunication::setUninstallPressureAndPressureDiff1(float uninstallPressure,float pressureDiff)
+void DeviceCommunication::setUninstallPressureAndPressureDiff1(int uninstallPressure,int pressureDiff)
 {
-    writeFloat32(1551, uninstallPressure, [uninstallPressure](){
-        qDebug() << "Device: Manual Move Speed Changed:" << uninstallPressure;
-    });
-
-    writeFloat32(1552, pressureDiff, [pressureDiff](){
-        qDebug() << "Device: Manual Move Speed Changed:" << pressureDiff;
-    });
+    writeUint16(400, uninstallPressure);
+    writeUint16(401, pressureDiff);
 }
-void DeviceCommunication::setUninstallPressureAndPressureDiff2(float uninstallPressure,float pressureDiff)
+void DeviceCommunication::setUninstallPressureAndPressureDiff2(int uninstallPressure,int pressureDiff)
 {
-    writeFloat32(1561, uninstallPressure, [uninstallPressure](){
-        qDebug() << "Device: Manual Move Speed Changed:" << uninstallPressure;
-    });
-
-    writeFloat32(1562, pressureDiff, [pressureDiff](){
-        qDebug() << "Device: Manual Move Speed Changed:" << pressureDiff;
-    });
+    writeUint16(402, uninstallPressure);
+    writeUint16(403, pressureDiff);
 }
-void DeviceCommunication::setUninstallPressureAndPressureDiff3(float uninstallPressure,float pressureDiff)
+void DeviceCommunication::setUninstallPressureAndPressureDiff3(int uninstallPressure,int pressureDiff)
 {
-    writeFloat32(1571, uninstallPressure, [uninstallPressure](){
-        qDebug() << "Device: Manual Move Speed Changed:" << uninstallPressure;
-    });
-
-    writeFloat32(1572, pressureDiff, [pressureDiff](){
-        qDebug() << "Device: Manual Move Speed Changed:" << pressureDiff;
-    });
+    writeUint16(404, uninstallPressure);
+    writeUint16(405, pressureDiff);
 }
 void DeviceCommunication::compressorSwitch1(bool off)
 {
-    writeUint16(1550, (off ? 1 : 2));
+    writeUint16(50, (off ? 1 : 2));
 }
 void DeviceCommunication::compressorSwitch2(bool off)
 {
-    writeUint16(1560, (off ? 1 : 2));
+    writeUint16(51, (off ? 1 : 2));
 }
 void DeviceCommunication::compressorSwitch3(bool off)
 {
-    writeUint16(1570, (off ? 1 : 2));
+    writeUint16(52, (off ? 1 : 2));
 }
 void DeviceCommunication::dryerSwitch1(bool off)
 {
@@ -261,9 +242,19 @@ void DeviceCommunication::dryerSwitch3(bool off)
     writeUint16(55, (off ? 1 : 2));
 }
 
+void DeviceCommunication::writeAddress26()
+{
+    writeUint16(26, 1);
+}
+
+void DeviceCommunication::writeAddress410(int val)
+{
+    writeUint16(410, val);
+}
+
 void DeviceCommunication::resetOperation()
 {
-    writeUint16(5, 1);
+    writeUint16(37, 1);
 }
 
 void DeviceCommunication::setRunMode(DeviceRunMode mode)
@@ -272,22 +263,152 @@ void DeviceCommunication::setRunMode(DeviceRunMode mode)
 
     switch (mode) {
     case AutoMode:
-        code = 2;
+        code = 1;
         break;
     case ManualMode:
-        code = 1;
+        code = 2;
         break;
     default:
         return;
         break;
     }
-    writeUint16(1, code);
+    writeUint16(35, code);
 }
 
-void DeviceCommunication::readCompressor(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3)
+void DeviceCommunication::readCompressor(QVector<quint16> &compressor1,
+                                         QVector<quint16> &compressor2,
+                                         QVector<quint16> &compressor3,
+                                         QVector<quint16> &dryer1,
+                                         QVector<quint16> &dryer2,
+                                         QVector<quint16> &dryer3)
 {
-    QModbusDataUnit readUnit(registerType4, 100, 105);/*类型、首地址、长度*/// 100   105
-    readRequest(readUnit, [this,&data1,&data2,&data3](QModbusDataUnit unit){
+    QModbusDataUnit compressor1_readUnit(registerType4, 100, 35);/*类型、首地址、长度*/// 100   267
+    readRequest(compressor1_readUnit, [this,&compressor1](QModbusDataUnit unit){
+//        qDebug() << "compressor1_unit.valueCount():" << unit.valueCount();
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+//            qDebug() << "compressor1_adress:" << currentAddres << "compressor1_value:" << value;
+            compressor1.push_back(value);
+        }
+        emit readOverCompressorData1();
+    });
+    QModbusDataUnit compressor2_readUnit(registerType4, 150, 35);/*类型、首地址、长度*/// 100   267
+    readRequest(compressor2_readUnit, [this,&compressor2](QModbusDataUnit unit){
+//        qDebug() << "compressor2_unit.valueCount():" << unit.valueCount();
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+//            qDebug() << "compressor2_adress:" << currentAddres << "compressor2_value:" << value;
+            compressor2.push_back(value);
+        }
+        emit readOverCompressorData2();
+    });
+    QModbusDataUnit compressor3_readUnit(registerType4, 200, 35);/*类型、首地址、长度*/// 100   267
+    readRequest(compressor3_readUnit, [this,&compressor3](QModbusDataUnit unit){
+//        qDebug() << "compressor3_unit.valueCount():" << unit.valueCount();
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+//            qDebug() << "compressor3_adress:" << currentAddres << "compressor3_value:" << value;
+            compressor3.push_back(value);
+        }
+        emit readOverCompressorData3();
+    });
+    QModbusDataUnit dryer1_readUnit(registerType4, 250, 17);/*类型、首地址、长度*/// 100   267
+    readRequest(dryer1_readUnit, [this,&dryer1](QModbusDataUnit unit){
+//        qDebug() << "dryer1_unit.valueCount():" << unit.valueCount();
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+//            qDebug() << "dryer1_adress:" << currentAddres << "dryer1_value:" << value;
+            dryer1.push_back(value);
+        }
+        emit readOverDryer1Data1();
+    });
+    QModbusDataUnit dryer2_readUnit(registerType4, 300, 17);/*类型、首地址、长度*/// 100   267
+    readRequest(dryer2_readUnit, [this,&dryer2](QModbusDataUnit unit){
+//        qDebug() << "dryer2_unit.valueCount():" << unit.valueCount();
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+//            qDebug() << "dryer2_adress:" << currentAddres << "dryer2_value:" << value;
+            dryer2.push_back(value);
+        }
+        emit readOverDryer1Data2();
+    });
+    QModbusDataUnit dryer3_readUnit(registerType4, 350, 17);/*类型、首地址、长度*/// 100   267
+    readRequest(dryer3_readUnit, [this,&dryer3](QModbusDataUnit unit){
+//        qDebug() << "dryer3_unit.valueCount():" << unit.valueCount();
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+//            qDebug() << "dryer3_adress:" << currentAddres << "dryer3_value:" << value;
+            dryer3.push_back(value);
+        }
+        emit readOverDryer1Data3();
+    });
+
+    // Waiting for receiving data.
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::readOverCompressorData1,&loop, &QEventLoop::quit);
+    loop.exec();
+    connect(this, &DeviceCommunication::readOverCompressorData2,&loop, &QEventLoop::quit);
+    loop.exec();
+    connect(this, &DeviceCommunication::readOverCompressorData3,&loop, &QEventLoop::quit);
+    loop.exec();
+    connect(this, &DeviceCommunication::readOverDryer1Data1,&loop, &QEventLoop::quit);
+    loop.exec();
+    connect(this, &DeviceCommunication::readOverDryer1Data2,&loop, &QEventLoop::quit);
+    loop.exec();
+    connect(this, &DeviceCommunication::readOverDryer1Data3,&loop, &QEventLoop::quit);
+    loop.exec();
+    // Got it!
+
+}
+void DeviceCommunication::readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3)
+{
+    QModbusDataUnit readUnit(registerType4, 250, 117);/*类型、首地址、长度*///13
+    readRequest(readUnit, [this,&dryer1,&dryer2,&dryer3](QModbusDataUnit unit){
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            QString adress_str = tr("%1").arg(unit.startAddress() + i);
+            QString value_str = tr("%1").arg(QString::number(unit.value(i)));
+//            qDebug() << "Dryer_adress_str:" << adress_str << "Dryer_value_str:" << value_str;
+
+            quint16 value = unit.value(i);
+            int currentAddres = unit.startAddress() + i;
+
+            qDebug() << "Dryer_adress:" << currentAddres << "Dryer_value:" << value;
+
+            if(currentAddres <=266 && currentAddres >=250){
+                dryer1.push_back(value);
+            }
+            if(currentAddres <=316 && currentAddres >=300){
+                dryer2.push_back(value);
+            }
+            if(currentAddres <=366 && currentAddres >=350){
+                dryer3.push_back(value);
+            }
+        }
+        emit readDryerData();
+    });
+    // Waiting for receiving data.
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::readDryerData,&loop, &QEventLoop::quit);
+    loop.exec();
+    // Got it!
+}
+
+void DeviceCommunication::readCompressor_old(QVector<quint16> &compressor1,
+                                         QVector<quint16> &compressor2,
+                                         QVector<quint16> &compressor3,
+                                         QVector<quint16> &dryer1,
+                                         QVector<quint16> &dryer2,
+                                         QVector<quint16> &dryer3)
+{
+    QModbusDataUnit readUnit(registerType4, 100, 130);/*类型、首地址、长度*/// 100   267
+    readRequest(readUnit, [this,&compressor1,&compressor2,&compressor3,&dryer1,&dryer2,&dryer3](QModbusDataUnit unit){
+        qDebug() << "unit.valueCount():" << unit.valueCount();
         for (uint i = 0; i < unit.valueCount(); i++) {
             QString adress_str = tr("%1").arg(unit.startAddress() + i);
             QString value_str = tr("%1").arg(QString::number(unit.value(i)));
@@ -296,41 +417,32 @@ void DeviceCommunication::readCompressor(QVector<quint16> &data1,QVector<quint16
             quint16 value = unit.value(i);
             int currentAddres = unit.startAddress() + i;
 
-            qDebug() << "adress_str:" << currentAddres << "value_str:" << value;
-
+//            qDebug() << "adress:" << currentAddres << "value:" << value;
+            //空压机
             if(currentAddres <=134 && currentAddres >=100){
-                data1.append(value);
+                compressor1.push_back(value);
             }
             if(currentAddres <=184 && currentAddres >=150){
-                data2.append(value);
+                compressor2.push_back(value);
             }
             if(currentAddres <=234 && currentAddres >=200){
-                data3.append(value);
+                compressor3.push_back(value);
             }
-        }
-    });
-}
-void DeviceCommunication::readDryer(QVector<quint16> &data1,QVector<quint16> &data2,QVector<quint16> &data3)
-{
-    QModbusDataUnit readUnit(registerType4, 250, 51);/*类型、首地址、长度*///13
-    readRequest(readUnit, [this,&data1,&data2,&data3](QModbusDataUnit unit){
-        for (uint i = 0; i < unit.valueCount(); i++) {
-            QString adress_str = tr("%1").arg(unit.startAddress() + i);
-            QString value_str = tr("%1").arg(QString::number(unit.value(i)));
-            qDebug() << "adress_str:" << adress_str << "value_str:" << value_str;
-
-            quint16 value = unit.value(i);
-            int currentAddres = unit.startAddress() + i;
-
+            //冷干机
             if(currentAddres <=266 && currentAddres >=250){
-                data1.append(value);
+                dryer1.push_back(value);
             }
             if(currentAddres <=316 && currentAddres >=300){
-                data2.append(value);
+                dryer2.push_back(value);
             }
             if(currentAddres <=366 && currentAddres >=350){
-                data3.append(value);
+                dryer3.push_back(value);
             }
         }
+        emit readALLOverData();
     });
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::readALLOverData,&loop, &QEventLoop::quit);
+    loop.exec();
+
 }
