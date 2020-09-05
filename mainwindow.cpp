@@ -48,17 +48,6 @@ void MainWindow::initForm()
     ui->listView->setColorLine(QColor(193, 193, 193));
     ui->listView->setColorBg(QColor(255, 255, 255), QColor(232, 236, 245), QColor(242, 242, 242));
     ui->listView->setColorText(QColor(19, 36, 62), QColor(19, 36, 62), QColor(19, 36, 62));
-
-    //设置数据方式
-    QStringList listItem;
-    listItem.append("主界面||1|");
-    listItem.append("设备状态||1|");
-    listItem.append("设备控制||1|");
-    listItem.append("操作日志||1|");
-    listItem.append("系统报警||1|");
-    listItem.append("历史数据||1|");
-    listItem.append("用户管理||1|");
-//    ui->listView->setData(listItem);
 //    ui->listView->readData(":/image/config.xml");//这句话windows7下可以发布，windows10下不能发布
     ui->listView->setVisible(false);
 
