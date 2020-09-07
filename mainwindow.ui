@@ -317,7 +317,7 @@ QGroupBox {
         </property>
         <layout class="QGridLayout" name="gridLayout_21">
          <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_1">
            <property name="minimumSize">
             <size>
              <width>100</width>

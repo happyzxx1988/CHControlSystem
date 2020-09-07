@@ -22,9 +22,9 @@ MainWindow::MainWindow(QString u, QString p, QWidget *parent) :
     this->initTable();
     this->initChart();
 
-    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
-    ui->sys_name->setText("长虹智能空压站房系统");
-    setWindowTitle("长虹智能空压站房系统");
+//    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
+//    ui->sys_name->setText("长虹智能空压站房系统");
+//    setWindowTitle("长虹智能空压站房系统");
 }
 
 MainWindow::~MainWindow()
@@ -111,7 +111,7 @@ void MainWindow::initForm()
     connect(&appcore, &AppCore::infoMessage, this, [this](const QString& info){
         qDebug() << "emit infoMessage(info):" << info;
     });
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
     connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
     connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
