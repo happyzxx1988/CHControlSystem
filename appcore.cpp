@@ -135,6 +135,7 @@ void AppCore::readCompressor(QVector<quint16> &compressor1,
 {
     dc.readCompressor(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
 }
+
 //批量一次性读取3台冷干机数据
 void AppCore::readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3)
 {
@@ -186,4 +187,32 @@ void AppCore::sleep(unsigned int msec)
     QTime dieTime = QTime::currentTime().addMSecs(msec);
     while( QTime::currentTime() < dieTime )
        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
+
+
+
+
+void AppCore::readCompressor1(QVector<quint16> &compressor1)
+{
+   dc.readCompressor1(compressor1);
+}
+void AppCore::readCompressor2(QVector<quint16> &compressor2)
+{
+    dc.readCompressor2(compressor2);
+}
+void AppCore::readCompressor3(QVector<quint16> &compressor3)
+{
+    dc.readCompressor3(compressor3);
+}
+void AppCore::dryer1(QVector<quint16> &dryer1)
+{
+   dc.dryer1(dryer1);
+}
+void AppCore::dryer2(QVector<quint16> &dryer2)
+{
+    dc.dryer2(dryer2);
+}
+void AppCore::dryer3(QVector<quint16> &dryer3)
+{
+    dc.dryer3(dryer3);
 }

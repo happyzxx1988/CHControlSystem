@@ -66,6 +66,8 @@ signals:
     void readOverDryer1Data2();
     void readOverDryer1Data3();
 
+    void readUint16Signal_D();
+
 private:
     QModbusClient *modbusDevice;
     int             srvId;
@@ -97,7 +99,16 @@ public:
                         QVector<quint16> &dryer2,
                         QVector<quint16> &dryer3);
 
+    void readCompressor1(QVector<quint16> &compressor1);
+    void readCompressor2(QVector<quint16> &compressor2);
+    void readCompressor3(QVector<quint16> &compressor3);
+    void dryer1(QVector<quint16> &dryer1);
+    void dryer2(QVector<quint16> &dryer2);
+    void dryer3(QVector<quint16> &dryer3);
+
     void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
+
+    void readUint16(int address_, int count_, std::vector<quint16> &buffer_);
 
     void writeAddress26();
     void writeAddress410(int val);

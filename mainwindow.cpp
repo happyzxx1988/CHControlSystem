@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
 void MainWindow::initForm()
 {
     QDate date = QDate::currentDate();   //获取当前日期
-    READ_TIME =      1000;    //定时读取间隔时间
+    READ_TIME =      10;    //定时读取间隔时间
     ui->listView->setIcoColorBg(false);
     ui->listView->setColorLine(QColor(193, 193, 193));
     ui->listView->setColorBg(QColor(255, 255, 255), QColor(232, 236, 245), QColor(242, 242, 242));
@@ -776,7 +776,15 @@ void MainWindow::readCompressorTimer()
     QVector<quint16> dryer1;
     QVector<quint16> dryer2;
     QVector<quint16> dryer3;
-    appcore.readCompressor(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
+//    appcore.readCompressor(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
+
+    appcore.readCompressor1(compressor1);
+    appcore.readCompressor2(compressor2);
+    appcore.readCompressor3(compressor3);
+    appcore.dryer1(dryer1);
+    appcore.dryer2(dryer2);
+    appcore.dryer3(dryer3);
+
 
     dealCompressor1(compressor1,dryer1);
     dealCompressor2(compressor2,dryer2);

@@ -51,6 +51,15 @@ public:
                         QVector<quint16> &dryer2,
                         QVector<quint16> &dryer3);
     void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
+
+    void readCompressor1(QVector<quint16> &compressor1);
+    void readCompressor2(QVector<quint16> &compressor2);
+    void readCompressor3(QVector<quint16> &compressor3);
+    void dryer1(QVector<quint16> &dryer1);
+    void dryer2(QVector<quint16> &dryer2);
+    void dryer3(QVector<quint16> &dryer3);
+
+
     void sleep(unsigned int msec);
 
 
