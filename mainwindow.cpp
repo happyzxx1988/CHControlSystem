@@ -44,12 +44,6 @@ void MainWindow::initForm()
 {
     QDate date = QDate::currentDate();   //获取当前日期
     READ_TIME =      10;    //定时读取间隔时间
-    ui->listView->setIcoColorBg(false);
-    ui->listView->setColorLine(QColor(193, 193, 193));
-    ui->listView->setColorBg(QColor(255, 255, 255), QColor(232, 236, 245), QColor(242, 242, 242));
-    ui->listView->setColorText(QColor(19, 36, 62), QColor(19, 36, 62), QColor(19, 36, 62));
-//    ui->listView->readData(":/image/config.xml");//这句话windows7下可以发布，windows10下不能发布
-    ui->listView->setVisible(false);
 
     ui->warningStartime->setDate(date);
     ui->warningEndTime->setDate(date);
@@ -294,9 +288,6 @@ void MainWindow::on_loadDataBtn_clicked()
 }
 void MainWindow::on_listView_pressed()
 {
-//    QModelIndex index = ui->listView->currentIndex();
-//    QString text = index.data().toString();
-
     QPushButton *b = (QPushButton *)sender();
     QString text = b->text();
 
@@ -851,7 +842,7 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState1->setText("满载");//运行状态
         }
         ui->powerStatus1->setText(aa.at(8) ? "上电" : "断电");//电源
-        ui->ventingPressure1->setText(QString::number(P2/142));//排气压力
+        ui->ventingPressure1->setText(QString::number(P2/142.0,'f',2));//排气压力
         ui->ventingT1->setText(QString::number(T1));//排气温度
         ui->runningT1->setText(QString::number(runTimeL));//运行时间
         ui->hostA1->setText(QString::number(hostCurrent));//主机电流
@@ -877,6 +868,9 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         quint16 dewPointProbeFault = dryer.at(8);//露点探头故障 4
         quint16 faultWarn = dryer.at(11);//故障报警 5
         quint16 faultStop = dryer.at(12);//故障停机 6
+        quint16 dewPointT = dryer.at(14);//露点温度
+        quint16 runTimeH = dryer.at(15);//运行计时（时）
+        quint16 runTimeM = dryer.at(16);//运行计时（分）
         if(faultHint){
             saveWarningDryer(1,1);
         }
@@ -897,8 +891,12 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         }
         //主界面
         ui->valveState1->setText(runHint ? "运行中" : "停机状态");//运行状态
-        ui->refrigerantH1->setText(QString::number(sysHighVoltage));//冷媒高压
-        ui->refrigerantL1->setText(QString::number(sysLowVoltage));//冷媒低压
+        ui->faultHint1->setText(faultHint ? "故障" : "无故障");//故障提示
+        ui->refrigerantH1->setText(QString::number(sysHighVoltage));//系统高压
+        ui->refrigerantL1->setText(QString::number(sysLowVoltage));//系统低压
+        ui->dewPointT1->setText(QString::number(dewPointT));//露点温度
+        ui->runTimeH1->setText(QString::number(runTimeH));//运行计时（时）
+        ui->runTimeM1->setText(QString::number(runTimeM));//运行计时（分）
         //设备状态
         ui->dryerRunState1->setText(runHint ? "开机" : "关机");//是否开机
         //设备控制
@@ -913,6 +911,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
+        quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
         quint16 P2 = compressor.at(14);//P2
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
@@ -939,11 +938,11 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState2->setText("满载");//运行状态
         }
         ui->powerStatus2->setText(aa.at(8) ? "上电" : "断电");//电源
-        ui->ventingPressure2->setText(QString::number(P2/142));//排气压力
-        ui->ventingT2->setText(QString::number(T2));//排气温度
+        ui->ventingPressure2->setText(QString::number(P2/142.0,'f',2));//排气压力
+        ui->ventingT2->setText(QString::number(T1));//排气温度
         ui->runningT2->setText(QString::number(runTimeL));//运行时间
         ui->hostA2->setText(QString::number(hostCurrent));//主机电流
-        ui->sysT2->setText(QString::number(runTimeL));//系统温度
+        ui->sysT2->setText(QString::number(T2));//系统温度
         ui->uploadT2->setText(QString::number(loadTimeL));//加载时间
         //设备状态
         ui->compressorRunState2->setText(aa.at(9) ? "运行中" : "停止");//运行状态
@@ -965,6 +964,9 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
         quint16 faultWarn = dryer.at(11);//故障报警
         quint16 faultStop = dryer.at(12);//故障停机
+        quint16 dewPointT = dryer.at(14);//露点温度
+        quint16 runTimeH = dryer.at(15);//运行计时（时）
+        quint16 runTimeM = dryer.at(16);//运行计时（分）
         if(faultHint){
             saveWarningDryer(2,1);
         }
@@ -986,8 +988,12 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
 
         //主界面
         ui->valveState2->setText(runHint ? "运行中" : "停机状态");//阀门状态
-        ui->refrigerantH2->setText(QString::number(sysHighVoltage));//冷媒高压
-        ui->refrigerantL2->setText(QString::number(sysLowVoltage));//冷媒低压
+        ui->faultHint2->setText(faultHint ? "故障" : "无故障");//故障提示
+        ui->refrigerantH2->setText(QString::number(sysHighVoltage));//系统高压
+        ui->refrigerantL2->setText(QString::number(sysLowVoltage));//系统低压
+        ui->dewPointT2->setText(QString::number(dewPointT));//露点温度
+        ui->runTimeH2->setText(QString::number(runTimeH));//运行计时（时）
+        ui->runTimeM2->setText(QString::number(runTimeM));//运行计时（分）
         //设备状态
         ui->dryerRunState2->setText(runHint ? "开机" : "关机");//是否开机
         //设备控制
@@ -1004,6 +1010,7 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
         quint16 loadTimeL = compressor.at(2);//累计加载时间 L
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
+        quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
         quint16 P2 = compressor.at(14);//P2
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
@@ -1030,11 +1037,11 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState3->setText("满载");//运行状态
         }
         ui->powerStatus3->setText(aa.at(8) ? "上电" : "断电");//电源
-        ui->ventingPressure3->setText(QString::number(P2/142));//排气压力
-        ui->ventingT3->setText(QString::number(T2));//排气温度
+        ui->ventingPressure3->setText(QString::number(P2/142.0,'f',2));//排气压力
+        ui->ventingT3->setText(QString::number(T1));//排气温度
         ui->runningT3->setText(QString::number(runTimeL));//运行时间
         ui->hostA3->setText(QString::number(hostCurrent));//主机电流
-        ui->sysT3->setText(QString::number(runTimeL));//系统温度
+        ui->sysT3->setText(QString::number(T2));//系统温度
         ui->uploadT3->setText(QString::number(loadTimeL));//加载时间
         //设备状态
         ui->compressorRunState3->setText(aa.at(9) ? "运行中" : "停止");//运行状态
@@ -1056,6 +1063,9 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         quint16 dewPointProbeFault = dryer.at(8);//露点探头故障
         quint16 faultWarn = dryer.at(11);//故障报警
         quint16 faultStop = dryer.at(12);//故障停机
+        quint16 dewPointT = dryer.at(14);//露点温度
+        quint16 runTimeH = dryer.at(15);//运行计时（时）
+        quint16 runTimeM = dryer.at(16);//运行计时（分）
         if(faultHint){
             saveWarningDryer(3,1);
         }
@@ -1077,8 +1087,12 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
 
         //主界面
         ui->valveState3->setText(runHint ? "运行中" : "停机状态");//阀门状态
-        ui->refrigerantH3->setText(QString::number(sysHighVoltage));//冷媒高压
-        ui->refrigerantL3->setText(QString::number(sysLowVoltage));//冷媒低压
+        ui->faultHint3->setText(faultHint ? "故障" : "无故障");//故障提示
+        ui->refrigerantH3->setText(QString::number(sysHighVoltage));//系统高压
+        ui->refrigerantL3->setText(QString::number(sysLowVoltage));//系统低压
+        ui->dewPointT3->setText(QString::number(dewPointT));//露点温度
+        ui->runTimeH3->setText(QString::number(runTimeH));//运行计时（时）
+        ui->runTimeM3->setText(QString::number(runTimeM));//运行计时（分）
         //设备状态
         ui->dryerRunState3->setText(runHint ? "开机" : "关机");//是否开机
         //设备控制

@@ -28,7 +28,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    navlistview.cpp \
     flatui.cpp \
     login.cpp \
     userdialog.cpp \
@@ -40,7 +39,6 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    navlistview.h \
     flatui.h \
     connection.h \
     login.h \

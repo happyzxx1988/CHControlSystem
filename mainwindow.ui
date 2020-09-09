@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1188</width>
+    <width>1194</width>
     <height>726</height>
    </rect>
   </property>
@@ -280,25 +280,6 @@ QGroupBox {
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="NavListView" name="listView">
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>150</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">/*background-color: rgb(52, 73, 94);*/</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QGroupBox" name="groupBox_26">
         <property name="minimumSize">
          <size>
@@ -500,10 +481,10 @@ QGroupBox {
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>5</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="main_p">
-         <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,5,2">
+         <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,5,3">
           <property name="topMargin">
            <number>0</number>
           </property>
@@ -1056,11 +1037,29 @@ QGroupBox {
                 </layout>
                </item>
                <item row="1" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_78">
+                 <item>
+                  <widget class="QLabel" name="label_40">
+                   <property name="text">
+                    <string>故障提示</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="faultHint1">
+                   <property name="text">
+                    <string>无故障</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_58">
                  <item>
                   <widget class="QLabel" name="label_101">
                    <property name="text">
-                    <string>冷媒高压(Mpa)</string>
+                    <string>系统高压(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1073,12 +1072,12 @@ QGroupBox {
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_59">
                  <item>
                   <widget class="QLabel" name="label_103">
                    <property name="text">
-                    <string>冷媒低压(Mpa)</string>
+                    <string>系统低压(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1088,6 +1087,82 @@ QGroupBox {
                     <string>3</string>
                    </property>
                   </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_79">
+                 <item>
+                  <widget class="QLabel" name="label_44">
+                   <property name="text">
+                    <string>露点温度(℃)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="dewPointT1">
+                   <property name="text">
+                    <string>26</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_87">
+                 <property name="spacing">
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_46">
+                   <property name="text">
+                    <string>运行时间</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_80">
+                   <item>
+                    <widget class="QLabel" name="runTimeH1">
+                     <property name="text">
+                      <string>23</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_52">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>时</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runTimeM1">
+                     <property name="text">
+                      <string>23</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_56">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>分</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </item>
@@ -1119,11 +1194,29 @@ QGroupBox {
                 </layout>
                </item>
                <item row="1" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_81">
+                 <item>
+                  <widget class="QLabel" name="label_64">
+                   <property name="text">
+                    <string>故障提示</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="faultHint2">
+                   <property name="text">
+                    <string>故障</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_61">
                  <item>
                   <widget class="QLabel" name="label_107">
                    <property name="text">
-                    <string>冷媒高压(Mpa)</string>
+                    <string>系统高压(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1136,12 +1229,12 @@ QGroupBox {
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_62">
                  <item>
                   <widget class="QLabel" name="label_109">
                    <property name="text">
-                    <string>冷媒低压(Mpa)</string>
+                    <string>系统低压(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1151,6 +1244,82 @@ QGroupBox {
                     <string>3</string>
                    </property>
                   </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_82">
+                 <item>
+                  <widget class="QLabel" name="label_65">
+                   <property name="text">
+                    <string>露点温度(℃)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="dewPointT2">
+                   <property name="text">
+                    <string>26</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_88">
+                 <property name="spacing">
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_66">
+                   <property name="text">
+                    <string>运行时间</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_83">
+                   <item>
+                    <widget class="QLabel" name="runTimeH2">
+                     <property name="text">
+                      <string>23</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_80">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>时</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runTimeM2">
+                     <property name="text">
+                      <string>23</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_74">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>分</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </item>
@@ -1182,11 +1351,29 @@ QGroupBox {
                 </layout>
                </item>
                <item row="1" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_84">
+                 <item>
+                  <widget class="QLabel" name="label_67">
+                   <property name="text">
+                    <string>故障提示</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="faultHint3">
+                   <property name="text">
+                    <string>无故障</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_64">
                  <item>
                   <widget class="QLabel" name="label_113">
                    <property name="text">
-                    <string>冷媒高压(Mpa)</string>
+                    <string>系统高压(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1199,12 +1386,12 @@ QGroupBox {
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_65">
                  <item>
                   <widget class="QLabel" name="label_115">
                    <property name="text">
-                    <string>冷媒低压(Mpa)</string>
+                    <string>系统低压(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1214,6 +1401,79 @@ QGroupBox {
                     <string>3</string>
                    </property>
                   </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_85">
+                 <item>
+                  <widget class="QLabel" name="label_68">
+                   <property name="text">
+                    <string>露点温度(℃)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="dewPointT3">
+                   <property name="text">
+                    <string>26</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_89">
+                 <item>
+                  <widget class="QLabel" name="label_69">
+                   <property name="text">
+                    <string>运行时间</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_86">
+                   <item>
+                    <widget class="QLabel" name="runTimeH3">
+                     <property name="text">
+                      <string>23</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_92">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>时</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runTimeM3">
+                     <property name="text">
+                      <string>23</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_86">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>分</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </item>
@@ -1319,7 +1579,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_34">
                    <property name="text">
-                    <string>加载压差(Psi)</string>
+                    <string>加载压差(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1337,7 +1597,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_35">
                    <property name="text">
-                    <string>卸载压力(Psi)</string>
+                    <string>卸载压力(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1396,7 +1656,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_41">
                    <property name="text">
-                    <string>加载压差(Psi)</string>
+                    <string>加载压差(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1414,7 +1674,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_43">
                    <property name="text">
-                    <string>卸载压力(Psi)</string>
+                    <string>卸载压力(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1473,7 +1733,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_47">
                    <property name="text">
-                    <string>加载压差(Psi)</string>
+                    <string>加载压差(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1491,7 +1751,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_49">
                    <property name="text">
-                    <string>卸载压力(Psi)</string>
+                    <string>卸载压力(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1896,7 +2156,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Psi）</string>
+                    <string>加载压差（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -1939,7 +2199,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Psi）</string>
+                    <string>卸载压力（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2109,7 +2369,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Psi）</string>
+                    <string>加载压差（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2152,7 +2412,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Psi）</string>
+                    <string>卸载压力（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2322,7 +2582,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Psi）</string>
+                    <string>加载压差（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2365,7 +2625,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Psi）</string>
+                    <string>卸载压力（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2969,11 +3229,6 @@ QGroupBox {
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>NavListView</class>
-   <extends>QListView</extends>
-   <header>navlistview.h</header>
-  </customwidget>
   <customwidget>
    <class>QChartView</class>
    <extends>QWidget</extends>

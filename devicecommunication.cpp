@@ -198,8 +198,8 @@ void DeviceCommunication::writeFloat32(int address, float f, std::function<void 
 
 void DeviceCommunication::setMaxAndMinPressure(int max,int min)
 {
-    writeUint16(60, max);
-    writeUint16(61, min);
+    writeUint16(23, max);
+    writeUint16(24, min);
 }
 
 void DeviceCommunication::setUninstallPressureAndPressureDiff1(int uninstallPressure,int pressureDiff)
@@ -446,9 +446,12 @@ void DeviceCommunication::readCompressor1(QVector<quint16> &compressor1)
         }
         emit readOverCompressorData1();
     });
-    QEventLoop loop;
-    connect(this, &DeviceCommunication::readOverCompressorData1,&loop, &QEventLoop::quit);
-    loop.exec();
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readOverCompressorData1,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
+
 }
 void DeviceCommunication::readCompressor2(QVector<quint16> &compressor2)
 {
@@ -461,13 +464,11 @@ void DeviceCommunication::readCompressor2(QVector<quint16> &compressor2)
         }
         emit readOverCompressorData2();
     });
-
-
-    // Waiting for receiving data.
-    QEventLoop loop;
-    connect(this, &DeviceCommunication::readOverCompressorData2,&loop, &QEventLoop::quit);
-    loop.exec();
-    // Got it!
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readOverCompressorData2,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
 }
 void DeviceCommunication::readCompressor3(QVector<quint16> &compressor3)
 {
@@ -479,12 +480,11 @@ void DeviceCommunication::readCompressor3(QVector<quint16> &compressor3)
         }
         emit readOverCompressorData3();
     });
-
-
-    // Waiting for receiving data.
-    QEventLoop loop;
-    connect(this, &DeviceCommunication::readOverCompressorData3,&loop, &QEventLoop::quit);
-    loop.exec();
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readOverCompressorData3,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
 }
 void DeviceCommunication::dryer1(QVector<quint16> &dryer1)
 {
@@ -492,16 +492,15 @@ void DeviceCommunication::dryer1(QVector<quint16> &dryer1)
     readRequest(dryer1_readUnit, [this,&dryer1](QModbusDataUnit unit){
         for (uint i = 0; i < unit.valueCount(); i++) {
             quint16 value = unit.value(i);
-            int currentAddres = unit.startAddress() + i;
             dryer1.push_back(value);
         }
         emit readOverDryer1Data1();
     });
-    // Waiting for receiving data.
-    QEventLoop loop;
-    connect(this, &DeviceCommunication::readOverDryer1Data1,&loop, &QEventLoop::quit);
-    loop.exec();
-    // Got it!
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readOverDryer1Data1,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
 }
 void DeviceCommunication::dryer2(QVector<quint16> &dryer2)
 {
@@ -509,16 +508,15 @@ void DeviceCommunication::dryer2(QVector<quint16> &dryer2)
     readRequest(dryer2_readUnit, [this,&dryer2](QModbusDataUnit unit){
         for (uint i = 0; i < unit.valueCount(); i++) {
             quint16 value = unit.value(i);
-            int currentAddres = unit.startAddress() + i;
             dryer2.push_back(value);
         }
         emit readOverDryer1Data2();
     });
-    // Waiting for receiving data.
-    QEventLoop loop;
-    connect(this, &DeviceCommunication::readOverDryer1Data2,&loop, &QEventLoop::quit);
-    loop.exec();
-    // Got it!
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readOverDryer1Data2,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
 }
 void DeviceCommunication::dryer3(QVector<quint16> &dryer3)
 {
@@ -526,16 +524,15 @@ void DeviceCommunication::dryer3(QVector<quint16> &dryer3)
     readRequest(dryer3_readUnit, [this,&dryer3](QModbusDataUnit unit){
         for (uint i = 0; i < unit.valueCount(); i++) {
             quint16 value = unit.value(i);
-            int currentAddres = unit.startAddress() + i;
             dryer3.push_back(value);
         }
         emit readOverDryer1Data3();
     });
-    // Waiting for receiving data.
-    QEventLoop loop;
-    connect(this, &DeviceCommunication::readOverDryer1Data3,&loop, &QEventLoop::quit);
-    loop.exec();
-    // Got it!
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readOverDryer1Data3,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
 }
 
 void DeviceCommunication::readUint16(int address_, int count_, std::vector<quint16> &buffer_)
@@ -556,8 +553,10 @@ void DeviceCommunication::readUint16(int address_, int count_, std::vector<quint
             }
             emit readUint16Signal_D();
         });
-        QEventLoop loop;
-        connect(this, &DeviceCommunication::readUint16Signal_D,&loop, &QEventLoop::quit);
-        loop.exec();
+        if(modbusDevice){
+            QEventLoop loop;
+            connect(this, &DeviceCommunication::readUint16Signal_D,&loop, &QEventLoop::quit);
+            loop.exec();
+        }
     }
 }

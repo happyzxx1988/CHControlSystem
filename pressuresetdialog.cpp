@@ -33,8 +33,12 @@ void PressureSetDialog::on_setPressureBtn_clicked()
     }
     float maxPressure = ui->maxPressure->text().toFloat();
     float minPressure = ui->minPressure->text().toFloat();
-    int maxPressure_int = QString::number(maxPressure,'f',1).toFloat() * 10;
-    int minPressure_int = QString::number(minPressure,'f',1).toFloat() * 10;
+    if(maxPressure < 0.0 || maxPressure > 2.0 || minPressure < 0.0 || minPressure > 2.0){
+        QMessageBox::information(this, tr("提示"), tr("最大最小压力值,只能是0-2的两位小数值！"),tr("确定"));
+        return;
+    }
+    int maxPressure_int = QString::number(maxPressure,'f',2).toFloat() * 100;
+    int minPressure_int = QString::number(minPressure,'f',2).toFloat() * 100;
 
 
     appcore->setMaxAndMinPressure(maxPressure_int,minPressure_int);

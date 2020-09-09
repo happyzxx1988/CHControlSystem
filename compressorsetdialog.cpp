@@ -38,8 +38,14 @@ void CompressorSetDialog::on_setCompressorBtn_clicked()
     float uninstallPressure = ui->uninstallPressure->text().toFloat();
     float pressureDiff = ui->pressureDiff->text().toFloat();
 
-    int uninstallPressure_int = QString::number(uninstallPressure,'f',1).toFloat() * 10;
-    int pressureDiff_int = QString::number(pressureDiff,'f',1).toFloat() * 10;
+    if(uninstallPressure < 0.0 || pressureDiff > 2.0 || uninstallPressure < 0.0 || pressureDiff > 2.0){
+        QMessageBox::information(this, tr("提示"), tr("卸载压差(加载压力)值,只能是0-2的两位小数值！"),tr("确定"));
+        return;
+    }
+
+
+    int uninstallPressure_int = QString::number(uninstallPressure,'f',2).toInt() * 142;
+    int pressureDiff_int = QString::number(pressureDiff,'f',2).toInt() * 142;
 
     appcore->setUninstallPressureAndPressureDiff(uninstallPressure_int,pressureDiff_int,compressorNo);
 
