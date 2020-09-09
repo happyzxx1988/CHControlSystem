@@ -25,7 +25,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_listView_pressed();
+    void navigation_pressed();
     void timerUpdate(void);
     void on_userAddBtn_clicked();
     void on_userEditBtn_clicked();

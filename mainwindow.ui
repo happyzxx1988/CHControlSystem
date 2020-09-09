@@ -560,7 +560,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_63">
                    <property name="text">
-                    <string>加载时间(h)</string>
+                    <string>加载时间(h):</string>
                    </property>
                   </widget>
                  </item>
@@ -578,7 +578,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_61">
                    <property name="text">
-                    <string>运行时间(h)</string>
+                    <string>运行时间(h):</string>
                    </property>
                   </widget>
                  </item>
@@ -596,7 +596,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_59">
                    <property name="text">
-                    <string>排气温度(℃)</string>
+                    <string>排气温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -614,7 +614,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_58">
                    <property name="text">
-                    <string>排气压力(Mpa)</string>
+                    <string>排气压力(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -632,7 +632,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_60">
                    <property name="text">
-                    <string>主机电流(A)</string>
+                    <string>主机电流(A):</string>
                    </property>
                   </widget>
                  </item>
@@ -650,7 +650,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_62">
                    <property name="text">
-                    <string>系统温度(℃)</string>
+                    <string>系统温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -668,7 +668,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_57">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -686,7 +686,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_23">
                    <property name="text">
-                    <string>电源</string>
+                    <string>电源:</string>
                    </property>
                   </widget>
                  </item>
@@ -713,7 +713,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_71">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -731,7 +731,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_73">
                    <property name="text">
-                    <string>排气压力(Mpa)</string>
+                    <string>排气压力(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -749,7 +749,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_81">
                    <property name="text">
-                    <string>系统温度(℃)</string>
+                    <string>系统温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -767,7 +767,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_83">
                    <property name="text">
-                    <string>加载时间(h)</string>
+                    <string>加载时间(h):</string>
                    </property>
                   </widget>
                  </item>
@@ -785,7 +785,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_75">
                    <property name="text">
-                    <string>排气温度(℃)</string>
+                    <string>排气温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -803,7 +803,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_77">
                    <property name="text">
-                    <string>运行时间(h)</string>
+                    <string>运行时间(h):</string>
                    </property>
                   </widget>
                  </item>
@@ -821,7 +821,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_79">
                    <property name="text">
-                    <string>主机电流(A)</string>
+                    <string>主机电流(A):</string>
                    </property>
                   </widget>
                  </item>
@@ -839,7 +839,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_21">
                    <property name="text">
-                    <string>电源</string>
+                    <string>电源:</string>
                    </property>
                   </widget>
                  </item>
@@ -866,7 +866,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_95">
                    <property name="text">
-                    <string>系统温度(℃)</string>
+                    <string>系统温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -884,7 +884,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_97">
                    <property name="text">
-                    <string>加载时间(h)</string>
+                    <string>加载时间(h):</string>
                    </property>
                   </widget>
                  </item>
@@ -902,7 +902,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_93">
                    <property name="text">
-                    <string>主机电流(A)</string>
+                    <string>主机电流(A:</string>
                    </property>
                   </widget>
                  </item>
@@ -920,7 +920,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_85">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -938,7 +938,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_91">
                    <property name="text">
-                    <string>运行时间(h)</string>
+                    <string>运行时间(h):</string>
                    </property>
                   </widget>
                  </item>
@@ -956,7 +956,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_87">
                    <property name="text">
-                    <string>排气压力(Mpa)</string>
+                    <string>排气压力(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -974,7 +974,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_89">
                    <property name="text">
-                    <string>排气温度(℃)</string>
+                    <string>排气温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -992,7 +992,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_36">
                    <property name="text">
-                    <string>电源</string>
+                    <string>电源:</string>
                    </property>
                   </widget>
                  </item>
@@ -1023,7 +1023,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_99">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -1041,7 +1041,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_40">
                    <property name="text">
-                    <string>故障提示</string>
+                    <string>故障提示:</string>
                    </property>
                   </widget>
                  </item>
@@ -1059,7 +1059,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_101">
                    <property name="text">
-                    <string>系统高压(Mpa)</string>
+                    <string>系统高压(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1077,7 +1077,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_103">
                    <property name="text">
-                    <string>系统低压(Mpa)</string>
+                    <string>系统低压(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1095,7 +1095,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_44">
                    <property name="text">
-                    <string>露点温度(℃)</string>
+                    <string>露点温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -1116,7 +1116,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_46">
                    <property name="text">
-                    <string>运行时间</string>
+                    <string>运行时间:</string>
                    </property>
                   </widget>
                  </item>
@@ -1180,7 +1180,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_105">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -1198,7 +1198,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_64">
                    <property name="text">
-                    <string>故障提示</string>
+                    <string>故障提示:</string>
                    </property>
                   </widget>
                  </item>
@@ -1216,7 +1216,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_107">
                    <property name="text">
-                    <string>系统高压(Mpa)</string>
+                    <string>系统高压(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1234,7 +1234,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_109">
                    <property name="text">
-                    <string>系统低压(Mpa)</string>
+                    <string>系统低压(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1252,7 +1252,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_65">
                    <property name="text">
-                    <string>露点温度(℃)</string>
+                    <string>露点温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -1273,7 +1273,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_66">
                    <property name="text">
-                    <string>运行时间</string>
+                    <string>运行时间:</string>
                    </property>
                   </widget>
                  </item>
@@ -1337,7 +1337,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_111">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -1355,7 +1355,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_67">
                    <property name="text">
-                    <string>故障提示</string>
+                    <string>故障提示:</string>
                    </property>
                   </widget>
                  </item>
@@ -1373,7 +1373,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_113">
                    <property name="text">
-                    <string>系统高压(Mpa)</string>
+                    <string>系统高压(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1391,7 +1391,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_115">
                    <property name="text">
-                    <string>系统低压(Mpa)</string>
+                    <string>系统低压(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1409,7 +1409,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_68">
                    <property name="text">
-                    <string>露点温度(℃)</string>
+                    <string>露点温度(℃):</string>
                    </property>
                   </widget>
                  </item>
@@ -1427,7 +1427,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_69">
                    <property name="text">
-                    <string>运行时间</string>
+                    <string>运行时间:</string>
                    </property>
                   </widget>
                  </item>
@@ -1518,7 +1518,7 @@ QGroupBox {
                   </size>
                  </property>
                  <property name="text">
-                  <string>运行模式</string>
+                  <string>运行模式:</string>
                  </property>
                 </widget>
                </item>
@@ -1561,7 +1561,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_33">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -1579,7 +1579,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_34">
                    <property name="text">
-                    <string>加载压差(Mpa)</string>
+                    <string>加载压差(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1597,7 +1597,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_35">
                    <property name="text">
-                    <string>卸载压力(Mpa)</string>
+                    <string>卸载压力(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1638,7 +1638,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_39">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -1656,7 +1656,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_41">
                    <property name="text">
-                    <string>加载压差(Mpa)</string>
+                    <string>加载压差(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1674,7 +1674,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_43">
                    <property name="text">
-                    <string>卸载压力(Mpa)</string>
+                    <string>卸载压力(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1715,7 +1715,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_45">
                    <property name="text">
-                    <string>运行状态</string>
+                    <string>运行状态:</string>
                    </property>
                   </widget>
                  </item>
@@ -1733,7 +1733,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_47">
                    <property name="text">
-                    <string>加载压差(Mpa)</string>
+                    <string>加载压差(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1751,7 +1751,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_49">
                    <property name="text">
-                    <string>卸载压力(Mpa)</string>
+                    <string>卸载压力(Mpa):</string>
                    </property>
                   </widget>
                  </item>
@@ -1782,7 +1782,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_51">
                    <property name="text">
-                    <string>1#冷干机</string>
+                    <string>1#冷干机:</string>
                    </property>
                   </widget>
                  </item>
@@ -1809,7 +1809,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_53">
                    <property name="text">
-                    <string>2#冷干机</string>
+                    <string>2#冷干机:</string>
                    </property>
                   </widget>
                  </item>
@@ -1836,7 +1836,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_55">
                    <property name="text">
-                    <string>3#冷干机</string>
+                    <string>3#冷干机:</string>
                    </property>
                   </widget>
                  </item>
@@ -2057,7 +2057,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>1#空压机</string>
+                    <string>1#空压机:</string>
                    </property>
                   </widget>
                  </item>
@@ -2113,7 +2113,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>参数设置</string>
+                    <string>参数设置:</string>
                    </property>
                   </widget>
                  </item>
@@ -2156,7 +2156,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Mpa）</string>
+                    <string>加载压差（Mpa）:</string>
                    </property>
                   </widget>
                  </item>
@@ -2199,7 +2199,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Mpa）</string>
+                    <string>卸载压力（Mpa）:</string>
                    </property>
                   </widget>
                  </item>
@@ -2270,7 +2270,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>2#空压机</string>
+                    <string>2#空压机:</string>
                    </property>
                   </widget>
                  </item>
@@ -2326,7 +2326,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>参数设置</string>
+                    <string>参数设置:</string>
                    </property>
                   </widget>
                  </item>
@@ -2369,7 +2369,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Mpa）</string>
+                    <string>加载压差（Mpa）:</string>
                    </property>
                   </widget>
                  </item>
@@ -2412,7 +2412,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Mpa）</string>
+                    <string>卸载压力（Mpa）:</string>
                    </property>
                   </widget>
                  </item>
@@ -2483,7 +2483,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>3#空压机</string>
+                    <string>3#空压机:</string>
                    </property>
                   </widget>
                  </item>
@@ -2539,7 +2539,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>参数设置</string>
+                    <string>参数设置:</string>
                    </property>
                   </widget>
                  </item>
@@ -2582,7 +2582,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Mpa）</string>
+                    <string>加载压差（Mpa）:</string>
                    </property>
                   </widget>
                  </item>
@@ -2625,7 +2625,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Mpa）</string>
+                    <string>卸载压力（Mpa）:</string>
                    </property>
                   </widget>
                  </item>
@@ -2681,7 +2681,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>1#冷干机</string>
+                    <string>1#冷干机:</string>
                    </property>
                   </widget>
                  </item>
@@ -2733,7 +2733,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>2#冷干机</string>
+                    <string>2#冷干机:</string>
                    </property>
                   </widget>
                  </item>
@@ -2779,7 +2779,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>3#冷干机</string>
+                    <string>3#冷干机:</string>
                    </property>
                   </widget>
                  </item>

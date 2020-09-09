@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
 void MainWindow::initForm()
 {
     QDate date = QDate::currentDate();   //获取当前日期
-    READ_TIME =      10;    //定时读取间隔时间
+    READ_TIME =      20;    //定时读取间隔时间
 
     ui->warningStartime->setDate(date);
     ui->warningEndTime->setDate(date);
@@ -105,13 +105,13 @@ void MainWindow::initForm()
     connect(&appcore, &AppCore::infoMessage, this, [this](const QString& info){
         qDebug() << "emit infoMessage(info):" << info;
     });
-    connect(ui->pushButton_1, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
-    connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
-    connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
-    connect(ui->pushButton_5, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
-    connect(ui->pushButton_6, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
-    connect(ui->pushButton_7, SIGNAL(clicked()), this, SLOT(on_listView_pressed()));
+    connect(ui->pushButton_1, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_3, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_5, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_7, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
 
     // Initialize settings
     appcore.initSettings();
@@ -286,7 +286,7 @@ void MainWindow::on_loadDataBtn_clicked()
     pd_y->setRange(pd_y_min,pd_y_max);
 
 }
-void MainWindow::on_listView_pressed()
+void MainWindow::navigation_pressed()
 {
     QPushButton *b = (QPushButton *)sender();
     QString text = b->text();
