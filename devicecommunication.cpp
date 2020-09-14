@@ -5,6 +5,9 @@
 #include <QVariant>
 #include <QDebug>
 #include <QEventLoop>
+#include <QTime>
+#include <QCoreApplication>
+
 
 
 const static QModbusDataUnit::RegisterType registerType1 = QModbusDataUnit::Coils;
@@ -198,24 +201,72 @@ void DeviceCommunication::writeFloat32(int address, float f, std::function<void 
 
 void DeviceCommunication::setMaxAndMinPressure(int max,int min)
 {
-    writeUint16(23, max);
-    writeUint16(24, min);
+//    writeUint16(23, max);
+//    writeUint16(24, min);
+
+
+    writeUint16(23, max, [this](){ emit setMaxPressureFinished(); });
+
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::setMaxPressureFinished,&loop, &QEventLoop::quit);
+    loop.exec();
+
+    writeUint16(24, min, [this](){ emit setMinPressureFinished(); });
+
+    connect(this, &DeviceCommunication::setMinPressureFinished,&loop, &QEventLoop::quit);
+    loop.exec();
+
 }
+
+
 
 void DeviceCommunication::setUninstallPressureAndPressureDiff1(int uninstallPressure,int pressureDiff)
 {
-    writeUint16(400, uninstallPressure);
-    writeUint16(401, pressureDiff);
+//    writeUint16(400, uninstallPressure);
+//    writeUint16(401, pressureDiff);
+
+    writeUint16(400, uninstallPressure, [this](){ emit setUninstallPressure1Finished(); });
+
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::setUninstallPressure1Finished,&loop, &QEventLoop::quit);
+    loop.exec();
+
+    writeUint16(401, pressureDiff, [this](){ emit setPressureDiff1Finished(); });
+
+    connect(this, &DeviceCommunication::setPressureDiff1Finished,&loop, &QEventLoop::quit);
+    loop.exec();
+
 }
 void DeviceCommunication::setUninstallPressureAndPressureDiff2(int uninstallPressure,int pressureDiff)
 {
-    writeUint16(402, uninstallPressure);
-    writeUint16(403, pressureDiff);
+//    writeUint16(402, uninstallPressure);
+//    writeUint16(403, pressureDiff);
+
+    writeUint16(402, uninstallPressure, [this](){ emit setUninstallPressure2Finished(); });
+
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::setUninstallPressure2Finished,&loop, &QEventLoop::quit);
+    loop.exec();
+
+    writeUint16(403, pressureDiff, [this](){ emit setPressureDiff2Finished(); });
+    connect(this, &DeviceCommunication::setPressureDiff2Finished,&loop, &QEventLoop::quit);
+    loop.exec();
 }
 void DeviceCommunication::setUninstallPressureAndPressureDiff3(int uninstallPressure,int pressureDiff)
 {
-    writeUint16(404, uninstallPressure);
-    writeUint16(405, pressureDiff);
+//    writeUint16(404, uninstallPressure);
+//    writeUint16(405, pressureDiff);
+
+    writeUint16(404, uninstallPressure, [this](){ emit setUninstallPressure3Finished(); });
+
+    QEventLoop loop;
+    connect(this, &DeviceCommunication::setUninstallPressure3Finished,&loop, &QEventLoop::quit);
+    loop.exec();
+
+    writeUint16(405, pressureDiff, [this](){ emit setPressureDiff3Finished(); });
+    connect(this, &DeviceCommunication::setPressureDiff3Finished,&loop, &QEventLoop::quit);
+    loop.exec();
+
 }
 void DeviceCommunication::compressorSwitch1(bool off)
 {
@@ -231,15 +282,15 @@ void DeviceCommunication::compressorSwitch3(bool off)
 }
 void DeviceCommunication::dryerSwitch1(bool off)
 {
-    writeUint16(53, (off ? 1 : 2));
+    writeUint16(53, (off ? 1 : 0));
 }
 void DeviceCommunication::dryerSwitch2(bool off)
 {
-    writeUint16(54, (off ? 1 : 2));
+    writeUint16(54, (off ? 1 : 0));
 }
 void DeviceCommunication::dryerSwitch3(bool off)
 {
-    writeUint16(55, (off ? 1 : 2));
+    writeUint16(55, (off ? 1 : 0));
 }
 
 void DeviceCommunication::writeAddress26()
@@ -535,7 +586,50 @@ void DeviceCommunication::dryer3(QVector<quint16> &dryer3)
     }
 }
 
-void DeviceCommunication::readUint16(int address_, int count_, std::vector<quint16> &buffer_)
+void DeviceCommunication::readWarningHint(QVector<quint16> &warningInfo)
+{
+    QModbusDataUnit readUnit(registerType4, 75, 6);/*类型、首地址、长度*/// 100   267
+    readRequest(readUnit, [this,&warningInfo](QModbusDataUnit unit){
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            warningInfo.push_back(value);
+//            qDebug() << "warningInfo:"<<value;
+        }
+        emit readWarningHintInfo();
+    });
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readWarningHintInfo,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
+}
+void DeviceCommunication::compressorEnable1(bool off)
+{
+    writeUint16(85, (off ? 0 : 1));
+}
+void DeviceCommunication::compressorEnable2(bool off)
+{
+    writeUint16(86, (off ? 0 : 1));
+}
+void DeviceCommunication::compressorEnable3(bool off)
+{
+    writeUint16(87, (off ? 0 : 1));
+}
+void DeviceCommunication::dryerEnable1(bool off)
+{
+    writeUint16(88, (off ? 0 : 1));
+}
+void DeviceCommunication::dryerEnable2(bool off)
+{
+    writeUint16(89, (off ? 0 : 1));
+}
+void DeviceCommunication::dryerEnable3(bool off)
+{
+    writeUint16(90, (off ? 0 : 1));
+}
+
+
+void DeviceCommunication::readUint16(int address_, int count_, QVector<quint16> &buffer_)
 {
     buffer_.clear();
     int num = count_ / 120;
@@ -559,4 +653,14 @@ void DeviceCommunication::readUint16(int address_, int count_, std::vector<quint
             loop.exec();
         }
     }
+}
+
+
+
+//以毫秒为单位的延时函数
+void DeviceCommunication::sleep(unsigned int msec)
+{
+    QTime dieTime = QTime::currentTime().addMSecs(msec);
+    while( QTime::currentTime() < dieTime )
+       QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }

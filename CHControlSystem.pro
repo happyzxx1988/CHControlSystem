@@ -35,7 +35,9 @@ SOURCES += \
     pressuresetdialog.cpp \
     devicecommunication.cpp \
     compressorsetdialog.cpp \
-    appcore.cpp
+    appcore.cpp \
+    warninghintdialog.cpp \
+    showimgwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -48,15 +50,21 @@ HEADERS += \
     pressuresetdialog.h \
     devicecommunication.h \
     compressorsetdialog.h \
-    appcore.h
+    appcore.h \
+    warninghintdialog.h \
+    showimgwidget.h
 
 FORMS += \
         mainwindow.ui \
     login.ui \
     userdialog.ui \
     pressuresetdialog.ui \
-    compressorsetdialog.ui
+    compressorsetdialog.ui \
+    warninghintdialog.ui
 
 RESOURCES += \
     rc.qrc
 RC_ICONS=images/log.ico
+
+
+#images/log.ico

@@ -43,6 +43,6 @@ void PressureSetDialog::on_setPressureBtn_clicked()
 
     appcore->setMaxAndMinPressure(maxPressure_int,minPressure_int);
 
-    emit closeCurrentDialog(maxPressure_int,maxPressure_int);
+    emit closeCurrentDialog(QString::number(maxPressure,'f',2).toFloat(),QString::number(minPressure,'f',2).toFloat());
     this->close();
 }

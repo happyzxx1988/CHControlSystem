@@ -171,6 +171,38 @@ void AppCore::setEquipmentSwitch(int equipmentType,bool off)
     }
 }
 
+//设备设置是否启用 1-1#空压机，2-2#空压机，3-3#空压机，4-1#冷干机，5-2#冷干机，6-3#冷干机
+void AppCore::setEquipmentEnable(int equipmentType,bool off)
+{
+    this->sleep(500);
+    switch (equipmentType) {
+    case 1:
+        dc.compressorEnable1(off);
+        break;
+    case 2:
+        dc.compressorEnable2(off);
+        break;
+    case 3:
+        dc.compressorEnable3(off);
+        break;
+    case 4:
+        dc.dryerEnable1(off);
+        break;
+    case 5:
+        dc.dryerEnable2(off);
+        break;
+    case 6:
+        dc.dryerEnable3(off);
+        break;
+    }
+}
+
+void AppCore::readUint16(int address_, int count_, QVector<quint16> &buffer_)
+{
+    dc.readUint16(address_,count_,buffer_);
+}
+
+
 void AppCore::resetOperation()
 {
     dc.resetOperation();
@@ -215,4 +247,9 @@ void AppCore::dryer2(QVector<quint16> &dryer2)
 void AppCore::dryer3(QVector<quint16> &dryer3)
 {
     dc.dryer3(dryer3);
+}
+
+void AppCore::readWarningHint(QVector<quint16> &warningInfo)
+{
+    dc.readWarningHint(warningInfo);
 }

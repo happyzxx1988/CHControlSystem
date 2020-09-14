@@ -9,6 +9,10 @@
 #include "compressorsetdialog.h"
 #include "appcore.h"
 #include <QtCharts>
+#include "warninghintdialog.h"
+
+#define STATION_HOUSE   "102"        //站房102-3    201-对面-2   202-2
+#define STORE_TIME      60000      //储存读取数据的时间间隔  暂定1分钟
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -21,11 +25,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QString u,QString p,QWidget *parent = 0);
+    explicit MainWindow(int num,QString u,QString p,QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
     void navigation_pressed();
+    void checkBox_pressed(bool checked);
     void timerUpdate(void);
     void on_userAddBtn_clicked();
     void on_userEditBtn_clicked();
@@ -50,14 +55,18 @@ private slots:
     void on_compressorSetBtn3_clicked();
     void on_manualOper_clicked();
     void on_autoOper_clicked();
-    void compressor_call_back(int compressorNO, int uninstallPressure, int pressureDiff);
-    void pressure_call_back(int maxPressure, int minPressure);
+    void compressor_call_back(int compressorNO, float uninstallPressure, float pressureDiff);
+    void pressure_call_back(float maxPressure, float minPressure);
     void userEdit_call_back(int userEditType);
     void readCompressorTimer();
     void on_loadDataBtn_clicked();
     void slotPointHoverd(const QPointF &point, bool state);
 
     void on_connectPLCBtn_clicked();
+
+    void readWarningHintTimer();
+
+    void warningHint_call_back(bool a, bool b, bool c, bool d, bool e, bool f);
 
 private:
     void initForm();
@@ -71,12 +80,15 @@ private:
     void saveWarning(quint16 warningInfo, int compressorNo, int runState);
     void saveWarningDryer(int dryerNo, int runState);
 
+    void binToDec(unsigned int data, int &h_val, int &l_val);
+
 private:
     Ui::MainWindow *ui;
     QString userName;
     QString pass;
     QString edit_userName;
     QString edit_pass;
+    int device_num;
     DataOper dataOper;
     UserDialog *userDialog;
     PressureSetDialog *pressureSetDialog;
@@ -90,8 +102,21 @@ private:
     AppCore appcore;
     int storageInterval;//存储读取数据的时间间隔
     int READ_TIME;
+    int warningHint_time;
     QTimer compressorTimer;
     QTimer timer;
+    QTimer warningHintTimer;
+
+    bool isShowWarning;
+    bool compressorIsShowWarning1;
+    bool compressorIsShowWarning2;
+    bool compressorIsShowWarning3;
+    bool dryerIsShowWarning1;
+    bool dryerIsShowWarning2;
+    bool dryerIsShowWarning3;
+
+    WarningHintDialog *warningHintDialog;
+
 
 
     QDateTimeAxis *up_x;

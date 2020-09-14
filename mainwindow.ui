@@ -481,10 +481,16 @@ QGroupBox {
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="main_p">
-         <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,5,3">
+         <layout class="QVBoxLayout" name="verticalLayout_15" stretch="1">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
           <property name="topMargin">
            <number>0</number>
           </property>
@@ -495,207 +501,54 @@ QGroupBox {
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_25">
-            <property name="title">
-             <string/>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_20">
-             <item row="0" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_77">
-               <item>
-                <spacer name="horizontalSpacer_5">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_38">
-                 <property name="text">
-                  <string>PLC 连接</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="connectPLCBtn">
-                 <property name="text">
-                  <string>连接</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_56">
+           <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,5,3">
             <item>
-             <widget class="QGroupBox" name="groupBox_10">
+             <widget class="QGroupBox" name="groupBox_25">
               <property name="title">
-               <string>1#空压机</string>
+               <string/>
               </property>
-              <layout class="QGridLayout" name="gridLayout_11">
-               <item row="7" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_41">
-                 <item>
-                  <widget class="QLabel" name="label_63">
-                   <property name="text">
-                    <string>加载时间(h):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="uploadT1">
-                   <property name="text">
-                    <string>3944</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_38">
-                 <item>
-                  <widget class="QLabel" name="label_61">
-                   <property name="text">
-                    <string>运行时间(h):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="runningT1">
-                   <property name="text">
-                    <string>5593</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_37">
-                 <item>
-                  <widget class="QLabel" name="label_59">
-                   <property name="text">
-                    <string>排气温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="ventingT1">
-                   <property name="text">
-                    <string>77</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_36">
-                 <item>
-                  <widget class="QLabel" name="label_58">
-                   <property name="text">
-                    <string>排气压力(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="ventingPressure1">
-                   <property name="text">
-                    <string>6.97</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_39">
-                 <item>
-                  <widget class="QLabel" name="label_60">
-                   <property name="text">
-                    <string>主机电流(A):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="hostA1">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="6" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_40">
-                 <item>
-                  <widget class="QLabel" name="label_62">
-                   <property name="text">
-                    <string>系统温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="sysT1">
-                   <property name="text">
-                    <string>78</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
+              <layout class="QGridLayout" name="gridLayout_20">
                <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_19">
+                <layout class="QHBoxLayout" name="horizontalLayout_77">
                  <item>
-                  <widget class="QLabel" name="label_57">
+                  <spacer name="horizontalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_38">
                    <property name="text">
-                    <string>运行状态:</string>
+                    <string>PLC 连接</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="runningState1">
+                  <widget class="QPushButton" name="connectPLCBtn">
                    <property name="text">
-                    <string>运行中</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_67">
-                 <item>
-                  <widget class="QLabel" name="label_23">
-                   <property name="text">
-                    <string>电源:</string>
+                    <string>连接</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="powerStatus1">
-                   <property name="text">
-                    <string>通电</string>
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
                    </property>
-                  </widget>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </item>
@@ -703,782 +556,1482 @@ QGroupBox {
              </widget>
             </item>
             <item>
-             <widget class="QGroupBox" name="groupBox_11">
-              <property name="title">
-               <string>2#空压机</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_12">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_42">
-                 <item>
-                  <widget class="QLabel" name="label_71">
-                   <property name="text">
-                    <string>运行状态:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="runningState2">
-                   <property name="text">
-                    <string>运行中</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_43">
-                 <item>
-                  <widget class="QLabel" name="label_73">
-                   <property name="text">
-                    <string>排气压力(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="ventingPressure2">
-                   <property name="text">
-                    <string>6.97</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="6" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_47">
-                 <item>
-                  <widget class="QLabel" name="label_81">
-                   <property name="text">
-                    <string>系统温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="sysT2">
-                   <property name="text">
-                    <string>78</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="7" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_48">
-                 <item>
-                  <widget class="QLabel" name="label_83">
-                   <property name="text">
-                    <string>加载时间(h):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="uploadT2">
-                   <property name="text">
-                    <string>3944</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_44">
-                 <item>
-                  <widget class="QLabel" name="label_75">
-                   <property name="text">
-                    <string>排气温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="ventingT2">
-                   <property name="text">
-                    <string>77</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_45">
-                 <item>
-                  <widget class="QLabel" name="label_77">
-                   <property name="text">
-                    <string>运行时间(h):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="runningT2">
-                   <property name="text">
-                    <string>5593</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_46">
-                 <item>
-                  <widget class="QLabel" name="label_79">
-                   <property name="text">
-                    <string>主机电流(A):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="hostA2">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_68">
-                 <item>
-                  <widget class="QLabel" name="label_21">
-                   <property name="text">
-                    <string>电源:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="powerStatus2">
-                   <property name="text">
-                    <string>断电</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_12">
-              <property name="title">
-               <string>3#空压机</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_13">
-               <item row="6" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_54">
-                 <item>
-                  <widget class="QLabel" name="label_95">
-                   <property name="text">
-                    <string>系统温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="sysT3">
-                   <property name="text">
-                    <string>78</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="7" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_55">
-                 <item>
-                  <widget class="QLabel" name="label_97">
-                   <property name="text">
-                    <string>加载时间(h):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="uploadT3">
-                   <property name="text">
-                    <string>3944</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_53">
-                 <item>
-                  <widget class="QLabel" name="label_93">
-                   <property name="text">
-                    <string>主机电流(A:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="hostA3">
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_49">
-                 <item>
-                  <widget class="QLabel" name="label_85">
-                   <property name="text">
-                    <string>运行状态:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="runningState3">
-                   <property name="text">
-                    <string>运行中</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_52">
-                 <item>
-                  <widget class="QLabel" name="label_91">
-                   <property name="text">
-                    <string>运行时间(h):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="runningT3">
-                   <property name="text">
-                    <string>5593</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_50">
-                 <item>
-                  <widget class="QLabel" name="label_87">
-                   <property name="text">
-                    <string>排气压力(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="ventingPressure3">
-                   <property name="text">
-                    <string>6.97</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_51">
-                 <item>
-                  <widget class="QLabel" name="label_89">
-                   <property name="text">
-                    <string>排气温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="ventingT3">
-                   <property name="text">
-                    <string>77</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_69">
-                 <item>
-                  <widget class="QLabel" name="label_36">
-                   <property name="text">
-                    <string>电源:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="powerStatus3">
-                   <property name="text">
-                    <string>断电</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_20">
-            <item>
-             <widget class="QGroupBox" name="groupBox_13">
-              <property name="title">
-               <string>1#冷干机</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_14">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_57">
-                 <item>
-                  <widget class="QLabel" name="label_99">
-                   <property name="text">
-                    <string>运行状态:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="valveState1">
-                   <property name="text">
-                    <string>开</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_78">
-                 <item>
-                  <widget class="QLabel" name="label_40">
-                   <property name="text">
-                    <string>故障提示:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="faultHint1">
-                   <property name="text">
-                    <string>无故障</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_58">
-                 <item>
-                  <widget class="QLabel" name="label_101">
-                   <property name="text">
-                    <string>系统高压(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="refrigerantH1">
-                   <property name="text">
-                    <string>10</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_59">
-                 <item>
-                  <widget class="QLabel" name="label_103">
-                   <property name="text">
-                    <string>系统低压(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="refrigerantL1">
-                   <property name="text">
-                    <string>3</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_79">
-                 <item>
-                  <widget class="QLabel" name="label_44">
-                   <property name="text">
-                    <string>露点温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="dewPointT1">
-                   <property name="text">
-                    <string>26</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_87">
-                 <property name="spacing">
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_46">
-                   <property name="text">
-                    <string>运行时间:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_80">
+             <layout class="QHBoxLayout" name="horizontalLayout_56">
+              <item>
+               <widget class="QGroupBox" name="groupBox_10">
+                <property name="title">
+                 <string>1#空压机</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_11">
+                 <item row="7" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_41">
                    <item>
-                    <widget class="QLabel" name="runTimeH1">
+                    <widget class="QLabel" name="label_63">
                      <property name="text">
-                      <string>23</string>
+                      <string>加载时间:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_52">
+                    <widget class="QLabel" name="uploadT1">
+                     <property name="text">
+                      <string>3944</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_108">
                      <property name="maximumSize">
                       <size>
-                       <width>20</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
-                      <string>时</string>
+                      <string>(h)</string>
                      </property>
                     </widget>
                    </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_38">
                    <item>
-                    <widget class="QLabel" name="runTimeM1">
+                    <widget class="QLabel" name="label_61">
                      <property name="text">
-                      <string>23</string>
+                      <string>运行时间:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_56">
+                    <widget class="QLabel" name="runningT1">
+                     <property name="text">
+                      <string>5593</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_114">
                      <property name="maximumSize">
                       <size>
-                       <width>20</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
-                      <string>分</string>
+                      <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_37">
+                   <item>
+                    <widget class="QLabel" name="label_59">
+                     <property name="text">
+                      <string>排气温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="ventingT1">
+                     <property name="text">
+                      <string>77</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_116">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_36">
+                   <item>
+                    <widget class="QLabel" name="label_58">
+                     <property name="text">
+                      <string>排气压力:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="ventingPressure1">
+                     <property name="text">
+                      <string>6.97</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_117">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_39">
+                   <item>
+                    <widget class="QLabel" name="label_60">
+                     <property name="text">
+                      <string>主机电流:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="hostA1">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_112">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(A)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_40">
+                   <item>
+                    <widget class="QLabel" name="label_62">
+                     <property name="text">
+                      <string>系统温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="sysT1">
+                     <property name="text">
+                      <string>78</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_110">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_19">
+                   <item>
+                    <widget class="QLabel" name="label_57">
+                     <property name="text">
+                      <string>运行状态:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runningState1">
+                     <property name="text">
+                      <string>运行中</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_42">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_67">
+                   <item>
+                    <widget class="QLabel" name="label_23">
+                     <property name="text">
+                      <string>电源:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="powerStatus1">
+                     <property name="text">
+                      <string>通电</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_118">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </item>
                 </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_14">
-              <property name="title">
-               <string>2#冷干机</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_15">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_60">
-                 <item>
-                  <widget class="QLabel" name="label_105">
-                   <property name="text">
-                    <string>运行状态:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="valveState2">
-                   <property name="text">
-                    <string>开</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_81">
-                 <item>
-                  <widget class="QLabel" name="label_64">
-                   <property name="text">
-                    <string>故障提示:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="faultHint2">
-                   <property name="text">
-                    <string>故障</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_61">
-                 <item>
-                  <widget class="QLabel" name="label_107">
-                   <property name="text">
-                    <string>系统高压(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="refrigerantH2">
-                   <property name="text">
-                    <string>10</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_62">
-                 <item>
-                  <widget class="QLabel" name="label_109">
-                   <property name="text">
-                    <string>系统低压(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="refrigerantL2">
-                   <property name="text">
-                    <string>3</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_82">
-                 <item>
-                  <widget class="QLabel" name="label_65">
-                   <property name="text">
-                    <string>露点温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="dewPointT2">
-                   <property name="text">
-                    <string>26</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_88">
-                 <property name="spacing">
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="label_66">
-                   <property name="text">
-                    <string>运行时间:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_83">
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_11">
+                <property name="title">
+                 <string>2#空压机</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_12">
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_42">
                    <item>
-                    <widget class="QLabel" name="runTimeH2">
+                    <widget class="QLabel" name="label_71">
                      <property name="text">
-                      <string>23</string>
+                      <string>运行状态:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_80">
+                    <widget class="QLabel" name="runningState2">
+                     <property name="text">
+                      <string>运行中</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_126">
                      <property name="maximumSize">
                       <size>
-                       <width>20</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
-                      <string>时</string>
+                      <string/>
                      </property>
                     </widget>
                    </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_43">
                    <item>
-                    <widget class="QLabel" name="runTimeM2">
+                    <widget class="QLabel" name="label_73">
                      <property name="text">
-                      <string>23</string>
+                      <string>排气压力:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_74">
+                    <widget class="QLabel" name="ventingPressure2">
+                     <property name="text">
+                      <string>6.97</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_124">
                      <property name="maximumSize">
                       <size>
-                       <width>20</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
-                      <string>分</string>
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_47">
+                   <item>
+                    <widget class="QLabel" name="label_81">
+                     <property name="text">
+                      <string>系统温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="sysT2">
+                     <property name="text">
+                      <string>78</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_120">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="7" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_48">
+                   <item>
+                    <widget class="QLabel" name="label_83">
+                     <property name="text">
+                      <string>加载时间:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="uploadT2">
+                     <property name="text">
+                      <string>3944</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_119">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_44">
+                   <item>
+                    <widget class="QLabel" name="label_75">
+                     <property name="text">
+                      <string>排气温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="ventingT2">
+                     <property name="text">
+                      <string>77</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_123">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_45">
+                   <item>
+                    <widget class="QLabel" name="label_77">
+                     <property name="text">
+                      <string>运行时间:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runningT2">
+                     <property name="text">
+                      <string>5593</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_122">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_46">
+                   <item>
+                    <widget class="QLabel" name="label_79">
+                     <property name="text">
+                      <string>主机电流:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="hostA2">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_121">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(A)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_68">
+                   <item>
+                    <widget class="QLabel" name="label_21">
+                     <property name="text">
+                      <string>电源:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="powerStatus2">
+                     <property name="text">
+                      <string>断电</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_125">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </item>
                 </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_15">
-              <property name="title">
-               <string>3#冷干机</string>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_16">
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_63">
-                 <item>
-                  <widget class="QLabel" name="label_111">
-                   <property name="text">
-                    <string>运行状态:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="valveState3">
-                   <property name="text">
-                    <string>开</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="1" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_84">
-                 <item>
-                  <widget class="QLabel" name="label_67">
-                   <property name="text">
-                    <string>故障提示:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="faultHint3">
-                   <property name="text">
-                    <string>无故障</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_64">
-                 <item>
-                  <widget class="QLabel" name="label_113">
-                   <property name="text">
-                    <string>系统高压(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="refrigerantH3">
-                   <property name="text">
-                    <string>10</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="3" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_65">
-                 <item>
-                  <widget class="QLabel" name="label_115">
-                   <property name="text">
-                    <string>系统低压(Mpa):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="refrigerantL3">
-                   <property name="text">
-                    <string>3</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_85">
-                 <item>
-                  <widget class="QLabel" name="label_68">
-                   <property name="text">
-                    <string>露点温度(℃):</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="dewPointT3">
-                   <property name="text">
-                    <string>26</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_89">
-                 <item>
-                  <widget class="QLabel" name="label_69">
-                   <property name="text">
-                    <string>运行时间:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_86">
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_12">
+                <property name="title">
+                 <string>3#空压机</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_13">
+                 <item row="6" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_54">
                    <item>
-                    <widget class="QLabel" name="runTimeH3">
+                    <widget class="QLabel" name="label_95">
                      <property name="text">
-                      <string>23</string>
+                      <string>系统温度:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_92">
+                    <widget class="QLabel" name="sysT3">
+                     <property name="text">
+                      <string>78</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_133">
                      <property name="maximumSize">
                       <size>
-                       <width>20</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
-                      <string>时</string>
+                      <string>(℃)</string>
                      </property>
                     </widget>
                    </item>
+                  </layout>
+                 </item>
+                 <item row="7" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_55">
                    <item>
-                    <widget class="QLabel" name="runTimeM3">
+                    <widget class="QLabel" name="label_97">
                      <property name="text">
-                      <string>23</string>
+                      <string>加载时间:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_86">
+                    <widget class="QLabel" name="uploadT3">
+                     <property name="text">
+                      <string>3944</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_134">
                      <property name="maximumSize">
                       <size>
-                       <width>20</width>
+                       <width>50</width>
                        <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
-                      <string>分</string>
+                      <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_53">
+                   <item>
+                    <widget class="QLabel" name="label_93">
+                     <property name="text">
+                      <string>主机电流:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="hostA3">
+                     <property name="text">
+                      <string>0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_132">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(A)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_49">
+                   <item>
+                    <widget class="QLabel" name="label_85">
+                     <property name="text">
+                      <string>运行状态:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runningState3">
+                     <property name="text">
+                      <string>运行中</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_127">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_52">
+                   <item>
+                    <widget class="QLabel" name="label_91">
+                     <property name="text">
+                      <string>运行时间:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="runningT3">
+                     <property name="text">
+                      <string>5593</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_131">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_50">
+                   <item>
+                    <widget class="QLabel" name="label_87">
+                     <property name="text">
+                      <string>排气压力:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="ventingPressure3">
+                     <property name="text">
+                      <string>6.97</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_129">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_51">
+                   <item>
+                    <widget class="QLabel" name="label_89">
+                     <property name="text">
+                      <string>排气温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="ventingT3">
+                     <property name="text">
+                      <string>77</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_130">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_69">
+                   <item>
+                    <widget class="QLabel" name="label_36">
+                     <property name="text">
+                      <string>电源:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="powerStatus3">
+                     <property name="text">
+                      <string>断电</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_128">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </item>
                 </layout>
-               </item>
-              </layout>
-             </widget>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <widget class="QGroupBox" name="groupBox_13">
+                <property name="title">
+                 <string>1#冷干机</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_14">
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_57">
+                   <item>
+                    <widget class="QLabel" name="label_99">
+                     <property name="text">
+                      <string>运行状态:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="valveState1">
+                     <property name="text">
+                      <string>开</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_76">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_78">
+                   <item>
+                    <widget class="QLabel" name="label_40">
+                     <property name="text">
+                      <string>故障提示:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="faultHint1">
+                     <property name="text">
+                      <string>无故障</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_72">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_58">
+                   <item>
+                    <widget class="QLabel" name="label_101">
+                     <property name="text">
+                      <string>系统高压:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="refrigerantH1">
+                     <property name="text">
+                      <string>10</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_70">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_59">
+                   <item>
+                    <widget class="QLabel" name="label_103">
+                     <property name="text">
+                      <string>系统低压:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="refrigerantL1">
+                     <property name="text">
+                      <string>3</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_54">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_79">
+                   <item>
+                    <widget class="QLabel" name="label_44">
+                     <property name="text">
+                      <string>露点温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="dewPointT1">
+                     <property name="text">
+                      <string>26</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_50">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_87">
+                   <item>
+                    <widget class="QLabel" name="label_46">
+                     <property name="text">
+                      <string>运行时间:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_80">
+                     <item>
+                      <widget class="QLabel" name="runTimeH1">
+                       <property name="text">
+                        <string>23</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_52">
+                       <property name="maximumSize">
+                        <size>
+                         <width>20</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>时</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="runTimeM1">
+                       <property name="text">
+                        <string>23</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_56">
+                       <property name="maximumSize">
+                        <size>
+                         <width>20</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>分</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_48">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_14">
+                <property name="title">
+                 <string>2#冷干机</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_15">
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_60">
+                   <item>
+                    <widget class="QLabel" name="label_105">
+                     <property name="text">
+                      <string>运行状态:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="valveState2">
+                     <property name="text">
+                      <string>开</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_78">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_81">
+                   <item>
+                    <widget class="QLabel" name="label_64">
+                     <property name="text">
+                      <string>故障提示:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="faultHint2">
+                     <property name="text">
+                      <string>故障</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_82">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_61">
+                   <item>
+                    <widget class="QLabel" name="label_107">
+                     <property name="text">
+                      <string>系统高压:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="refrigerantH2">
+                     <property name="text">
+                      <string>10</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_84">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_62">
+                   <item>
+                    <widget class="QLabel" name="label_109">
+                     <property name="text">
+                      <string>系统低压:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="refrigerantL2">
+                     <property name="text">
+                      <string>3</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_88">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_82">
+                   <item>
+                    <widget class="QLabel" name="label_65">
+                     <property name="text">
+                      <string>露点温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="dewPointT2">
+                     <property name="text">
+                      <string>26</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_90">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_88">
+                   <property name="spacing">
+                    <number>6</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_66">
+                     <property name="text">
+                      <string>运行时间:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_83">
+                     <item>
+                      <widget class="QLabel" name="runTimeH2">
+                       <property name="text">
+                        <string>23</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_80">
+                       <property name="maximumSize">
+                        <size>
+                         <width>20</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>时</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="runTimeM2">
+                       <property name="text">
+                        <string>23</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_74">
+                       <property name="maximumSize">
+                        <size>
+                         <width>20</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>分</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_104">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_15">
+                <property name="title">
+                 <string>3#冷干机</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_16">
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_63">
+                   <item>
+                    <widget class="QLabel" name="label_111">
+                     <property name="text">
+                      <string>运行状态:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="valveState3">
+                     <property name="text">
+                      <string>开</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_94">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_84">
+                   <item>
+                    <widget class="QLabel" name="label_67">
+                     <property name="text">
+                      <string>故障提示:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="faultHint3">
+                     <property name="text">
+                      <string>无故障</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_96">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_64">
+                   <item>
+                    <widget class="QLabel" name="label_113">
+                     <property name="text">
+                      <string>系统高压:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="refrigerantH3">
+                     <property name="text">
+                      <string>10</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_98">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_65">
+                   <item>
+                    <widget class="QLabel" name="label_115">
+                     <property name="text">
+                      <string>系统低压:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="refrigerantL3">
+                     <property name="text">
+                      <string>3</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_100">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_85">
+                   <item>
+                    <widget class="QLabel" name="label_68">
+                     <property name="text">
+                      <string>露点温度:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="dewPointT3">
+                     <property name="text">
+                      <string>26</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_102">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(℃)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_89">
+                   <item>
+                    <widget class="QLabel" name="label_69">
+                     <property name="text">
+                      <string>运行时间:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_86">
+                     <item>
+                      <widget class="QLabel" name="runTimeH3">
+                       <property name="text">
+                        <string>23</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_92">
+                       <property name="maximumSize">
+                        <size>
+                         <width>20</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>时</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="runTimeM3">
+                       <property name="text">
+                        <string>23</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_86">
+                       <property name="maximumSize">
+                        <size>
+                         <width>20</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>分</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_106">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -1572,6 +2125,19 @@ QGroupBox {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QLabel" name="label_135">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1579,7 +2145,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_34">
                    <property name="text">
-                    <string>加载压差(Mpa):</string>
+                    <string>加载压差:</string>
                    </property>
                   </widget>
                  </item>
@@ -1590,6 +2156,19 @@ QGroupBox {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QLabel" name="label_136">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>(Mpa)</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1597,7 +2176,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_35">
                    <property name="text">
-                    <string>卸载压力(Mpa):</string>
+                    <string>卸载压力:</string>
                    </property>
                   </widget>
                  </item>
@@ -1605,6 +2184,19 @@ QGroupBox {
                   <widget class="QLabel" name="uninstallPressure1">
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_137">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1624,7 +2216,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_29">
                    <property name="text">
-                    <string>3#空压机</string>
+                    <string>2#空压机</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -1649,6 +2241,19 @@ QGroupBox {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QLabel" name="label_138">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1656,7 +2261,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_41">
                    <property name="text">
-                    <string>加载压差(Mpa):</string>
+                    <string>加载压差:</string>
                    </property>
                   </widget>
                  </item>
@@ -1667,6 +2272,19 @@ QGroupBox {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QLabel" name="label_139">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>(Mpa)</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1674,7 +2292,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_43">
                    <property name="text">
-                    <string>卸载压力(Mpa):</string>
+                    <string>卸载压力:</string>
                    </property>
                   </widget>
                  </item>
@@ -1682,6 +2300,19 @@ QGroupBox {
                   <widget class="QLabel" name="uninstallPressure2">
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_140">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1726,6 +2357,19 @@ QGroupBox {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QLabel" name="label_141">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1733,7 +2377,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_47">
                    <property name="text">
-                    <string>加载压差(Mpa):</string>
+                    <string>加载压差:</string>
                    </property>
                   </widget>
                  </item>
@@ -1744,6 +2388,19 @@ QGroupBox {
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QLabel" name="label_142">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>(Mpa)</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1751,7 +2408,7 @@ QGroupBox {
                  <item>
                   <widget class="QLabel" name="label_49">
                    <property name="text">
-                    <string>卸载压力(Mpa):</string>
+                    <string>卸载压力:</string>
                    </property>
                   </widget>
                  </item>
@@ -1759,6 +2416,19 @@ QGroupBox {
                   <widget class="QLabel" name="uninstallPressure3">
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_143">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>(Mpa)</string>
                    </property>
                   </widget>
                  </item>
@@ -1858,15 +2528,6 @@ QGroupBox {
         </widget>
         <widget class="QWidget" name="deviceControl_p">
          <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
           <item>
            <widget class="QGroupBox" name="groupBox_3">
             <property name="title">
@@ -2020,6 +2681,57 @@ QGroupBox {
            </widget>
           </item>
           <item>
+           <widget class="QGroupBox" name="groupBox_27">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_22">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="stopCompressor1">
+               <property name="text">
+                <string>1#空压机是否启用</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="stopCompressor2">
+               <property name="text">
+                <string>2#空压机是否启用</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="stopCompressor3">
+               <property name="text">
+                <string>3#空压机是否启用</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QCheckBox" name="stopDryer1">
+               <property name="text">
+                <string>1#冷干机是否启用</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QCheckBox" name="stopDryer2">
+               <property name="text">
+                <string>2#冷干机是否启用</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <widget class="QCheckBox" name="stopDryer3">
+               <property name="text">
+                <string>3#冷干机是否启用</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QGroupBox" name="groupBox_6">
@@ -2156,7 +2868,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Mpa）:</string>
+                    <string>加载压差:</string>
                    </property>
                   </widget>
                  </item>
@@ -2170,6 +2882,19 @@ QGroupBox {
                    </property>
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_144">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2199,7 +2924,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Mpa）:</string>
+                    <string>卸载压力:</string>
                    </property>
                   </widget>
                  </item>
@@ -2213,6 +2938,19 @@ QGroupBox {
                    </property>
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_145">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2369,7 +3107,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Mpa）:</string>
+                    <string>加载压差:</string>
                    </property>
                   </widget>
                  </item>
@@ -2383,6 +3121,19 @@ QGroupBox {
                    </property>
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_146">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2412,7 +3163,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Mpa）:</string>
+                    <string>卸载压力:</string>
                    </property>
                   </widget>
                  </item>
@@ -2426,6 +3177,19 @@ QGroupBox {
                    </property>
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_147">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2582,7 +3346,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>加载压差（Mpa）:</string>
+                    <string>加载压差:</string>
                    </property>
                   </widget>
                  </item>
@@ -2596,6 +3360,19 @@ QGroupBox {
                    </property>
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_148">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>（Mpa）</string>
                    </property>
                   </widget>
                  </item>
@@ -2625,7 +3402,7 @@ QGroupBox {
                     </size>
                    </property>
                    <property name="text">
-                    <string>卸载压力（Mpa）:</string>
+                    <string>卸载压力:</string>
                    </property>
                   </widget>
                  </item>
@@ -2639,6 +3416,19 @@ QGroupBox {
                    </property>
                    <property name="text">
                     <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_149">
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>（Mpa）</string>
                    </property>
                   </widget>
                  </item>

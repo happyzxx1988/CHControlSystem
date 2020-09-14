@@ -191,6 +191,12 @@
        <property name="text">
         <string>登录</string>
        </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -249,7 +255,7 @@
       </font>
      </property>
      <property name="text">
-      <string>长虹智能空压站房系统</string>
+      <string>空压机恒压控制系统</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

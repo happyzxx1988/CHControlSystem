@@ -19,6 +19,8 @@ static bool db_sqllitecreateConnection()
     }
 }
 
+
+
 //创建数据库表
 static bool createTable()
 {

@@ -66,7 +66,22 @@ signals:
     void readOverDryer1Data2();
     void readOverDryer1Data3();
 
+    void readWarningHintInfo();
+
     void readUint16Signal_D();
+
+    void setMaxPressureFinished();
+    void setMinPressureFinished();
+
+    void setUninstallPressure1Finished();
+    void setPressureDiff1Finished();
+
+    void setUninstallPressure2Finished();
+    void setPressureDiff2Finished();
+
+    void setUninstallPressure3Finished();
+    void setPressureDiff3Finished();
+
 
 private:
     QModbusClient *modbusDevice;
@@ -108,10 +123,21 @@ public:
 
     void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
 
-    void readUint16(int address_, int count_, std::vector<quint16> &buffer_);
+    void readUint16(int address_, int count_, QVector<quint16> &buffer_);
 
     void writeAddress26();
     void writeAddress410(int val);
+
+    void readWarningHint(QVector<quint16> &warningInfo);
+
+    void compressorEnable1(bool off);
+    void compressorEnable2(bool off);
+    void compressorEnable3(bool off);
+    void dryerEnable1(bool off);
+    void dryerEnable2(bool off);
+    void dryerEnable3(bool off);
+
+    void sleep(unsigned int msec);
 
 
 };

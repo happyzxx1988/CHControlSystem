@@ -489,8 +489,8 @@ void DataOper::getCompressorInfo(vector<Compressor> &compressors, int Compressor
     bool successFlag = query.exec(sql);
     if(successFlag){
         while(query.next()){
-            compressor.pressureDiff = query.value(0).toDouble();
-            compressor.uninstallPressure = query.value(1).toDouble();
+            compressor.pressureDiff = QString::number(query.value(0).toDouble()/142.0,'f',2).toDouble();
+            compressor.uninstallPressure = QString::number(query.value(1).toDouble()/142.0,'f',2).toDouble();
             compressor.date = query.value(2).toDateTime();
             compressors.push_back(compressor);
         }
