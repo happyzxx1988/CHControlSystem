@@ -603,6 +603,25 @@ void DeviceCommunication::readWarningHint(QVector<quint16> &warningInfo)
         loop.exec();
     }
 }
+
+void DeviceCommunication::readEquipmentStatus(QVector<quint16> &equipmentStatus)
+{
+    QModbusDataUnit readUnit(registerType4, 85, 6);/*类型、首地址、长度*/// 100   267
+    readRequest(readUnit, [this,&equipmentStatus](QModbusDataUnit unit){
+        for (uint i = 0; i < unit.valueCount(); i++) {
+            quint16 value = unit.value(i);
+            equipmentStatus.push_back(value);
+//            qDebug() << "EquipmentStatus:"<<value;
+        }
+        emit readEquipmentStatusInfo();
+    });
+    if(modbusDevice){
+        QEventLoop loop;
+        connect(this, &DeviceCommunication::readEquipmentStatusInfo,&loop, &QEventLoop::quit);
+        loop.exec();
+    }
+}
+
 void DeviceCommunication::compressorEnable1(bool off)
 {
     writeUint16(85, (off ? 0 : 1));

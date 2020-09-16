@@ -253,3 +253,8 @@ void AppCore::readWarningHint(QVector<quint16> &warningInfo)
 {
     dc.readWarningHint(warningInfo);
 }
+
+void AppCore::readEquipmentStatus(QVector<quint16> &equipmentStatus)
+{
+    dc.readEquipmentStatus(equipmentStatus);
+}

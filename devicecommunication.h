@@ -82,6 +82,8 @@ signals:
     void setUninstallPressure3Finished();
     void setPressureDiff3Finished();
 
+    void readEquipmentStatusInfo();
+
 
 private:
     QModbusClient *modbusDevice;
@@ -129,6 +131,7 @@ public:
     void writeAddress410(int val);
 
     void readWarningHint(QVector<quint16> &warningInfo);
+    void readEquipmentStatus(QVector<quint16> &equipmentStatus);
 
     void compressorEnable1(bool off);
     void compressorEnable2(bool off);

@@ -81,6 +81,10 @@ private:
     void saveWarningDryer(int dryerNo, int runState);
 
     void binToDec(unsigned int data, int &h_val, int &l_val);
+    bool PlcIsConnect();
+    void lockUiOperation();
+    void unlockUiOperation();
+    void getInitEquipmentStatus();
 
 private:
     Ui::MainWindow *ui;
@@ -102,10 +106,10 @@ private:
     AppCore appcore;
     int storageInterval;//存储读取数据的时间间隔
     int READ_TIME;
-    int warningHint_time;
     QTimer compressorTimer;
     QTimer timer;
-    QTimer warningHintTimer;
+
+    bool PLCIsConnected;
 
     bool isShowWarning;
     bool compressorIsShowWarning1;

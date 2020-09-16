@@ -61,6 +61,8 @@ public:
 
     void readWarningHint(QVector<quint16> &warningInfo);
 
+    void readEquipmentStatus(QVector<quint16> &equipmentStatus);
+
     void setEquipmentEnable(int equipmentType,bool off);
 
     void readUint16(int address_, int count_, QVector<quint16> &buffer_);

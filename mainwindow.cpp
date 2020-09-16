@@ -23,31 +23,10 @@ MainWindow::MainWindow(int num, QString u, QString p, QWidget *parent) :
     this->initTable();
     this->initChart();
 
-    QStringList aa ;
-    switch (device_num) {
-    case 2:
-        aa  << "选择空压机" << "1#空压机" << "2#空压机";
-        ui->groupBox_12->hide();
-        ui->groupBox_15->hide();
-        ui->groupBox_21->hide();
-        ui->groupBox_24->hide();
-        ui->groupBox_12->hide();
-        ui->groupBox_15->hide();
-        ui->groupBox_8->hide();
-        ui->groupBox_5->hide();
-        ui->stopCompressor3->hide();
-        ui->stopDryer3->hide();
-        break;
-    case 3:
-        aa  << "选择空压机" << "1#空压机" << "2#空压机" << "3#空压机";
-        break;
-    }
-    ui->compressorNO->clear();
-    ui->compressorNO->addItems(aa);
 
-    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png")); // 10442511021.png  log.png
-    ui->sys_name->setText("空压机恒压控制系统");
-    setWindowTitle("空压机恒压控制系统");
+//    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
+//    ui->sys_name->setText("空压机恒压控制系统");
+//    setWindowTitle("空压机恒压控制系统");
 }
 
 MainWindow::~MainWindow()
@@ -56,9 +35,7 @@ MainWindow::~MainWindow()
     if(compressorTimer.isActive()){
         compressorTimer.stop();
     }
-    if(warningHintTimer.isActive()){
-        warningHintTimer.stop();
-    }
+
     QProcess *process = new QProcess;
     process->start("taskkill", QStringList() << "/f" << "/im" << "CHControlSystem.exe");
 }
@@ -68,7 +45,6 @@ void MainWindow::initForm()
 {
     QDate date = QDate::currentDate();   //获取当前日期
     READ_TIME =      1000;    //定时读取间隔时间
-    warningHint_time = 300;  //报警提示定时器
 
     ui->warningStartime->setDate(date);
     ui->warningEndTime->setDate(date);
@@ -93,13 +69,34 @@ void MainWindow::initForm()
     dryerIsShowWarning1 = true;
     dryerIsShowWarning2 = true;
     dryerIsShowWarning3 = true;
-    ui->stopCompressor1->setChecked(compressorIsShowWarning1);
-    ui->stopCompressor2->setChecked(compressorIsShowWarning2);
-    ui->stopCompressor3->setChecked(compressorIsShowWarning3);
-    ui->stopDryer1->setChecked(dryerIsShowWarning1);
-    ui->stopDryer2->setChecked(dryerIsShowWarning2);
-    ui->stopDryer3->setChecked(dryerIsShowWarning3);
+    PLCIsConnected = false;
+
+    lockUiOperation();
+
     storageInterval = 0;
+
+    QStringList aa ;
+    switch (device_num) {
+    case 2:
+        aa  << "选择空压机" << "1#空压机" << "2#空压机";
+        ui->groupBox_12->hide();
+        ui->groupBox_15->hide();
+        ui->groupBox_21->hide();
+        ui->groupBox_24->hide();
+        ui->groupBox_12->hide();
+        ui->groupBox_15->hide();
+        ui->groupBox_8->hide();
+        ui->groupBox_5->hide();
+        ui->stopCompressor3->hide();
+        ui->stopDryer3->hide();
+        break;
+    case 3:
+        aa  << "选择空压机" << "1#空压机" << "2#空压机" << "3#空压机";
+        break;
+    }
+    ui->compressorNO->clear();
+    ui->compressorNO->addItems(aa);
+
 
     connect(&timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
     timer.start(1000);
@@ -107,8 +104,6 @@ void MainWindow::initForm()
     connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readCompressorTimer()));
 
     connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readWarningHintTimer()));
-
-    connect(&warningHintTimer,SIGNAL(timeout()),this,SLOT(readWarningHintTimer()));
 
     connect(ui->userTable,SIGNAL(cellClicked(int,int)),this,SLOT(checkRowSlot(int,int)));
     /*数据处理的消息传输*/
@@ -122,28 +117,30 @@ void MainWindow::initForm()
         ui->connectPLCBtn->setStyleSheet("background-color: rgb(85, 255, 0);");
         ui->connectPLCBtn->setEnabled(false);
 
+        unlockUiOperation();
+
+        PLCIsConnected = true;
+
         //设备启动，设置手动模式
         appcore.setRunMode(ManualMode);
         ui->runningMode->setText("手动");
         ui->manualOper->setChecked(true);
+        getInitEquipmentStatus();//读取设备初始化状态
 
         if(!compressorTimer.isActive()){
             compressorTimer.start(READ_TIME);
         }
-//        if(!warningHintTimer.isActive()){
-//            warningHintTimer.start(warningHint_time);
-//        }
+
     });
     connect(&appcore, &AppCore::deviceDisconnected, this, [this](){
         qDebug() << "emit deviceDisconnected()";
         ui->connectPLCBtn->setText("已断开");
         ui->connectPLCBtn->setStyleSheet("background-color: rgb(255, 0, 0);");
         ui->connectPLCBtn->setEnabled(true);
+        lockUiOperation();
+        PLCIsConnected = false;
         if(compressorTimer.isActive()){
             compressorTimer.stop();
-        }
-        if(warningHintTimer.isActive()){
-            warningHintTimer.stop();
         }
     });
     connect(&appcore, &AppCore::errorMessage, this, [this](const QString& error){
@@ -372,6 +369,9 @@ void MainWindow::checkBox_pressed(bool checked)
 {
     QCheckBox *b = (QCheckBox *)sender();
     QString text = b->text();
+    if(!PLCIsConnected){
+        return;
+    }
     if (text == "1#空压机是否启用") {
         compressorIsShowWarning1 = checked;
         appcore.setEquipmentEnable(1,checked);
@@ -702,6 +702,9 @@ void MainWindow::on_autoOper_clicked()
 //设备控制---压力设置按钮
 void MainWindow::on_pressureSetBtn_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     pressureSetDialog = new PressureSetDialog(userName,&appcore);
     connect(pressureSetDialog,&PressureSetDialog::closeCurrentDialog,this,&MainWindow::pressure_call_back);
     pressureSetDialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -717,7 +720,9 @@ void MainWindow::pressure_call_back(float maxPressure, float minPressure)
 //设备控制---1#空压机设置
 void MainWindow::on_compressorSetBtn1_clicked()
 {
-
+    if(PlcIsConnect()){
+        return;
+    }
     compressorSetDialog = new CompressorSetDialog(userName,1,&appcore);
     connect(compressorSetDialog,&CompressorSetDialog::closeCurrentDialog,this,&MainWindow::compressor_call_back);
     compressorSetDialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -727,6 +732,9 @@ void MainWindow::on_compressorSetBtn1_clicked()
 //设备控制---2#空压机设置
 void MainWindow::on_compressorSetBtn2_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     compressorSetDialog = new CompressorSetDialog(userName,2,&appcore);
     connect(compressorSetDialog,&CompressorSetDialog::closeCurrentDialog,this,&MainWindow::compressor_call_back);
     compressorSetDialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -736,6 +744,9 @@ void MainWindow::on_compressorSetBtn2_clicked()
 //设备控制---3#空压机设置
 void MainWindow::on_compressorSetBtn3_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     compressorSetDialog = new CompressorSetDialog(userName,3,&appcore);
     connect(compressorSetDialog,&CompressorSetDialog::closeCurrentDialog,this,&MainWindow::compressor_call_back);
     compressorSetDialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -758,12 +769,18 @@ void MainWindow::compressor_call_back(int compressorNO, float uninstallPressure,
 //设备控制---运行模式复位按钮
 void MainWindow::on_runResetBtn_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     appcore.resetOperation();
     dataOper.saveLog(STATION_HOUSE,"运行模式","运行模式复位设置",userName,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 }
 //设备控制---1#冷干机开关
 void MainWindow::on_dryerBtn1_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     if(dryerSwitch1){
         appcore.setEquipmentSwitch(4,false);
         ui->dryerBtn1->setIcon(QIcon(":/images/images/btncheckoff2.png"));
@@ -778,6 +795,9 @@ void MainWindow::on_dryerBtn1_clicked()
 //设备控制---2#冷干机开关
 void MainWindow::on_dryerBtn2_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     if(dryerSwitch2){
         appcore.setEquipmentSwitch(5,false);
         ui->dryerBtn2->setIcon(QIcon(":/images/images/btncheckoff2.png"));
@@ -792,6 +812,9 @@ void MainWindow::on_dryerBtn2_clicked()
 //设备控制---3#冷干机开关
 void MainWindow::on_dryerBtn3_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     if(dryerSwitch3){
         appcore.setEquipmentSwitch(6,false);
         ui->dryerBtn3->setIcon(QIcon(":/images/images/btncheckoff2.png"));
@@ -806,6 +829,9 @@ void MainWindow::on_dryerBtn3_clicked()
 //设备控制---1#空压机开关
 void MainWindow::on_compressorBtn1_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     if(compressorSwitch1){
         appcore.setEquipmentSwitch(1,false);
         ui->compressorBtn1->setIcon(QIcon(":/images/images/btncheckoff2.png"));
@@ -820,6 +846,9 @@ void MainWindow::on_compressorBtn1_clicked()
 //设备控制---2#空压机开关
 void MainWindow::on_compressorBtn2_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     if(compressorSwitch2){
         appcore.setEquipmentSwitch(2,false);
         ui->compressorBtn2->setIcon(QIcon(":/images/images/btncheckoff2.png"));
@@ -834,6 +863,9 @@ void MainWindow::on_compressorBtn2_clicked()
 //设备控制---3#空压机开关
 void MainWindow::on_compressorBtn3_clicked()
 {
+    if(PlcIsConnect()){
+        return;
+    }
     if(compressorSwitch3){
         appcore.setEquipmentSwitch(3,false);
         ui->compressorBtn3->setIcon(QIcon(":/images/images/btncheckoff2.png"));
@@ -1530,6 +1562,19 @@ void MainWindow::saveWarningDryer(int dryerNo, int runState)
 }
 
 
+//初始读取设备是否启用
+void MainWindow::getInitEquipmentStatus()
+{
+    QVector<quint16> equipmentStatus;
+    appcore.readEquipmentStatus(equipmentStatus);
+
+    ui->stopCompressor1->setChecked(!equipmentStatus.at(0));
+    ui->stopCompressor2->setChecked(!equipmentStatus.at(1));
+    ui->stopCompressor3->setChecked(!equipmentStatus.at(2));
+    ui->stopDryer1->setChecked(!equipmentStatus.at(3));
+    ui->stopDryer2->setChecked(!equipmentStatus.at(4));
+    ui->stopDryer3->setChecked(!equipmentStatus.at(5));
+}
 
 
 
@@ -1641,3 +1686,32 @@ void MainWindow::binToDec(unsigned int data, int &h_val, int &l_val)
 
 }
 
+bool MainWindow::PlcIsConnect()
+{
+    if(!PLCIsConnected){
+        QMessageBox::information(this, "提示", "PLC未连接！","确定");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+void MainWindow::lockUiOperation()
+{
+    ui->stopCompressor1->setEnabled(false);
+    ui->stopCompressor2->setEnabled(false);
+    ui->stopCompressor3->setEnabled(false);
+    ui->stopDryer1->setEnabled(false);
+    ui->stopDryer2->setEnabled(false);
+    ui->stopDryer3->setEnabled(false);
+
+}
+void MainWindow::unlockUiOperation()
+{
+    ui->stopCompressor1->setEnabled(true);
+    ui->stopCompressor2->setEnabled(true);
+    ui->stopCompressor3->setEnabled(true);
+    ui->stopDryer1->setEnabled(true);
+    ui->stopDryer2->setEnabled(true);
+    ui->stopDryer3->setEnabled(true);
+}
