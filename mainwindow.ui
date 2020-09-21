@@ -14,36 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*QGroupBox{
-    border-width:1px;   //线的粗细
-   border-style:solid;
-  border-color:red;   //颜色，
-  margin-top: 0.5ex;  //文字在方框中位置的偏离度
-}*/
-
-/*QGroupBox{border:1px solid red;
-
- margin-top: -1ex;
-}
-
-QGroupBox::title {
-
-color: rgb(0, 0, 0);
-
-subcontrol-origin: margin;
-
-subcontrol-position: top left;
-
-left:10px;
-
-top:0px;
-
-padding: 0px;
-
-}*/
-
-
-QGroupBox {
+   <string notr="true">QGroupBox {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #E0E0E0, stop: 1 #FFFFFF);
     border: 1px solid gray;
@@ -52,14 +23,18 @@ QGroupBox {
 }
 
 
+QToolButton{  
+	color:rgb(255, 255, 255);  
+	border-style:solid;  	
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 rgb(226,236,241),   
+                            stop: 0.3 rgb(160,160,160),  
+                              stop: 1 rgb(140,140,140));  
+	border:1px;  
+	background:transparent;
+	padding:1px 1px;
+}  
 
-/*QGroupBox::title {
-    subcontrol-origin: margin;
-    subcontrol-position: top center; 
-    padding: 0 3px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FFOECE, stop: 1 #FFFFFF);
-}*/</string>
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
