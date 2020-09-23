@@ -38,6 +38,10 @@ public:
     void saveWarningInfo(Warning warning);
     void getCompressorInfo(vector<Compressor> &compressors, int CompressorNo, QString s_start, QString e_time);
 
+    void deleteGrabDataInfo(QString tableName,QString time);
+    void deleteLogDataInfo(QString time);
+    void deleteWarningDataInfo(QString time);
+
 
 
 

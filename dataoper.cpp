@@ -498,3 +498,45 @@ void DataOper::getCompressorInfo(vector<Compressor> &compressors, int Compressor
         qDebug() << tr("加载数据失败: ") + query.lastError().text();
     }
 }
+
+
+
+//删除给定时间之前的采集的数据，
+void DataOper::deleteGrabDataInfo(QString tableName,QString time)
+{
+    QSqlQuery query;
+    QString sql = nullptr;
+    sql += QString("delete from %1 where date <= '%2 23:59:59'").arg(tableName).arg(time);
+    qDebug() << sql;
+    if(query.exec(sql)){
+//        qDebug() << QString("delete %1 success").arg(tableName);
+    }else{
+//        qDebug() << QString("delete %1 fail: %2").arg(tableName).arg(query.lastError().text());
+    }
+}
+//删除给定时间之前的日志数据，
+void DataOper::deleteLogDataInfo(QString time)
+{
+    QSqlQuery query;
+    QString sql = nullptr;
+    sql += QString("delete from operlog where date <= '%1 23:59:59'").arg(time);
+    qDebug() << sql;
+    if(query.exec(sql)){
+//        qDebug() << "delete log success";
+    }else{
+//        qDebug() << "delete log fail: " + query.lastError().text();
+    }
+}
+//删除给定时间之前的警告数据
+void DataOper::deleteWarningDataInfo(QString time)
+{
+    QSqlQuery query;
+    QString sql = nullptr;
+    sql += QString("delete from warning where date <= '%1 23:59:59'").arg(time);
+    qDebug() << sql;
+    if(query.exec(sql)){
+//        qDebug() << "delete warning success";
+    }else{
+//        qDebug() << "delete warning fail: " + query.lastError().text();
+    }
+}

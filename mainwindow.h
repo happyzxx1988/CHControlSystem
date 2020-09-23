@@ -86,6 +86,8 @@ private:
     void unlockUiOperation();
     void getInitEquipmentStatus();
 
+    QString getDefineTimeByDay(int day);
+
 private:
     Ui::MainWindow *ui;
     QString userName;

@@ -171,6 +171,20 @@ void MainWindow::initForm()
     // Connect to Device
     appcore.initDevice();
 
+    //删除给定时间之前的数据，包括采集数据，警告数据，日志数据 默认保留10的数据
+
+    QString defineTime = this->getDefineTimeByDay(-10);
+
+//    dataOper.deleteGrabDataInfo("Compressor1",defineTime);
+//    dataOper.deleteGrabDataInfo("Compressor2",defineTime);
+//    dataOper.deleteGrabDataInfo("Compressor3",defineTime);
+//    dataOper.deleteGrabDataInfo("dryer1",defineTime);
+//    dataOper.deleteGrabDataInfo("dryer2",defineTime);
+//    dataOper.deleteGrabDataInfo("dryer3",defineTime);
+
+//    dataOper.deleteWarningDataInfo(defineTime);
+//    dataOper.deleteLogDataInfo(defineTime);
+
 }
 void MainWindow::initTable()
 {
@@ -1610,6 +1624,18 @@ void MainWindow::timerUpdate(void)
     //图像采集的当前时间toString();
     QString currentDateTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     ui->currenTime->setText(currentDateTime);//设置测量日期是当前日期
+}
+
+//返回当前时间之间的时间或者之后的时间，负数 之前的天数  整数 之后的天数
+QString MainWindow::getDefineTimeByDay(int day)
+{
+//    QDateTime time = QDateTime::currentDateTime();//获取系统现在的时间
+//    QString str = time.toString("yyyy-MM-dd hh:mm:ss"); //设置显示格式
+//    QString BeforeDaystr = time.addDays(day).toString("yyyy-MM-dd hh:mm:ss");//获取前一天时间
+
+//    qDebug() << BeforeDaystr;
+//    return BeforeDaystr;
+    return QDateTime::currentDateTime().addDays(day).toString("yyyy-MM-dd");
 }
 
 
