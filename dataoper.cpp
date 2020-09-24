@@ -540,3 +540,105 @@ void DataOper::deleteWarningDataInfo(QString time)
 //        qDebug() << "delete warning fail: " + query.lastError().text();
     }
 }
+
+
+void DataOper::GetTotalRecordCount(QString tableName, int &totalRecordCount)
+{
+    QSqlQuery query;
+    QString sql = QString("select  count(1) as count  from  %1").arg(tableName);
+    if(query.exec(sql)){
+        if(query.next()){
+            totalRecordCount = query.value(0).toInt();
+        }
+    }else{
+        qDebug() << "GetTotalRecordCount fail: " + query.lastError().text();
+    }
+}
+
+void DataOper::RecordQuery(int limitIndex,int pageRecordCount,QString tableName, vector<Compressor> &compressors,vector<Dryer> &dryers)
+{
+    Compressor  compressor;
+    Dryer  dryer;
+    QSqlQuery query;
+    QString sql = nullptr;
+    if(tableName.contains("Compressor")){
+        sql = QString("select runTimeL,runTimeH,loadTimeL,loadTimeH,electricityType,airDemand,jointControlMode,voltageDeviation,hostCurrent,"
+                      "dewPointTemperature,EnvironmentalTemperature,T1,T2,P1,P2,T3,T4,P3,P4,T5,T6,runMode1,runMode2,"
+                      "runMode3,dp1,pressureDiff,uninstallPressure,MaxManifoldPressure,MinManifoldPressure,MinimalPressure,"
+                      "StartLoadDelayTime,StopTime,OrderTime,RotateTime,TransitionTime,date from %1 limit %2,%3")
+                .arg(tableName).arg(limitIndex).arg(pageRecordCount);
+    }
+    if(tableName.contains("dryer")){
+        sql = QString("select runHint,faultHint,compressor,drainer,phaseOrderFault,overloadSave,sysHighVoltage,sysLowVoltage,dewPointProbeFault,"
+                      "dewPointH,dewPointL,faultWarn,faultStop,countDown,dewPointT,runTimeH,runTimeM,date from %1 limit %2,%3")
+                .arg(tableName).arg(limitIndex).arg(pageRecordCount);
+    }
+    bool successFlag = query.exec(sql);
+    if(successFlag){
+        while(query.next()){
+            if(tableName.contains("Compressor")){
+                compressor.runTimeL = query.value(0).toDouble();
+                compressor.runTimeH = query.value(1).toDouble();
+                compressor.loadTimeL = query.value(2).toDouble();
+                compressor.loadTimeH = query.value(3).toDouble();
+                compressor.electricityType = query.value(4).toDouble();
+                compressor.airDemand = query.value(5).toDouble();
+                compressor.jointControlMode = query.value(6).toDouble();
+                compressor.voltageDeviation = query.value(7).toDouble();
+                compressor.hostCurrent = query.value(8).toDouble();
+                compressor.dewPointTemperature = query.value(9).toDouble();
+                compressor.EnvironmentalTemperature = query.value(10).toDouble();
+                compressor.T1 = query.value(11).toDouble();
+                compressor.T2 = query.value(12).toDouble();
+                compressor.P1 = query.value(13).toDouble();
+                compressor.P2 = query.value(14).toDouble();
+                compressor.T3 = query.value(15).toDouble();
+                compressor.T4 = query.value(16).toDouble();
+                compressor.P3 = query.value(17).toDouble();
+                compressor.P4 = query.value(18).toDouble();
+                compressor.T5 = query.value(19).toDouble();
+                compressor.T6 = query.value(20).toDouble();
+                compressor.runMode1 = query.value(21).toDouble();
+                compressor.runMode2 = query.value(22).toDouble();
+                compressor.runMode3 = query.value(23).toDouble();
+                compressor.dp1 = query.value(24).toDouble();
+                compressor.pressureDiff = QString::number(query.value(25).toDouble()/142.0,'f',2).toDouble();
+                compressor.uninstallPressure = QString::number(query.value(26).toDouble()/142.0,'f',2).toDouble();
+                compressor.MaxManifoldPressure = query.value(27).toDouble();
+                compressor.MinManifoldPressure = query.value(28).toDouble();
+                compressor.MinimalPressure = query.value(29).toDouble();
+                compressor.StartLoadDelayTime = query.value(30).toDouble();
+                compressor.StopTime = query.value(31).toDouble();
+                compressor.OrderTime = query.value(32).toDouble();
+                compressor.RotateTime = query.value(33).toDouble();
+                compressor.TransitionTime = query.value(34).toDouble();
+                compressor.date = query.value(35).toDateTime();
+                compressors.push_back(compressor);
+            }
+            if(tableName.contains("dryer")){
+                dryer.runHint = query.value(0).toDouble();
+                dryer.faultHint = query.value(1).toDouble();
+                dryer.compressor = query.value(2).toDouble();
+                dryer.drainer = query.value(3).toDouble();
+                dryer.phaseOrderFault = query.value(4).toDouble();
+                dryer.overloadSave = query.value(5).toDouble();
+                dryer.sysHighVoltage = query.value(6).toDouble();
+                dryer.sysLowVoltage = query.value(7).toDouble();
+                dryer.dewPointProbeFault = query.value(8).toDouble();
+                dryer.dewPointH = query.value(9).toDouble();
+                dryer.dewPointL = query.value(10).toDouble();
+                dryer.faultWarn = query.value(11).toDouble();
+                dryer.faultStop = query.value(12).toDouble();
+                dryer.countDown = query.value(13).toDouble();
+                dryer.dewPointT = query.value(14).toDouble();
+                dryer.runTimeH = query.value(15).toDouble();
+                dryer.runTimeM = query.value(16).toDouble();
+                dryer.date = query.value(17).toDateTime();
+                dryers.push_back(dryer);
+            }
+        }
+    }else{
+        qDebug() << tr("分页查询数据失败: ") + query.lastError().text();
+    }
+}
+

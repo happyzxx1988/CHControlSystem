@@ -76,6 +76,26 @@ struct Compressor
     QDateTime date;//存储时间
 };
 
-
+struct Dryer
+{
+    double runHint;//运行提示
+    double faultHint;//故障提示 1
+    double compressor;//压缩机
+    double drainer;//排水器
+    double phaseOrderFault;//相序故障 2
+    double overloadSave;//故障保护 3
+    double sysHighVoltage;//系统高压
+    double sysLowVoltage;//系统低压
+    double dewPointProbeFault;//露点探头故障 4
+    double dewPointH;//露点偏高
+    double dewPointL;//露点偏低
+    double faultWarn;//故障报警 5
+    double faultStop;//故障停机 6
+    double countDown;//倒计时
+    double dewPointT;//露点温度
+    double runTimeH;//运行计时（时）
+    double runTimeM;//运行计时（分）
+    QDateTime date;//存储时间
+};
 
 #endif // OBJECTINFO_H

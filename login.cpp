@@ -32,8 +32,8 @@ Login::Login(QWidget *parent) :
     }
 
     ui->logLabel->hide();
-//    ui->logLabel->setText("空压机恒压控制系统");
-//    this->setWindowTitle("空压机恒压控制系统");
+//    ui->logLabel->setText("双创园空压机站房恒压控制系统");
+//    this->setWindowTitle("双创园空压机站房恒压控制系统");
 
 }
 

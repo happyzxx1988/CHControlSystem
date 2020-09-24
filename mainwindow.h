@@ -68,6 +68,18 @@ private slots:
 
     void warningHint_call_back(bool a, bool b, bool c, bool d, bool e, bool f);
 
+    void radioButton_pressed(bool checked);
+
+    void on_fristButton_clicked();
+
+    void on_prevButton_clicked();
+
+    void on_switchPageButton_clicked();
+
+    void on_nextButton_clicked();
+
+    void on_lastButton_clicked();
+
 private:
     void initForm();
     void clearTable(QTableWidget *table);
@@ -87,6 +99,12 @@ private:
     void getInitEquipmentStatus();
 
     QString getDefineTimeByDay(int day);
+    void GetTotalRecordCount();
+    void GetPageCount();
+    void initDatatable();
+    void RecordQuery(int limitIndex);
+    void UpdateStatus();
+    bool radioButtonIsChecked();
 
 private:
     Ui::MainWindow *ui;
@@ -136,6 +154,13 @@ private:
     QChart        *pd_chart;
 
     QLabel        *m_valueLabel;
+
+    //table 分页处理
+    int       currentPage;      //当前页
+    int       totalPage;    //总页数
+    int       totalRecrodCount;     //总记录数
+    int       PageRecordCount;      //每页记录数
+    QString tableName;
 
 };
 

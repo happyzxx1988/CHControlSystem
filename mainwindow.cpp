@@ -6,7 +6,6 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QDebug>
-#include "mainwindow.h"
 
 //#define STATION_HOUSE   "202"        //站房201-3    102-2   202-2
 //#define STORE_TIME      60000      //储存读取数据的时间间隔  暂定1分钟
@@ -25,8 +24,10 @@ MainWindow::MainWindow(int num, QString u, QString p, QWidget *parent) :
 
 
 //    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
-//    ui->sys_name->setText("空压机恒压控制系统");
-//    setWindowTitle("空压机恒压控制系统");
+//    ui->sys_name->setText("双创园空压机站房恒压控制系统");
+//    setWindowTitle("双创园空压机站房恒压控制系统");
+
+
 }
 
 MainWindow::~MainWindow()
@@ -89,6 +90,8 @@ void MainWindow::initForm()
         ui->groupBox_5->hide();
         ui->stopCompressor3->hide();
         ui->stopDryer3->hide();
+        ui->radioButton_3->hide();
+        ui->radioButton_6->hide();
         break;
     case 3:
         aa  << "选择空压机" << "1#空压机" << "2#空压机" << "3#空压机";
@@ -157,6 +160,15 @@ void MainWindow::initForm()
     connect(ui->pushButton_5, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
     connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
     connect(ui->pushButton_7, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_8, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+
+    connect(ui->radioButton_1, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
+    connect(ui->radioButton_2, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
+    connect(ui->radioButton_3, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
+    connect(ui->radioButton_4, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
+    connect(ui->radioButton_5, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
+    connect(ui->radioButton_6, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
+
 
     connect(ui->stopCompressor1, &QCheckBox::toggled, this, &MainWindow::checkBox_pressed);
     connect(ui->stopCompressor2, &QCheckBox::toggled, this, &MainWindow::checkBox_pressed);
@@ -184,6 +196,32 @@ void MainWindow::initForm()
 
 //    dataOper.deleteWarningDataInfo(defineTime);
 //    dataOper.deleteLogDataInfo(defineTime);
+
+    //不需要系统高压、系统低压参数
+    ui->label_101->hide();
+    ui->refrigerantH1->hide();
+    ui->label_70->hide();
+
+    ui->label_107->hide();
+    ui->refrigerantH2->hide();
+    ui->label_84->hide();
+
+    ui->label_113->hide();
+    ui->refrigerantH3->hide();
+    ui->label_98->hide();
+
+    ui->label_103->hide();
+    ui->refrigerantL1->hide();
+    ui->label_54->hide();
+
+    ui->label_109->hide();
+    ui->refrigerantL2->hide();
+    ui->label_88->hide();
+
+    ui->label_115->hide();
+    ui->refrigerantL3->hide();
+    ui->label_100->hide();
+
 
 }
 void MainWindow::initTable()
@@ -249,13 +287,16 @@ void MainWindow::initTable()
     ui->logTable->horizontalHeader()->setStretchLastSection(true);
     //设置行高
     ui->logTable->setRowCount(30);
+
+
+
 }
 void MainWindow::initChart()
 {
     m_valueLabel = new QLabel(this);
     m_valueLabel->setStyleSheet(QString("QLabel{color:#1564FF; font-family:\"Microsoft Yahei\"; font-size:12px; font-weight:bold;"
                                         " background-color:rgba(21, 100, 255, 51); border-radius:4px; text-align:center;}"));
-    m_valueLabel->setFixedSize(44, 24);
+    m_valueLabel->setFixedSize(180, 30);
     m_valueLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_valueLabel->hide();
     ui->upWidget->setRenderHint(QPainter::Antialiasing);
@@ -272,7 +313,7 @@ void MainWindow::initChart()
     pd_chart = ui->pdWidget->chart();
 
     up_x->setTickCount(10);
-    up_x->setFormat("yy-MM-dd hh:mm");
+    up_x->setFormat("yyyy-MM-dd hh:mm:ss");
     up_x->setLabelsAngle(20);
     up_x->setTitleText("采集时间");
     up_y->setTitleText("卸载压力");
@@ -285,7 +326,7 @@ void MainWindow::initChart()
     up_chart->setDropShadowEnabled(true);
 
     pd_x->setTickCount(10);
-    pd_x->setFormat("yy-MM-dd hh:mm");
+    pd_x->setFormat("yyyy-MM-dd hh:mm:ss");
     pd_x->setLabelsAngle(20);
     pd_x->setTitleText("采集时间");
     pd_y->setTitleText("加载压差");
@@ -371,16 +412,21 @@ void MainWindow::navigation_pressed()
     } else if (text == "系统报警") {
         ui->stackedWidget->setCurrentIndex(4);
 //        on_warningResetBtn_clicked();
-    } else if (text == "历史数据") {
+    } else if (text == "变化曲线") {
         ui->stackedWidget->setCurrentIndex(5);
     } else if (text == "用户管理") {
         ui->stackedWidget->setCurrentIndex(6);
         on_userClearBtn_clicked();
+    } else if (text == "历史数据") {
+        ui->stackedWidget->setCurrentIndex(7);
     }
 }
 //设置是否启用报警弹窗功能
 void MainWindow::checkBox_pressed(bool checked)
 {
+    if(!checked){
+        return;
+    }
     QCheckBox *b = (QCheckBox *)sender();
     QString text = b->text();
     if(!PLCIsConnected){
@@ -406,6 +452,7 @@ void MainWindow::checkBox_pressed(bool checked)
         appcore.setEquipmentEnable(6,checked);
     }
 }
+
 //连接PLC
 void MainWindow::on_connectPLCBtn_clicked()
 {
@@ -1044,9 +1091,11 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         //主界面
         if(aa.at(9)){
             ui->runningState1->setText("运行中");//运行状态
+            ui->runningState1->setStyleSheet("color:#336600;");
         }else{
             if(!aa.at(10) && !aa.at(11)){
                 ui->runningState1->setText("停止");//运行状态
+                ui->runningState1->setStyleSheet("color:#990000;");
             }
         }
         if(aa.at(10)){
@@ -1056,6 +1105,7 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState1->setText("满载");//运行状态
         }
         ui->powerStatus1->setText(aa.at(8) ? "上电" : "断电");//电源
+        ui->powerStatus1->setStyleSheet(aa.at(8) ? "color:#336600;" : "color:#990000;");
         ui->ventingPressure1->setText(QString::number(P2/142.0,'f',2));//排气压力
         ui->ventingT1->setText(QString::number(T1));//排气温度
         ui->runningT1->setText(QString::number(runTimeL));//运行时间
@@ -1064,6 +1114,7 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         ui->uploadT1->setText(QString::number(loadTimeL));//加载时间
         //设备状态
         ui->compressorRunState1->setText(aa.at(9) ? "运行中" : "停止");//运行状态
+        ui->compressorRunState1->setStyleSheet(aa.at(9) ? "color:#336600;" : "color:#990000;");
         ui->pressureDiff1->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
         ui->uninstallPressure1->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
         //设备控制
@@ -1105,7 +1156,9 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         }
         //主界面
         ui->valveState1->setText(runHint ? "运行中" : "停机状态");//运行状态
+        ui->valveState1->setStyleSheet(runHint ? "color:#336600;" : "color:#990000;");
         ui->faultHint1->setText(faultHint ? "故障" : "无故障");//故障提示
+        ui->faultHint1->setStyleSheet(faultHint ? "color:#990000;" : "color:#336600;");
         ui->refrigerantH1->setText(QString::number(sysHighVoltage));//系统高压
         ui->refrigerantL1->setText(QString::number(sysLowVoltage));//系统低压
         ui->dewPointT1->setText(QString::number(dewPointT));//露点温度
@@ -1139,9 +1192,11 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         //主界面
         if(aa.at(9)){
             ui->runningState2->setText("运行中");//运行状态
+            ui->runningState2->setStyleSheet("color:#336600;");
         }else{
             if(!aa.at(10) && !aa.at(11)){
                 ui->runningState2->setText("停止");//运行状态
+                ui->runningState2->setStyleSheet("color:#990000;");
             }
         }
         if(aa.at(10)){
@@ -1151,6 +1206,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState2->setText("满载");//运行状态
         }
         ui->powerStatus2->setText(aa.at(8) ? "上电" : "断电");//电源
+        ui->powerStatus2->setStyleSheet(aa.at(8) ? "color:#336600;" : "color:#990000;");
         ui->ventingPressure2->setText(QString::number(P2/142.0,'f',2));//排气压力
         ui->ventingT2->setText(QString::number(T1));//排气温度
         ui->runningT2->setText(QString::number(runTimeL));//运行时间
@@ -1159,6 +1215,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         ui->uploadT2->setText(QString::number(loadTimeL));//加载时间
         //设备状态
         ui->compressorRunState2->setText(aa.at(9) ? "运行中" : "停止");//运行状态
+        ui->compressorRunState2->setStyleSheet(aa.at(9) ? "color:#336600;" : "color:#990000;");
         ui->pressureDiff2->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
         ui->uninstallPressure2->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
         //设备控制
@@ -1201,7 +1258,9 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
 
         //主界面
         ui->valveState2->setText(runHint ? "运行中" : "停机状态");//阀门状态
+        ui->valveState2->setStyleSheet(runHint ? "color:#336600;" : "color:#990000;");
         ui->faultHint2->setText(faultHint ? "故障" : "无故障");//故障提示
+        ui->faultHint2->setStyleSheet(faultHint ? "color:#990000;" : "color:#336600;");
         ui->refrigerantH2->setText(QString::number(sysHighVoltage));//系统高压
         ui->refrigerantL2->setText(QString::number(sysLowVoltage));//系统低压
         ui->dewPointT2->setText(QString::number(dewPointT));//露点温度
@@ -1237,9 +1296,11 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         //主界面
         if(aa.at(9)){
             ui->runningState3->setText("运行中");//运行状态
+            ui->runningState3->setStyleSheet("color:#336600;");
         }else{
             if(!aa.at(10) && !aa.at(11)){
                 ui->runningState3->setText("停止");//运行状态
+                ui->runningState3->setStyleSheet("color:#990000;");
             }
         }
         if(aa.at(10)){
@@ -1249,6 +1310,7 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
             ui->runningState3->setText("满载");//运行状态
         }
         ui->powerStatus3->setText(aa.at(8) ? "上电" : "断电");//电源
+        ui->powerStatus3->setStyleSheet(aa.at(8) ? "color:#336600;" : "color:#990000;");
         ui->ventingPressure3->setText(QString::number(P2/142.0,'f',2));//排气压力
         ui->ventingT3->setText(QString::number(T1));//排气温度
         ui->runningT3->setText(QString::number(runTimeL));//运行时间
@@ -1257,6 +1319,7 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         ui->uploadT3->setText(QString::number(loadTimeL));//加载时间
         //设备状态
         ui->compressorRunState3->setText(aa.at(9) ? "运行中" : "停止");//运行状态
+        ui->compressorRunState3->setStyleSheet(aa.at(9) ? "color:#336600;" : "color:#990000;");
         ui->pressureDiff3->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
         ui->uninstallPressure3->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
         //设备控制
@@ -1299,7 +1362,9 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
 
         //主界面
         ui->valveState3->setText(runHint ? "运行中" : "停机状态");//阀门状态
+        ui->valveState3->setStyleSheet(runHint ? "color:#336600;" : "color:#990000;");
         ui->faultHint3->setText(faultHint ? "故障" : "无故障");//故障提示
+        ui->faultHint3->setStyleSheet(faultHint ? "color:#990000;" : "color:#336600;");
         ui->refrigerantH3->setText(QString::number(sysHighVoltage));//系统高压
         ui->refrigerantL3->setText(QString::number(sysLowVoltage));//系统低压
         ui->dewPointT3->setText(QString::number(dewPointT));//露点温度
@@ -1595,8 +1660,10 @@ void MainWindow::getInitEquipmentStatus()
 //鼠标移动显示曲线数据
 void MainWindow::slotPointHoverd(const QPointF &point, bool state)
 {
+    QString time = QDateTime::fromMSecsSinceEpoch(point.x()).toString("yyyy-MM-dd hh:mm:ss");
+//    qDebug() << time;
     if (state){
-        m_valueLabel->setText(QString::number(point.y(),'f',2));
+        m_valueLabel->setText( "(" +QString::number(point.y(),'f',2) + "," + time + ")");
         QPoint curPos = mapFromGlobal(QCursor::pos());
         m_valueLabel->move(curPos.x() - m_valueLabel->width() / 2, curPos.y() - m_valueLabel->height() * 1.5);//移动数值
         m_valueLabel->show();//显示出来
@@ -1637,6 +1704,265 @@ QString MainWindow::getDefineTimeByDay(int day)
 //    return BeforeDaystr;
     return QDateTime::currentDateTime().addDays(day).toString("yyyy-MM-dd");
 }
+
+
+
+
+//数据查看单选按钮
+void MainWindow::radioButton_pressed(bool checked)
+{
+    if(!checked){
+        return;
+    }
+    QRadioButton *b = (QRadioButton *)sender();
+    QString text = b->text();
+    QStringList logHeadText;
+    ui->dataTable->clear();
+
+    if (text == "1#空压机") {
+        tableName = "Compressor1";
+        logHeadText << "序号" << "排气压力(Mpa)" << "排气温度(℃)" << "系统温度(℃)" << "主机电流(A)" << "加载压力(Mpa)" << "卸载压差(Mpa)" << "采集时间";
+    } else if (text == "2#空压机") {
+        tableName = "Compressor2";
+        logHeadText << "序号" << "排气压力(Mpa)" << "排气温度(℃)" << "系统温度(℃)" << "主机电流(A)" << "加载压力(Mpa)" << "卸载压差(Mpa)" << "采集时间";
+    } else if (text == "3#空压机") {
+        tableName = "Compressor3";
+        logHeadText << "序号" << "排气压力(Mpa)" << "排气温度(℃)" << "系统温度(℃)" << "主机电流(A)" << "加载压力(Mpa)" << "卸载压差(Mpa)" << "采集时间";
+    } else if (text == "1#冷干机") {
+        tableName = "dryer1";
+        logHeadText << "序号" << "露点温度(℃)" << "采集时间";
+    } else if (text == "2#冷干机") {
+        tableName = "dryer2";
+        logHeadText << "序号" << "露点温度(℃)" << "采集时间";
+    } else if (text == "3#冷干机") {
+        tableName = "dryer3";
+        logHeadText << "序号" << "露点温度(℃)" << "采集时间";
+    }
+
+    ui->dataTable->setColumnCount(logHeadText.size());
+
+    ui->dataTable->verticalHeader()->setDefaultSectionSize(25);
+
+    ui->dataTable->setHorizontalHeaderLabels(logHeadText);
+    ui->dataTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->dataTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->dataTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->dataTable->setAlternatingRowColors(true);
+    ui->dataTable->verticalHeader()->setVisible(false);
+    ui->dataTable->horizontalHeader()->setStretchLastSection(true);
+    initDatatable();
+}
+
+void MainWindow::initDatatable()
+{
+    currentPage = 1;
+    GetTotalRecordCount();
+    GetPageCount();
+    UpdateStatus();
+
+    RecordQuery(currentPage-1);
+
+}
+//总记录数
+void MainWindow::GetTotalRecordCount()
+{
+    dataOper.GetTotalRecordCount(tableName, totalRecrodCount);
+}
+
+//得到页数
+void MainWindow::GetPageCount()
+{
+    PageRecordCount = ui->pageRecordCount->currentText().toInt();
+    totalPage = (totalRecrodCount % PageRecordCount == 0) ? (totalRecrodCount / PageRecordCount) : (totalRecrodCount / PageRecordCount + 1);
+}
+//查询数据
+void MainWindow::RecordQuery(int limitIndex)
+{
+    vector<Dryer> dryers;
+    vector<Compressor> compressors;
+    dataOper.RecordQuery(limitIndex,PageRecordCount,tableName,compressors,dryers);
+
+    int dryersDataSize = dryers.size();
+    int compressorsDataSize = compressors.size();
+    int headerCount = ui->dataTable->horizontalHeader()->count();
+    if(dryersDataSize == 0 && compressorsDataSize == 0){
+        return;
+    }else{
+        clearTable(ui->dataTable);
+        if(dryersDataSize != 0){
+            ui->dataTable->setRowCount(dryersDataSize);
+            for(int i = 0; i < dryersDataSize; i++ ){
+                for(int j = 0; j < headerCount; j++){
+                    if(j == 0){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(i+1)));
+                    }else if (j == 1){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(dryers[i].dewPointT)));
+                    }else if(j == 2){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(dryers[i].date.toString("yyyy-MM-dd hh:mm:ss")));
+                    }
+                }
+            }
+        }
+        if(compressorsDataSize != 0){
+            ui->dataTable->setRowCount(compressorsDataSize);
+            for(int i = 0; i < compressorsDataSize; i++ ){
+                for(int j = 0; j < headerCount; j++){
+                    if(j == 0){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(i+1)));
+                    }else if (j == 1){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(compressors[i].P2)));
+                    }else if(j == 2){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(compressors[i].T1)));
+                    }else if(j == 3){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(compressors[i].T2)));
+                    }else if(j == 4){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(compressors[i].hostCurrent)));
+                    }else if(j == 5){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(compressors[i].pressureDiff)));
+                    }else if(j == 6){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(QString::number(compressors[i].uninstallPressure)));
+                    }else if(j == 7){
+                        ui->dataTable->setItem(i,j,new QTableWidgetItem(compressors[i].date.toString("yyyy-MM-dd hh:mm:ss")));
+                    }
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::on_fristButton_clicked()
+{
+    if(!radioButtonIsChecked()){
+        return;
+    }
+    currentPage = 1;
+    GetTotalRecordCount();
+    GetPageCount();
+    UpdateStatus();
+    RecordQuery(currentPage-1);
+}
+
+void MainWindow::on_prevButton_clicked()
+{
+    if(!radioButtonIsChecked()){
+        return;
+    }
+    GetTotalRecordCount();
+    GetPageCount();
+    int limitIndex = (currentPage - 2) * PageRecordCount;
+    RecordQuery(limitIndex);
+    currentPage -= 1;
+    UpdateStatus();
+}
+
+void MainWindow::on_switchPageButton_clicked()
+{
+    if(!radioButtonIsChecked()){
+        return;
+    }
+    GetTotalRecordCount();
+    GetPageCount();
+    //得到输入字符串
+    QString szText = ui->switchPageLineEdit->text();
+    //数字正则表达式
+    QRegExp regExp("-?[0-9]*");
+    //判断是否为数字
+    if(!regExp.exactMatch(szText))
+    {
+        QMessageBox::information(this, tr("提示"), tr("请输入数字"));
+        ui->switchPageLineEdit->clear();
+        return;
+    }
+    //是否为空
+    if(szText.isEmpty())
+    {
+        QMessageBox::information(this, tr("提示"), tr("请输入跳转页面"));
+        ui->switchPageLineEdit->clear();
+        return;
+    }
+    //得到页数
+    int pageIndex = szText.toInt();
+    //判断是否有指定页
+    if(pageIndex > totalPage || pageIndex < 1)
+    {
+        QMessageBox::information(this, tr("提示"), tr("没有指定的页面，请重新输入"));
+        ui->switchPageLineEdit->clear();
+        return;
+    }
+    //得到查询起始行号
+    int limitIndex = (pageIndex-1) * PageRecordCount;
+    //记录查询
+    RecordQuery(limitIndex);
+    //设置当前页
+    currentPage = pageIndex;
+    //刷新状态
+    UpdateStatus();
+}
+
+void MainWindow::on_nextButton_clicked()
+{
+    if(!radioButtonIsChecked()){
+        return;
+    }
+    GetTotalRecordCount();
+    GetPageCount();
+
+    int limitIndex = currentPage * PageRecordCount;
+    RecordQuery(limitIndex);
+    currentPage += 1;
+    UpdateStatus();
+}
+
+void MainWindow::on_lastButton_clicked()
+{
+    if(!radioButtonIsChecked()){
+        return;
+    }
+    GetTotalRecordCount();
+    GetPageCount();
+    int limitIndex = (totalPage-1) * PageRecordCount;
+    currentPage = totalPage;
+    UpdateStatus();
+    RecordQuery(limitIndex);
+}
+
+void MainWindow::UpdateStatus()
+{
+    ui->currentPage->setText(QString::number(currentPage));
+    ui->totalPage->setText(QString::number(totalPage));
+    if(currentPage == 1){
+        ui->prevButton->setEnabled(false);
+        ui->nextButton->setEnabled(true);
+    }else if(currentPage == totalPage){
+        ui->prevButton->setEnabled(true);
+        ui->nextButton->setEnabled(false);
+    }else{
+        ui->prevButton->setEnabled(true);
+        ui->nextButton->setEnabled(true);
+    }
+}
+
+bool MainWindow::radioButtonIsChecked()
+{
+    int a = ui->radioButton_1->isChecked();
+    int b = ui->radioButton_2->isChecked();
+    int c = ui->radioButton_3->isChecked();
+    int d = ui->radioButton_4->isChecked();
+    int e = ui->radioButton_5->isChecked();
+    int f = ui->radioButton_6->isChecked();
+    if(a || b || c || d || e || f){
+        return true;
+    }else{
+        QMessageBox::information(this, "提示", "选择需要查看数据的设备！","确定");
+        return false;
+    }
+}
+
+
+
+
+
+
 
 
 //解析无符号的整型数据
@@ -1741,3 +2067,5 @@ void MainWindow::unlockUiOperation()
     ui->stopDryer2->setEnabled(true);
     ui->stopDryer3->setEnabled(true);
 }
+
+

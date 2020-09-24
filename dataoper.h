@@ -41,6 +41,9 @@ public:
     void deleteGrabDataInfo(QString tableName,QString time);
     void deleteLogDataInfo(QString time);
     void deleteWarningDataInfo(QString time);
+    void GetTotalRecordCount(QString tableName, int &totalRecordCount);
+    void RecordQuery(int limitIndex,int pageRecordCount,QString tableName, vector<Compressor> &compressors,vector<Dryer> &dryers);
+
 
 
 
