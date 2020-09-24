@@ -21,6 +21,7 @@ MainWindow::MainWindow(int num, QString u, QString p, QWidget *parent) :
     this->initForm();
     this->initTable();
     this->initChart();
+    this->initChart2();
 
 
 //    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
@@ -53,6 +54,9 @@ void MainWindow::initForm()
     ui->logEndTime->setDate(date);
     ui->runningChartS->setDate(date);
     ui->runningChartE->setDate(date);
+    ui->runningChartS_2->setDate(date);
+    ui->runningChartE_2->setDate(date);
+
     ui->currentUser->setText(userName);
     edit_userName = nullptr;
     edit_pass = nullptr;
@@ -341,6 +345,56 @@ void MainWindow::initChart()
     connect(up_series, &QLineSeries::hovered, this, &MainWindow::slotPointHoverd);//用于鼠标移动到点上显示数值
     connect(pd_series, &QLineSeries::hovered, this, &MainWindow::slotPointHoverd);//用于鼠标移动到点上显示数值
 }
+void MainWindow::initChart2()
+{
+    m_valueLabel2 = new QLabel(this);
+    m_valueLabel2->setStyleSheet(QString("QLabel{color:#1564FF; font-family:\"Microsoft Yahei\"; font-size:12px; font-weight:bold;"
+                                        " background-color:rgba(21, 100, 255, 51); border-radius:4px; text-align:center;}"));
+    m_valueLabel2->setFixedSize(180, 30);
+    m_valueLabel2->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_valueLabel2->hide();
+    ui->P2Widget->setRenderHint(QPainter::Antialiasing);
+    ui->dewPointTWidget->setRenderHint(QPainter::Antialiasing);
+
+    p2_series = new QLineSeries();
+    p2_x = new QDateTimeAxis();
+    p2_y = new QValueAxis();
+    p2_chart = ui->P2Widget->chart();
+
+    T_series = new QLineSeries();
+    T_x = new QDateTimeAxis();//X轴
+    T_y = new QValueAxis();//Y轴
+    T_chart = ui->dewPointTWidget->chart();
+
+    p2_x->setTickCount(10);
+    p2_x->setFormat("yyyy-MM-dd hh:mm:ss");
+    p2_x->setLabelsAngle(20);
+    p2_x->setTitleText("采集时间");
+    p2_y->setTitleText("排气压力");
+    p2_chart->addSeries(p2_series);
+    p2_chart->setAxisX(p2_x, p2_series);
+    p2_chart->setAxisY(p2_y, p2_series);
+    p2_chart->legend()->hide();
+    p2_chart->setTitle("排气压力时间变化曲线");
+    p2_chart->setTitleFont(QFont("Microsoft YaHei", 10, QFont::Bold));
+    p2_chart->setDropShadowEnabled(true);
+
+    T_x->setTickCount(10);
+    T_x->setFormat("yyyy-MM-dd hh:mm:ss");
+    T_x->setLabelsAngle(20);
+    T_x->setTitleText("采集时间");
+    T_y->setTitleText("露点温度");
+    T_chart->addSeries(T_series);
+    T_chart->setAxisX(T_x, T_series);
+    T_chart->setAxisY(T_y, T_series);
+    T_chart->legend()->hide();
+    T_chart->setTitle("露点温度时间变化曲线");
+    T_chart->setTitleFont(QFont("Microsoft YaHei", 10, QFont::Bold));
+    T_chart->setDropShadowEnabled(true);
+
+    connect(p2_series, &QLineSeries::hovered, this, &MainWindow::slotPointHoverd2);//用于鼠标移动到点上显示数值
+    connect(T_series, &QLineSeries::hovered, this, &MainWindow::slotPointHoverd2);//用于鼠标移动到点上显示数值
+}
 
 //历史数据图表
 void MainWindow::on_loadDataBtn_clicked()
@@ -392,6 +446,72 @@ void MainWindow::on_loadDataBtn_clicked()
 
     pd_x->setRange(compressors.at(compressors_size - 1).date, compressors.at(0).date);
     pd_y->setRange(pd_y_min,pd_y_max);
+}
+
+void MainWindow::on_loadDataBtn_2_clicked()
+{
+    QString s_time = ui->runningChartS_2->text();//开始时间
+    QString e_time = ui->runningChartE_2->text();//结束时间
+    vector<Compressor> compressors;
+    vector<Dryer> dryers;
+    int compressorNo = ui->compressorNO_2->currentIndex();
+    int dryerNO = ui->dryerNO->currentIndex();
+    QDateTime start = QDateTime::fromString(s_time, "yyyy-MM-dd");
+    QDateTime end = QDateTime::fromString(e_time, "yyyy-MM-dd");
+    uint stime = start.toTime_t();
+    uint etime = end.toTime_t();
+    int end_ = stime - etime;
+    if(end_ > 0 ){
+        QMessageBox::information(this, "提示", "结束日期小于开始日期，重新选择日期","确定");
+        return;
+    }
+    if(compressorNo == 0 && dryerNO == 0){
+        QMessageBox::information(this, "提示", "选择需要加载的空压机编号或者冷干机编号","确定");
+        return;
+    }
+
+    dataOper.getCompressorInfo(compressors,compressorNo,s_time,e_time);//降序 排气压力，空压机
+    dataOper.getDryerInfo(dryers,dryerNO,s_time,e_time);//降序 露点温度，冷干机
+
+    int compressors_size = compressors.size();
+    int dryers_size = dryers.size();
+    if(compressors_size != 0){
+        p2_series->clear();
+        double p2_y_max = compressors.at(0).P2;
+        double p2_y_min = compressors.at(0).P2;
+
+        for(int i = 0; i < compressors_size; ++i){
+            p2_y_max = compressors.at(i).P2 > p2_y_max ? compressors.at(i).P2 : p2_y_max;
+            p2_y_min = compressors.at(i).P2 < p2_y_min ? compressors.at(i).P2 : p2_y_min;
+
+            p2_series->append(compressors.at(i).date.toMSecsSinceEpoch(), compressors.at(i).P2);
+        }
+
+        p2_x->setRange(compressors.at(compressors_size - 1).date, compressors.at(0).date);
+        p2_y->setRange(p2_y_min,p2_y_max);
+    }else{
+        p2_series->clear();
+    }
+
+    if(dryers_size != 0){
+        T_series->clear();
+        double T_y_max = dryers.at(0).dewPointT;
+        double T_y_min = dryers.at(0).dewPointT;
+
+        for(int i = 0; i < dryers_size; ++i){
+            T_y_max = dryers.at(i).dewPointT > T_y_max ? dryers.at(i).dewPointT : T_y_max;
+            T_y_min = dryers.at(i).dewPointT < T_y_min ? dryers.at(i).dewPointT : T_y_min;
+
+            T_series->append(dryers.at(i).date.toMSecsSinceEpoch(), dryers.at(i).dewPointT);
+        }
+
+        T_x->setRange(dryers.at(dryers_size - 1).date, dryers.at(0).date);
+        T_y->setRange(T_y_min,T_y_max);
+    }else{
+        T_series->clear();
+    }
+
+
 
 }
 //界面切换函数
@@ -413,7 +533,7 @@ void MainWindow::navigation_pressed()
         ui->stackedWidget->setCurrentIndex(4);
 //        on_warningResetBtn_clicked();
     } else if (text == "变化曲线") {
-        ui->stackedWidget->setCurrentIndex(5);
+        ui->stackedWidget->setCurrentIndex(8);  //   5是加载压差  卸载压力
     } else if (text == "用户管理") {
         ui->stackedWidget->setCurrentIndex(6);
         on_userClearBtn_clicked();
@@ -1661,7 +1781,6 @@ void MainWindow::getInitEquipmentStatus()
 void MainWindow::slotPointHoverd(const QPointF &point, bool state)
 {
     QString time = QDateTime::fromMSecsSinceEpoch(point.x()).toString("yyyy-MM-dd hh:mm:ss");
-//    qDebug() << time;
     if (state){
         m_valueLabel->setText( "(" +QString::number(point.y(),'f',2) + "," + time + ")");
         QPoint curPos = mapFromGlobal(QCursor::pos());
@@ -1669,6 +1788,18 @@ void MainWindow::slotPointHoverd(const QPointF &point, bool state)
         m_valueLabel->show();//显示出来
     }else{
         m_valueLabel->hide();//进行隐藏
+    }
+}
+void MainWindow::slotPointHoverd2(const QPointF &point, bool state)
+{
+    QString time = QDateTime::fromMSecsSinceEpoch(point.x()).toString("yyyy-MM-dd hh:mm:ss");
+    if (state){
+        m_valueLabel2->setText( "(" +QString::number(point.y(),'f',2) + "," + time + ")");
+        QPoint curPos = mapFromGlobal(QCursor::pos());
+        m_valueLabel2->move(curPos.x() - m_valueLabel2->width() / 2, curPos.y() - m_valueLabel2->height() * 1.5);//移动数值
+        m_valueLabel2->show();//显示出来
+    }else{
+        m_valueLabel2->hide();//进行隐藏
     }
 }
 
@@ -2067,5 +2198,7 @@ void MainWindow::unlockUiOperation()
     ui->stopDryer2->setEnabled(true);
     ui->stopDryer3->setEnabled(true);
 }
+
+
 
 

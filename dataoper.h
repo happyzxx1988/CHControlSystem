@@ -43,6 +43,7 @@ public:
     void deleteWarningDataInfo(QString time);
     void GetTotalRecordCount(QString tableName, int &totalRecordCount);
     void RecordQuery(int limitIndex,int pageRecordCount,QString tableName, vector<Compressor> &compressors,vector<Dryer> &dryers);
+    void getDryerInfo(vector<Dryer> &dryers, int DryerNo, QString s_start, QString e_time);
 
 
 

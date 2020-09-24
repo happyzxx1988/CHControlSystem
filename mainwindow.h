@@ -61,6 +61,7 @@ private slots:
     void readCompressorTimer();
     void on_loadDataBtn_clicked();
     void slotPointHoverd(const QPointF &point, bool state);
+    void slotPointHoverd2(const QPointF &point, bool state);
 
     void on_connectPLCBtn_clicked();
 
@@ -80,6 +81,8 @@ private slots:
 
     void on_lastButton_clicked();
 
+    void on_loadDataBtn_2_clicked();
+
 private:
     void initForm();
     void clearTable(QTableWidget *table);
@@ -88,6 +91,7 @@ private:
     void dealCompressor2(QVector<quint16> compressor, QVector<quint16> dryer);
     void dealCompressor3(QVector<quint16> compressor, QVector<quint16> dryer);
     void initChart();
+    void initChart2();
     QVector<bool> dec2BinTrans(unsigned int data);
     void saveWarning(quint16 warningInfo, int compressorNo, int runState);
     void saveWarningDryer(int dryerNo, int runState);
@@ -154,6 +158,22 @@ private:
     QChart        *pd_chart;
 
     QLabel        *m_valueLabel;
+
+
+    QDateTimeAxis *p2_x;
+    QValueAxis    *p2_y;
+    QLineSeries   *p2_series;
+    QChart        *p2_chart;
+
+    QDateTimeAxis *T_x;
+    QValueAxis    *T_y;
+    QLineSeries   *T_series;
+    QChart        *T_chart;
+
+    QLabel        *m_valueLabel2;
+
+
+
 
     //table 分页处理
     int       currentPage;      //当前页

@@ -465,40 +465,82 @@ void DataOper::getCompressorInfo(vector<Compressor> &compressors, int Compressor
     QSqlQuery query;
     QString sql = nullptr;
     if(CompressorNo == 1){
-        sql  = "SELECT pressureDiff,uninstallPressure,date FROM Compressor1 where 1 = 1 ";
+        sql  = "SELECT pressureDiff,uninstallPressure,P2,date FROM Compressor1 where 1 = 1 ";
         if (s_start.compare("1") != 0)//比较大小
         {
             sql += " AND date >= '" + s_start+" 00:00:00' AND date <= '" + e_time +" 23:59:59' ";
         }
         sql += " ORDER BY date DESC";
     }else if(CompressorNo == 2){
-        sql  = "SELECT pressureDiff,uninstallPressure,date FROM Compressor2 where 1 = 1 ";
+        sql  = "SELECT pressureDiff,uninstallPressure,P2,date FROM Compressor2 where 1 = 1 ";
         if (s_start.compare("1") != 0)//比较大小
         {
             sql += " AND date >= '" + s_start+" 00:00:00' AND date <= '" + e_time +" 23:59:59' ";
         }
         sql += " ORDER BY date DESC";
     }else if(CompressorNo == 3){
-        sql  = "SELECT pressureDiff,uninstallPressure,date FROM Compressor3 where 1 = 1 ";
+        sql  = "SELECT pressureDiff,uninstallPressure,P2,date FROM Compressor3 where 1 = 1 ";
         if (s_start.compare("1") != 0)//比较大小
         {
             sql += " AND date >= '" + s_start+" 00:00:00' AND date <= '" + e_time +" 23:59:59' ";
         }
         sql += " ORDER BY date DESC";
+    }else{
+        return;
     }
     bool successFlag = query.exec(sql);
     if(successFlag){
         while(query.next()){
             compressor.pressureDiff = QString::number(query.value(0).toDouble()/142.0,'f',2).toDouble();
             compressor.uninstallPressure = QString::number(query.value(1).toDouble()/142.0,'f',2).toDouble();
-            compressor.date = query.value(2).toDateTime();
+            compressor.P2 = QString::number(query.value(2).toDouble()/142.0,'f',2).toDouble();
+            compressor.date = query.value(3).toDateTime();
             compressors.push_back(compressor);
         }
     }else{
-        qDebug() << tr("加载数据失败: ") + query.lastError().text();
+        qDebug() << tr("查询空压机曲线加载数据失败: ") + query.lastError().text();
     }
 }
-
+void DataOper::getDryerInfo(vector<Dryer> &dryers, int DryerNo, QString s_start, QString e_time)
+{
+    Dryer  dryer;
+    QSqlQuery query;
+    QString sql = nullptr;
+    if(DryerNo == 1){
+        sql  = "SELECT dewPointT,date FROM dryer1 where 1 = 1 ";
+        if (s_start.compare("1") != 0)//比较大小
+        {
+            sql += " AND date >= '" + s_start+" 00:00:00' AND date <= '" + e_time +" 23:59:59' ";
+        }
+        sql += " ORDER BY date DESC";
+    }else if(DryerNo == 2){
+        sql  = "SELECT dewPointT,date FROM dryer2 where 1 = 1 ";
+        if (s_start.compare("1") != 0)//比较大小
+        {
+            sql += " AND date >= '" + s_start+" 00:00:00' AND date <= '" + e_time +" 23:59:59' ";
+        }
+        sql += " ORDER BY date DESC";
+    }else if(DryerNo == 3){
+        sql  = "SELECT dewPointT,date FROM dryer3 where 1 = 1 ";
+        if (s_start.compare("1") != 0)//比较大小
+        {
+            sql += " AND date >= '" + s_start+" 00:00:00' AND date <= '" + e_time +" 23:59:59' ";
+        }
+        sql += " ORDER BY date DESC";
+    }else{
+        return;
+    }
+    bool successFlag = query.exec(sql);
+    if(successFlag){
+        while(query.next()){
+            dryer.dewPointT = query.value(0).toDouble();
+            dryer.date = query.value(1).toDateTime();
+            dryers.push_back(dryer);
+        }
+    }else{
+        qDebug() << tr("查询冷干机曲线加载数据失败: ") + query.lastError().text();
+    }
+}
 
 
 //删除给定时间之前的采集的数据，
