@@ -64,7 +64,5 @@ FORMS += \
 
 RESOURCES += \
     rc.qrc
-RC_ICONS=images/log.ico
+RC_ICONS=images/log11.ico
 
-
-#images/log.ico

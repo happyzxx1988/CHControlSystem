@@ -1,7 +1,4 @@
 <RCC>
-    <qresource prefix="/image">
-        <file>config.xml</file>
-    </qresource>
     <qresource prefix="/images">
         <file>images/log.png</file>
         <file>images/btncheckoff1.png</file>
@@ -20,5 +17,6 @@
         <file>images/lgj-open.gif</file>
         <file>images/valve.png</file>
         <file>images/valve-open.png</file>
+        <file>images/log11.ico</file>
     </qresource>
 </RCC>
