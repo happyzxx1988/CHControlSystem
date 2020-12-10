@@ -125,23 +125,6 @@ void AppCore::setUninstallPressureAndPressureDiff(int uninstallPressure, int pre
     dc.writeAddress410(compressorNo);
 
 }
-//批量一次性读取3台空压机数据
-void AppCore::readCompressor(QVector<quint16> &compressor1,
-                             QVector<quint16> &compressor2,
-                             QVector<quint16> &compressor3,
-                             QVector<quint16> &dryer1,
-                             QVector<quint16> &dryer2,
-                             QVector<quint16> &dryer3)
-{
-    dc.readCompressor(compressor1,compressor2,compressor3,dryer1,dryer2,dryer3);
-}
-
-//批量一次性读取3台冷干机数据
-void AppCore::readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3)
-{
-    dc.readDryer(dryer1,dryer2,dryer3);
-}
-
 
 //设备开关设置 1-1#空压机，2-2#空压机，3-3#空压机，4-1#冷干机，5-2#冷干机，6-3#冷干机
 void AppCore::setEquipmentSwitch(int equipmentType,bool off)
@@ -201,6 +184,10 @@ void AppCore::readUint16(int address_, int count_, QVector<quint16> &buffer_)
 {
     dc.readUint16(address_,count_,buffer_);
 }
+void AppCore::readFloat32(int address_,float &buffer_)
+{
+    dc.readFloat32(address_,buffer_);
+}
 
 
 void AppCore::resetOperation()
@@ -236,9 +223,9 @@ void AppCore::readCompressor3(QVector<quint16> &compressor3)
 {
     dc.readCompressor3(compressor3);
 }
-void AppCore::dryer1(QVector<quint16> &dryer1)
+void AppCore::dryer1(QVector<quint16> &dryer1,QVector<quint16> &float2)
 {
-   dc.dryer1(dryer1);
+   dc.dryer1(dryer1,float2);
 }
 void AppCore::dryer2(QVector<quint16> &dryer2)
 {
@@ -258,3 +245,4 @@ void AppCore::readEquipmentStatus(QVector<quint16> &equipmentStatus)
 {
     dc.readEquipmentStatus(equipmentStatus);
 }
+

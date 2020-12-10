@@ -18,8 +18,8 @@ CompressorSetDialog::CompressorSetDialog(QString user, int type, AppCore *core, 
 
     CompressorSet compressorSet;
     dataOper.getLastCompressorSet(compressorSet,compressorNo);
-    ui->uninstallPressure->setText(QString::number(compressorSet.uninstallPressure/142.0,'f',2));
-    ui->pressureDiff->setText(QString::number(compressorSet.pressureDiff/142.0,'f',2));
+    ui->uninstallPressure->setText(QString::number(compressorSet.uninstallPressure/145.0,'f',2));
+    ui->pressureDiff->setText(QString::number(compressorSet.pressureDiff/145.0,'f',2));
 
 }
 
@@ -44,8 +44,8 @@ void CompressorSetDialog::on_setCompressorBtn_clicked()
     }
 
 
-    int uninstallPressure_int = QString::number(uninstallPressure,'f',2).toFloat() * 142;
-    int pressureDiff_int = QString::number(pressureDiff,'f',2).toFloat() * 142;
+    int uninstallPressure_int = QString::number(uninstallPressure,'f',2).toFloat() * 145;
+    int pressureDiff_int = QString::number(pressureDiff,'f',2).toFloat() * 145;
 
     appcore->setUninstallPressureAndPressureDiff(uninstallPressure_int,pressureDiff_int,compressorNo);
 

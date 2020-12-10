@@ -24,10 +24,9 @@ MainWindow::MainWindow(int num, QString u, QString p, QWidget *parent) :
     this->initChart2();
 
 
-//    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
-//    ui->sys_name->setText("双创园空压机站房恒压控制系统");
-//    setWindowTitle("双创园空压机站房恒压控制系统");
-
+    ui->sys_img->setPixmap(QPixmap(":/images/images/log.png"));
+    ui->sys_name->setText("双创园空压机站房恒压控制系统");
+    setWindowTitle("双创园空压机站房恒压控制系统");
 
 }
 
@@ -48,6 +47,9 @@ void MainWindow::initForm()
     QDate date = QDate::currentDate();   //获取当前日期
     READ_TIME =      1000;    //定时读取间隔时间
 
+    ui->logResetBtn->hide();
+    ui->warningResetBtn->hide();
+
     ui->warningStartime->setDate(date);
     ui->warningEndTime->setDate(date);
     ui->logStartime->setDate(date);
@@ -56,6 +58,15 @@ void MainWindow::initForm()
     ui->runningChartE->setDate(date);
     ui->runningChartS_2->setDate(date);
     ui->runningChartE_2->setDate(date);
+
+    ui->warningStartime->setDisplayFormat("yyyy-MM-dd");
+    ui->warningEndTime->setDisplayFormat("yyyy-MM-dd");
+    ui->logStartime->setDisplayFormat("yyyy-MM-dd");
+    ui->logEndTime->setDisplayFormat("yyyy-MM-dd");
+    ui->runningChartS->setDisplayFormat("yyyy-MM-dd");
+    ui->runningChartE->setDisplayFormat("yyyy-MM-dd");
+    ui->runningChartS_2->setDisplayFormat("yyyy-MM-dd");
+    ui->runningChartE_2->setDisplayFormat("yyyy-MM-dd");
 
     ui->currentUser->setText(userName);
     edit_userName = nullptr;
@@ -76,9 +87,20 @@ void MainWindow::initForm()
     dryerIsShowWarning3 = true;
     PLCIsConnected = false;
 
+    isGetEquipmentStatus = true;
+    isFristGetEquipmentStatus1 = true;
+    isFristGetEquipmentStatus2 = true;
+    isFristGetEquipmentStatus3 = true;
+    isFristGetEquipmentStatus4 = true;
+    isFristGetEquipmentStatus5 = true;
+    isFristGetEquipmentStatus6 = true;
+
+    isStoreData = true;
+
     lockUiOperation();
 
     storageInterval = 0;
+    storageInterval2 = 0;
 
     QStringList aa ;
     switch (device_num) {
@@ -110,7 +132,7 @@ void MainWindow::initForm()
 
     connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readCompressorTimer()));
 
-    connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readWarningHintTimer()));
+//    connect(&compressorTimer,SIGNAL(timeout()),this,SLOT(readWarningHintTimer()));
 
     connect(ui->userTable,SIGNAL(cellClicked(int,int)),this,SLOT(checkRowSlot(int,int)));
     /*数据处理的消息传输*/
@@ -132,7 +154,7 @@ void MainWindow::initForm()
         appcore.setRunMode(ManualMode);
         ui->runningMode->setText("手动");
         ui->manualOper->setChecked(true);
-        getInitEquipmentStatus();//读取设备初始化状态
+//        getInitEquipmentStatus();//读取设备初始化状态
 
         if(!compressorTimer.isActive()){
             compressorTimer.start(READ_TIME);
@@ -165,6 +187,8 @@ void MainWindow::initForm()
     connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
     connect(ui->pushButton_7, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
     connect(ui->pushButton_8, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+    connect(ui->pushButton_9, &QPushButton::clicked, this, &MainWindow::navigation_pressed);
+
 
     connect(ui->radioButton_1, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
     connect(ui->radioButton_2, &QRadioButton::toggled, this, &MainWindow::radioButton_pressed);
@@ -189,17 +213,8 @@ void MainWindow::initForm()
 
     //删除给定时间之前的数据，包括采集数据，警告数据，日志数据 默认保留10的数据
 
-    QString defineTime = this->getDefineTimeByDay(-10);
+//    QString defineTime = this->getDefineTimeByDay(-10);
 
-//    dataOper.deleteGrabDataInfo("Compressor1",defineTime);
-//    dataOper.deleteGrabDataInfo("Compressor2",defineTime);
-//    dataOper.deleteGrabDataInfo("Compressor3",defineTime);
-//    dataOper.deleteGrabDataInfo("dryer1",defineTime);
-//    dataOper.deleteGrabDataInfo("dryer2",defineTime);
-//    dataOper.deleteGrabDataInfo("dryer3",defineTime);
-
-//    dataOper.deleteWarningDataInfo(defineTime);
-//    dataOper.deleteLogDataInfo(defineTime);
 
     //不需要系统高压、系统低压参数
     ui->label_101->hide();
@@ -401,6 +416,7 @@ void MainWindow::on_loadDataBtn_clicked()
 {
     QString s_time = ui->runningChartS->text();//开始时间
     QString e_time = ui->runningChartE->text();//结束时间
+
     vector<Compressor> compressors;
     int compressorNo = ui->compressorNO->currentIndex();
     QDateTime start = QDateTime::fromString(s_time, "yyyy-MM-dd");
@@ -488,7 +504,7 @@ void MainWindow::on_loadDataBtn_2_clicked()
         }
 
         p2_x->setRange(compressors.at(compressors_size - 1).date, compressors.at(0).date);
-        p2_y->setRange(p2_y_min,p2_y_max);
+        p2_y->setRange(p2_y_min-0.1,p2_y_max+0.1);
     }else{
         p2_series->clear();
     }
@@ -506,7 +522,7 @@ void MainWindow::on_loadDataBtn_2_clicked()
         }
 
         T_x->setRange(dryers.at(dryers_size - 1).date, dryers.at(0).date);
-        T_y->setRange(T_y_min,T_y_max);
+        T_y->setRange(T_y_min-10,T_y_max+10);
     }else{
         T_series->clear();
     }
@@ -539,37 +555,61 @@ void MainWindow::navigation_pressed()
         on_userClearBtn_clicked();
     } else if (text == "历史数据") {
         ui->stackedWidget->setCurrentIndex(7);
+    } else if (text == "数据管理") {
+        ui->stackedWidget->setCurrentIndex(9);
     }
 }
 //设置是否启用报警弹窗功能
 void MainWindow::checkBox_pressed(bool checked)
 {
-    if(!checked){
-        return;
-    }
+
     QCheckBox *b = (QCheckBox *)sender();
     QString text = b->text();
     if(!PLCIsConnected){
         return;
     }
     if (text == "1#空压机是否启用") {
-        compressorIsShowWarning1 = checked;
-        appcore.setEquipmentEnable(1,checked);
+        if(isFristGetEquipmentStatus1){
+            isFristGetEquipmentStatus1 = false;
+        }else{
+            compressorIsShowWarning1 = checked;
+            appcore.setEquipmentEnable(1,checked);
+        }
     } else if (text == "2#空压机是否启用") {
-        compressorIsShowWarning2 = checked;
-        appcore.setEquipmentEnable(2,checked);
+        if(isFristGetEquipmentStatus2){
+            isFristGetEquipmentStatus2 = false;
+        }else{
+            compressorIsShowWarning2 = checked;
+            appcore.setEquipmentEnable(2,checked);
+        }
     } else if (text == "3#空压机是否启用") {
-        compressorIsShowWarning3 = checked;
-        appcore.setEquipmentEnable(3,checked);
+        if(isFristGetEquipmentStatus3){
+            isFristGetEquipmentStatus3 = false;
+        }else{
+            compressorIsShowWarning3 = checked;
+            appcore.setEquipmentEnable(3,checked);
+        }
     } else if (text == "1#冷干机是否启用") {
-        dryerIsShowWarning1 = checked;
-        appcore.setEquipmentEnable(4,checked);
+        if(isFristGetEquipmentStatus4){
+            isFristGetEquipmentStatus4 = false;
+        }else{
+            dryerIsShowWarning1 = checked;
+            appcore.setEquipmentEnable(4,checked);
+        }
     } else if (text == "2#冷干机是否启用") {
-        dryerIsShowWarning2 = checked;
-        appcore.setEquipmentEnable(5,checked);
+        if(isFristGetEquipmentStatus5){
+            isFristGetEquipmentStatus5 = false;
+        }else{
+            dryerIsShowWarning2 = checked;
+            appcore.setEquipmentEnable(5,checked);
+        }
     } else if (text == "3#冷干机是否启用") {
-        dryerIsShowWarning3 = checked;
-        appcore.setEquipmentEnable(6,checked);
+        if(isFristGetEquipmentStatus6){
+            isFristGetEquipmentStatus6 = false;
+        }else{
+            dryerIsShowWarning3 = checked;
+            appcore.setEquipmentEnable(6,checked);
+        }
     }
 }
 
@@ -709,42 +749,44 @@ void MainWindow::userEdit_call_back(int userEditType)
 //系统报警--搜索按钮
 void MainWindow::on_warningSearchBtn_clicked()
 {
-    QString s_time = ui->warningStartime->text();//开始时间
-    QString e_time = ui->warningEndTime->text();//结束时间
-    QDateTime start = QDateTime::fromString(s_time, "yyyy-MM-dd");
-    QDateTime end = QDateTime::fromString(e_time, "yyyy-MM-dd");
-    uint stime = start.toTime_t();
-    uint etime = end.toTime_t();
-    int end_ = stime - etime;
-    if(end_ > 0 ){
-        QMessageBox::information(this, "提示", "结束日期小于开始日期，重新选择日期","确定");
-        return;
-    }
-    vector<Warning> warnings;
-    dataOper.getAllWarningInfo(warnings,2,s_time,e_time);
-    dataOper.saveLog(STATION_HOUSE,"","搜索报警数据",userName,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
-    int dataSize = warnings.size();
-    if(dataSize == 0){
-        return;
-    }else{
-        clearTable(ui->warningTable);
-        ui->warningTable->setRowCount(dataSize);
-        for(int i = 0; i < dataSize; i++ ){
-            for(int j = 0; j < 5; j++){
-                if(j == 0){
-                    ui->warningTable->setItem(i,j,new QTableWidgetItem(QString::number(i+1)));
-                }else if (j == 1){
-                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].address));
-                }else if(j == 2){
-                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].deviceName));
-                }else if(j == 3){
-                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].info));
-                }else if(j == 4){
-                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].date));
-                }
-            }
-        }
-    }
+//    QString s_time = ui->warningStartime->text();//开始时间
+//    QString e_time = ui->warningEndTime->text();//结束时间
+//    QDateTime start = QDateTime::fromString(s_time, "yyyy-MM-dd");
+//    QDateTime end = QDateTime::fromString(e_time, "yyyy-MM-dd");
+//    uint stime = start.toTime_t();
+//    uint etime = end.toTime_t();
+//    int end_ = stime - etime;
+//    if(end_ > 0 ){
+//        QMessageBox::information(this, "提示", "结束日期小于开始日期，重新选择日期","确定");
+//        return;
+//    }
+//    vector<Warning> warnings;
+//    dataOper.getAllWarningInfo(warnings,2,s_time,e_time);
+//    dataOper.saveLog(STATION_HOUSE,"","搜索报警数据",userName,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+//    int dataSize = warnings.size();
+//    if(dataSize == 0){
+//        return;
+//    }else{
+//        clearTable(ui->warningTable);
+//        ui->warningTable->setRowCount(dataSize);
+//        for(int i = 0; i < dataSize; i++ ){
+//            for(int j = 0; j < 5; j++){
+//                if(j == 0){
+//                    ui->warningTable->setItem(i,j,new QTableWidgetItem(QString::number(i+1)));
+//                }else if (j == 1){
+//                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].address));
+//                }else if(j == 2){
+//                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].deviceName));
+//                }else if(j == 3){
+//                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].info));
+//                }else if(j == 4){
+//                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].date));
+//                }
+//            }
+//        }
+//    }
+
+    initDatatable_w();
 
 }
 //系统报警--清空按钮，即加载所有数据
@@ -775,6 +817,171 @@ void MainWindow::on_warningResetBtn_clicked()
         }
     }
 }
+
+void MainWindow::initDatatable_w()
+{
+    currentPage_w = 1;
+    GetTotalRecordCount_w();
+    GetPageCount_w();
+    UpdateStatus_w();
+
+    RecordQuery_w(currentPage_w-1);
+
+}
+//总记录数
+void MainWindow::GetTotalRecordCount_w()
+{
+    dataOper.GetTotalRecordCount("warning", totalRecrodCount_w);
+}
+
+//得到页数
+void MainWindow::GetPageCount_w()
+{
+    PageRecordCount_w = ui->pageRecordCount_2->currentText().toInt();
+    totalPage_w = (totalRecrodCount_w % PageRecordCount_w == 0) ? (totalRecrodCount_w / PageRecordCount_w) : (totalRecrodCount_w / PageRecordCount_w + 1);
+}
+//查询数据
+void MainWindow::RecordQuery_w(int limitIndex)
+{
+    QString s_time = ui->warningStartime->text();//开始时间
+    QString e_time = ui->warningEndTime->text();//结束时间
+    QDateTime start = QDateTime::fromString(s_time, "yyyy-MM-dd");
+    QDateTime end = QDateTime::fromString(e_time, "yyyy-MM-dd");
+    uint stime = start.toTime_t();
+    uint etime = end.toTime_t();
+    int end_ = stime - etime;
+    if(end_ > 0 ){
+        QMessageBox::information(this, "提示", "结束日期小于开始日期，重新选择日期","确定");
+        return;
+    }
+    vector<Warning> warnings;
+    dataOper.RecordQuery_w(limitIndex,PageRecordCount_w, s_time, e_time,warnings);
+    dataOper.saveLog(STATION_HOUSE,"","搜索报警数据",userName,QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    int dataSize = warnings.size();
+    if(dataSize == 0){
+        return;
+    }else{
+        clearTable(ui->warningTable);
+        ui->warningTable->setRowCount(dataSize);
+        for(int i = 0; i < dataSize; i++ ){
+            for(int j = 0; j < 5; j++){
+                if(j == 0){
+                    ui->warningTable->setItem(i,j,new QTableWidgetItem(QString::number(i+1)));
+                }else if (j == 1){
+                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].address));
+                }else if(j == 2){
+                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].deviceName));
+                }else if(j == 3){
+                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].info));
+                }else if(j == 4){
+                    ui->warningTable->setItem(i,j,new QTableWidgetItem(warnings[i].date));
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::UpdateStatus_w()
+{
+    ui->currentPage_2->setText(QString::number(currentPage_w));
+    ui->totalPage_2->setText(QString::number(totalPage_w));
+    if(currentPage_w == 1){
+        ui->prevButton_2->setEnabled(false);
+        ui->nextButton_2->setEnabled(true);
+    }else if(currentPage_w == totalPage_w){
+        ui->prevButton_2->setEnabled(true);
+        ui->nextButton_2->setEnabled(false);
+    }else{
+        ui->prevButton_2->setEnabled(true);
+        ui->nextButton_2->setEnabled(true);
+    }
+}
+
+void MainWindow::on_fristButton_2_clicked()
+{
+    currentPage_w = 1;
+    GetTotalRecordCount_w();
+    GetPageCount_w();
+    UpdateStatus_w();
+    RecordQuery_w(currentPage_w-1);
+}
+
+void MainWindow::on_prevButton_2_clicked()
+{
+    GetTotalRecordCount_w();
+    GetPageCount_w();
+    int limitIndex = (currentPage_w - 2) * PageRecordCount_w;
+    RecordQuery_w(limitIndex);
+    currentPage_w -= 1;
+    UpdateStatus_w();
+}
+
+void MainWindow::on_switchPageButton_2_clicked()
+{
+    GetTotalRecordCount_w();
+    GetPageCount_w();
+    //得到输入字符串
+    QString szText = ui->switchPageLineEdit_2->text();
+    //数字正则表达式
+    QRegExp regExp("-?[0-9]*");
+    //判断是否为数字
+    if(!regExp.exactMatch(szText))
+    {
+        QMessageBox::information(this, tr("提示"), tr("请输入数字"));
+        ui->switchPageLineEdit_2->clear();
+        return;
+    }
+    //是否为空
+    if(szText.isEmpty())
+    {
+        QMessageBox::information(this, tr("提示"), tr("请输入跳转页面"));
+        ui->switchPageLineEdit_2->clear();
+        return;
+    }
+    //得到页数
+    int pageIndex = szText.toInt();
+    //判断是否有指定页
+    if(pageIndex > totalPage_w || pageIndex < 1)
+    {
+        QMessageBox::information(this, tr("提示"), tr("没有指定的页面，请重新输入"));
+        ui->switchPageLineEdit_2->clear();
+        return;
+    }
+    //得到查询起始行号
+    int limitIndex = (pageIndex-1) * PageRecordCount_w;
+    //记录查询
+    RecordQuery_w(limitIndex);
+    //设置当前页
+    currentPage_w = pageIndex;
+    //刷新状态
+    UpdateStatus_w();
+}
+
+void MainWindow::on_nextButton_2_clicked()
+{
+    GetTotalRecordCount_w();
+    GetPageCount_w();
+
+    int limitIndex = currentPage_w * PageRecordCount_w;
+    RecordQuery_w(limitIndex);
+    currentPage_w += 1;
+    UpdateStatus_w();
+}
+
+void MainWindow::on_lastButton_2_clicked()
+{
+    GetTotalRecordCount_w();
+    GetPageCount_w();
+    int limitIndex = (totalPage_w - 1) * PageRecordCount_w;
+    currentPage_w = totalPage_w;
+    UpdateStatus_w();
+    RecordQuery_w(limitIndex);
+}
+
+
+
+
+
 
 
 //设备运行记录--搜索按钮
@@ -1059,63 +1266,261 @@ void MainWindow::on_compressorBtn3_clicked()
     compressorSwitch3 = !compressorSwitch3;
 }
 
+
 //定时读取3台空压机数据
 void MainWindow::readCompressorTimer()
 {
+    QVector<quint16> buffer_;
     QVector<quint16> compressor1;
     QVector<quint16> compressor2;
     QVector<quint16> compressor3;
     QVector<quint16> dryer1;
     QVector<quint16> dryer2;
     QVector<quint16> dryer3;
+    QVector<quint16> float2;
+    QVector<quint16> warningInfo;
+    QVector<quint16> equipmentStatus;
+
+    appcore.readUint16(75,292,buffer_);
+
+    //批量存储采集的数据
+    if(isStoreData){//正在往数据库存储的时候，不要往临时变量里面存储
+        saveBatchTimingData(buffer_);
+    }
+    for(int i = 0; i < buffer_.size(); i++){
+        if(i>= 0 && i <= 5){
+            warningInfo.push_back(buffer_.at(i));
+        }
+        if(i>= 10 && i <= 15){
+            equipmentStatus.push_back(buffer_.at(i));
+        }
+        if(i>= 25 && i <= 59){
+            compressor1.push_back(buffer_.at(i));
+        }
+        if(i>= 75 && i <= 109){
+            compressor2.push_back(buffer_.at(i));
+        }
+        if(i>= 125 && i <= 159){
+            compressor3.push_back(buffer_.at(i));
+        }
+        if(i>= 175 && i <= 191){
+            dryer1.push_back(buffer_.at(i));
+        }
+        if(i>= 195 && i <= 198){
+            float2.push_back(buffer_.at(i));
+        }
+        if(i>= 225 && i <= 241){
+            dryer2.push_back(buffer_.at(i));
+        }
+        if(i>= 275 && i <= 291){
+            dryer3.push_back(buffer_.at(i));
+        }
+
+    }
 
     switch (device_num) {
     case 2:
-        appcore.readCompressor1(compressor1);
-        appcore.readCompressor2(compressor2);
-        appcore.dryer1(dryer1);
-        appcore.dryer2(dryer2);
-        dealCompressor1(compressor1,dryer1);
+        dealCompressor1(compressor1,dryer1,float2);
         dealCompressor2(compressor2,dryer2);
+
+        if(compressor1.size() == 35){
+//            saveWarning(buffer_.at(46), 1,1);
+//            saveWarning(buffer_.at(47), 1,2);
+        }
+        if(compressor2.size() == 35){
+//            saveWarning(buffer_.at(96), 2,1);
+//            saveWarning(buffer_.at(97), 2,2);
+        }
+
+        if(dryer1.size() == 17){
+            if(buffer_.at(176)){
+//                saveWarningDryer(1,1);
+            }
+            if(buffer_.at(179)){
+//                saveWarningDryer(1,2);
+            }
+            if(buffer_.at(180)){
+//                saveWarningDryer(1,3);
+            }
+            if(buffer_.at(183)){
+//                saveWarningDryer(1,4);
+            }
+            if(buffer_.at(186)){
+//                saveWarningDryer(1,5);
+            }
+            if(buffer_.at(187)){
+//                saveWarningDryer(1,6);
+            }
+        }
+        if(dryer2.size() == 17){
+            if(buffer_.at(226)){
+//                saveWarningDryer(2,1);
+            }
+            if(buffer_.at(229)){
+//                saveWarningDryer(2,2);
+            }
+            if(buffer_.at(230)){
+//                saveWarningDryer(2,3);
+            }
+            if(buffer_.at(233)){
+//                saveWarningDryer(2,4);
+            }
+            if(buffer_.at(236)){
+//                saveWarningDryer(2,5);
+            }
+            if(buffer_.at(237)){
+//                saveWarningDryer(2,6);
+            }
+        }
+
         break;
     case 3:
-        appcore.readCompressor1(compressor1);
-        appcore.readCompressor2(compressor2);
-        appcore.readCompressor3(compressor3);
-        appcore.dryer1(dryer1);
-        appcore.dryer2(dryer2);
-        appcore.dryer3(dryer3);
-        dealCompressor1(compressor1,dryer1);
+        dealCompressor1(compressor1,dryer1,float2);
         dealCompressor2(compressor2,dryer2);
         dealCompressor3(compressor3,dryer3);
+
+        if(compressor1.size() == 35){
+//            saveWarning(buffer_.at(46), 1,1);
+//            saveWarning(buffer_.at(47), 1,2);
+        }
+        if(compressor2.size() == 35){
+//            saveWarning(buffer_.at(96), 2,1);
+//            saveWarning(buffer_.at(97), 2,2);
+        }
+        if(compressor3.size() == 35){
+//            saveWarning(buffer_.at(146), 3,1);
+//            saveWarning(buffer_.at(147), 3,2);
+        }
+        if(dryer1.size() == 17){
+            if(buffer_.at(176)){
+//                saveWarningDryer(1,1);
+            }
+            if(buffer_.at(179)){
+//                saveWarningDryer(1,2);
+            }
+            if(buffer_.at(180)){
+//                saveWarningDryer(1,3);
+            }
+            if(buffer_.at(183)){
+//                saveWarningDryer(1,4);
+            }
+            if(buffer_.at(186)){
+//                saveWarningDryer(1,5);
+            }
+            if(buffer_.at(187)){
+//                saveWarningDryer(1,6);
+            }
+        }
+        if(dryer2.size() == 17){
+            if(buffer_.at(226)){
+//                saveWarningDryer(2,1);
+            }
+            if(buffer_.at(229)){
+//                saveWarningDryer(2,2);
+            }
+            if(buffer_.at(230)){
+//                saveWarningDryer(2,3);
+            }
+            if(buffer_.at(233)){
+//                saveWarningDryer(2,4);
+            }
+            if(buffer_.at(236)){
+//                saveWarningDryer(2,5);
+            }
+            if(buffer_.at(237)){
+//                saveWarningDryer(2,6);
+            }
+        }
+        if(dryer3.size() == 17){
+            if(buffer_.at(276)){
+//                saveWarningDryer(3,1);
+            }
+            if(buffer_.at(279)){
+//                saveWarningDryer(3,2);
+            }
+            if(buffer_.at(280)){
+//                saveWarningDryer(3,3);
+            }
+            if(buffer_.at(283)){
+//                saveWarningDryer(3,4);
+            }
+            if(buffer_.at(286)){
+//                saveWarningDryer(3,5);
+            }
+            if(buffer_.at(287)){
+//                saveWarningDryer(3,6);
+            }
+        }
         break;
     }
 
-    if(storageInterval == STORE_TIME){
+    QString info = nullptr;
+    if(warningInfo.size() != 0){
+        if(warningInfo.at(0) == 1 && compressorIsShowWarning1){
+            info += "1号空压机通讯失败!\n";
+        }
+        if(warningInfo.at(1) == 1 && compressorIsShowWarning2){
+            info += "2号空压机通讯失败!\n";
+        }
+        if(warningInfo.at(2) == 1 && compressorIsShowWarning3){
+            info += "3号空压机通讯失败!\n";
+        }
+        if(warningInfo.at(3) == 1 && dryerIsShowWarning1){
+            info += "1号冷干机通讯失败!\n";
+        }
+        if(warningInfo.at(4) == 1 && dryerIsShowWarning2){
+            info += "2号冷干机通讯失败!\n";
+        }
+        if(warningInfo.at(5) == 1 && dryerIsShowWarning3){
+            info += "3号冷干机通讯失败!\n";
+        }
+        if(isShowWarning && info != nullptr ){
+            isShowWarning = false;
+            warningHintDialog = new WarningHintDialog(device_num,!compressorIsShowWarning1,!compressorIsShowWarning2,!compressorIsShowWarning3,
+                                                      !dryerIsShowWarning1,!dryerIsShowWarning2,!dryerIsShowWarning3,info);
+            connect(warningHintDialog,&WarningHintDialog::closeCurrentDialog,this,&MainWindow::warningHint_call_back);
+            warningHintDialog->setAttribute(Qt::WA_DeleteOnClose);
+            warningHintDialog->show();
+        }
+     }
+
+    if(isGetEquipmentStatus){
+        isGetEquipmentStatus = false;
+        ui->stopCompressor1->setChecked(!equipmentStatus.at(0));
+        ui->stopCompressor2->setChecked(!equipmentStatus.at(1));
+        ui->stopCompressor3->setChecked(!equipmentStatus.at(2));
+        ui->stopDryer1->setChecked(!equipmentStatus.at(3));
+        ui->stopDryer2->setChecked(!equipmentStatus.at(4));
+        ui->stopDryer3->setChecked(!equipmentStatus.at(5));
+
+    }
+
+    if(storageInterval == STORE_TIME){//储存空压机、冷干机数据
         storageInterval = 0;
         QString storageTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
         //存储读取数据导数据
         if(compressor1.size() == 35){
-            dataOper.saveReadCompressor1(compressor1,storageTime);
+//            dataOper.saveReadCompressor1(compressor1,storageTime);
         }
         if(compressor2.size() == 35){
-            dataOper.saveReadCompressor2(compressor2,storageTime);
+//            dataOper.saveReadCompressor2(compressor2,storageTime);
         }
         if(compressor3.size() == 35){
-            dataOper.saveReadCompressor3(compressor3,storageTime);
+//            dataOper.saveReadCompressor3(compressor3,storageTime);
         }
         if(dryer1.size() == 17){
-            dataOper.saveReadDryer1(dryer1,storageTime);
+//            dataOper.saveReadDryer1(dryer1,storageTime);
         }
         if(dryer2.size() == 17){
-            dataOper.saveReadDryer2(dryer2,storageTime);
+//            dataOper.saveReadDryer2(dryer2,storageTime);
         }
         if(dryer3.size() == 17){
-            dataOper.saveReadDryer3(dryer3,storageTime);
+//            dataOper.saveReadDryer3(dryer3,storageTime);
         }
-
     }
     storageInterval += READ_TIME;
+
+    saveData(compressors1,compressors2,compressors3,dryers1,dryers2,dryers3,warnings);
 }
 //定时读取设备弹窗警告信息
 void MainWindow::readWarningHintTimer()
@@ -1189,7 +1594,7 @@ void MainWindow::warningHint_call_back(bool a, bool b, bool c, bool d, bool e, b
 
 }
 //显示1#空压机读取的数据
-void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> dryer)
+void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> dryer,QVector<quint16> float2)
 {
     if(compressor.size() == 35){
         quint16 runTimeL = compressor.at(0);//累计运行时间 L
@@ -1197,17 +1602,16 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
         quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
+        quint16 P1 = compressor.at(13);//P1
         quint16 P2 = compressor.at(14);//P2
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
         quint16 runMode2 = compressor.at(22);//运行状态 2 （注 2）
         quint16 runMode3 = compressor.at(23);//运行状态 3 （注 3）
         quint16 pressureDiff = compressor.at(25);//加载压差
         quint16 uninstallPressure = compressor.at(26);//卸载压力
-        saveWarning(runMode1, 1,1);
-        saveWarning(runMode2, 1,2);
+//        saveWarning(runMode1, 1,1);
+//        saveWarning(runMode2, 1,2);
         QVector<bool> aa = dec2BinTrans(runMode3);
-//        qDebug() << runMode3 << ":" << aa << ":" << aa.at(9);
-
         //主界面
         if(aa.at(9)){
             ui->runningState1->setText("运行中");//运行状态
@@ -1226,7 +1630,8 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         }
         ui->powerStatus1->setText(aa.at(8) ? "上电" : "断电");//电源
         ui->powerStatus1->setStyleSheet(aa.at(8) ? "color:#336600;" : "color:#990000;");
-        ui->ventingPressure1->setText(QString::number(P2/142.0,'f',2));//排气压力
+        ui->P1_1->setText(QString::number(P1/145.0,'f',2));//P1
+        ui->ventingPressure1->setText(QString::number(P2/145.0,'f',2));//排气压力
         ui->ventingT1->setText(QString::number(T1));//排气温度
         ui->runningT1->setText(QString::number(runTimeL));//运行时间
         ui->hostA1->setText(QString::number(hostCurrent));//主机电流
@@ -1235,13 +1640,13 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         //设备状态
         ui->compressorRunState1->setText(aa.at(9) ? "运行中" : "停止");//运行状态
         ui->compressorRunState1->setStyleSheet(aa.at(9) ? "color:#336600;" : "color:#990000;");
-        ui->pressureDiff1->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
-        ui->uninstallPressure1->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
+        ui->pressureDiff1->setText(QString::number(pressureDiff/145.0,'f',2));//加载压差
+        ui->uninstallPressure1->setText(QString::number(uninstallPressure/145.0,'f',2));//卸载压力
         //设备控制
         ui->compressorBtn1->setIcon(aa.at(9) ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
         compressorSwitch1 = aa.at(9) ? true : false;
-        ui->controlPressureDiff1->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
-        ui->controlUninstallPressure1->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
+        ui->controlPressureDiff1->setText(QString::number(pressureDiff/145.0,'f',2));//加载压差
+        ui->controlUninstallPressure1->setText(QString::number(uninstallPressure/145.0,'f',2));//卸载压力
     }
     if(dryer.size() == 17){
         quint16 runHint = dryer.at(0);//运行提示
@@ -1256,24 +1661,24 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         quint16 dewPointT = dryer.at(14);//露点温度
         quint16 runTimeH = dryer.at(15);//运行计时（时）
         quint16 runTimeM = dryer.at(16);//运行计时（分）
-        if(faultHint){
-            saveWarningDryer(1,1);
-        }
-        if(phaseOrderFault){
-            saveWarningDryer(1,2);
-        }
-        if(overloadSave){
-            saveWarningDryer(1,3);
-        }
-        if(dewPointProbeFault){
-            saveWarningDryer(1,4);
-        }
-        if(faultWarn){
-            saveWarningDryer(1,5);
-        }
-        if(faultStop){
-            saveWarningDryer(1,6);
-        }
+//        if(faultHint){
+//            saveWarningDryer(1,1);
+//        }
+//        if(phaseOrderFault){
+//            saveWarningDryer(1,2);
+//        }
+//        if(overloadSave){
+//            saveWarningDryer(1,3);
+//        }
+//        if(dewPointProbeFault){
+//            saveWarningDryer(1,4);
+//        }
+//        if(faultWarn){
+//            saveWarningDryer(1,5);
+//        }
+//        if(faultStop){
+//            saveWarningDryer(1,6);
+//        }
         //主界面
         ui->valveState1->setText(runHint ? "运行中" : "停机状态");//运行状态
         ui->valveState1->setStyleSheet(runHint ? "color:#336600;" : "color:#990000;");
@@ -1290,8 +1695,19 @@ void MainWindow::dealCompressor1(QVector<quint16> compressor, QVector<quint16> d
         ui->dryerBtn1->setIcon(runHint ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
         dryerSwitch1 = runHint ? true : false;
     }
+
+    if(float2.size() == 4){
+
+        float instantVal = 0;//瞬时流量
+        float accumulativeVal = 0;//累计流量
+        int_to_float(float2.at(0),float2.at(1), instantVal);
+        int_to_float(float2.at(2),float2.at(3), accumulativeVal);
+
+        ui->F_labelV->setText(QString::number(instantVal,'f',2));
+        ui->F_labelV2->setText(QString::number(accumulativeVal,'f',2));
+    }
 }
-//显示1#空压机读取的数据
+//显示2#空压机读取的数据
 void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> dryer)
 {
     if(compressor.size() == 35){
@@ -1300,14 +1716,15 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
         quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
+        quint16 P1 = compressor.at(13);//P1
         quint16 P2 = compressor.at(14);//P2
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
         quint16 runMode2 = compressor.at(22);//运行状态 2 （注 2）
         quint16 runMode3 = compressor.at(23);//运行状态 3 （注 3）
         quint16 pressureDiff = compressor.at(25);//加载压差
         quint16 uninstallPressure = compressor.at(26);//卸载压力
-        saveWarning(runMode1, 2,1);
-        saveWarning(runMode2, 2,2);
+//        saveWarning(runMode1, 2,1);
+//        saveWarning(runMode2, 2,2);
         QVector<bool> aa = dec2BinTrans(runMode3);
         //主界面
         if(aa.at(9)){
@@ -1327,7 +1744,8 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         }
         ui->powerStatus2->setText(aa.at(8) ? "上电" : "断电");//电源
         ui->powerStatus2->setStyleSheet(aa.at(8) ? "color:#336600;" : "color:#990000;");
-        ui->ventingPressure2->setText(QString::number(P2/142.0,'f',2));//排气压力
+        ui->P1_2->setText(QString::number(P1/145.0,'f',2));//P1
+        ui->ventingPressure2->setText(QString::number(P2/145.0,'f',2));//排气压力
         ui->ventingT2->setText(QString::number(T1));//排气温度
         ui->runningT2->setText(QString::number(runTimeL));//运行时间
         ui->hostA2->setText(QString::number(hostCurrent));//主机电流
@@ -1336,13 +1754,13 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         //设备状态
         ui->compressorRunState2->setText(aa.at(9) ? "运行中" : "停止");//运行状态
         ui->compressorRunState2->setStyleSheet(aa.at(9) ? "color:#336600;" : "color:#990000;");
-        ui->pressureDiff2->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
-        ui->uninstallPressure2->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
+        ui->pressureDiff2->setText(QString::number(pressureDiff/145.0,'f',2));//加载压差
+        ui->uninstallPressure2->setText(QString::number(uninstallPressure/145.0,'f',2));//卸载压力
         //设备控制
         ui->compressorBtn2->setIcon(aa.at(9) ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
         compressorSwitch2 = aa.at(9) ? true : false;
-        ui->controlPressureDiff2->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
-        ui->controlUninstallPressure2->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
+        ui->controlPressureDiff2->setText(QString::number(pressureDiff/145.0,'f',2));//加载压差
+        ui->controlUninstallPressure2->setText(QString::number(uninstallPressure/145.0,'f',2));//卸载压力
     }
     if(dryer.size() == 17){
         quint16 runHint = dryer.at(0);//运行提示
@@ -1357,24 +1775,24 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
         quint16 dewPointT = dryer.at(14);//露点温度
         quint16 runTimeH = dryer.at(15);//运行计时（时）
         quint16 runTimeM = dryer.at(16);//运行计时（分）
-        if(faultHint){
-            saveWarningDryer(2,1);
-        }
-        if(phaseOrderFault){
-            saveWarningDryer(2,2);
-        }
-        if(overloadSave){
-            saveWarningDryer(2,3);
-        }
-        if(dewPointProbeFault){
-            saveWarningDryer(2,4);
-        }
-        if(faultWarn){
-            saveWarningDryer(2,5);
-        }
-        if(faultStop){
-            saveWarningDryer(2,6);
-        }
+//        if(faultHint){
+//            saveWarningDryer(2,1);
+//        }
+//        if(phaseOrderFault){
+//            saveWarningDryer(2,2);
+//        }
+//        if(overloadSave){
+//            saveWarningDryer(2,3);
+//        }
+//        if(dewPointProbeFault){
+//            saveWarningDryer(2,4);
+//        }
+//        if(faultWarn){
+//            saveWarningDryer(2,5);
+//        }
+//        if(faultStop){
+//            saveWarningDryer(2,6);
+//        }
 
         //主界面
         ui->valveState2->setText(runHint ? "运行中" : "停机状态");//阀门状态
@@ -1395,7 +1813,7 @@ void MainWindow::dealCompressor2(QVector<quint16> compressor, QVector<quint16> d
     }
 
 }
-//显示1#空压机读取的数据
+//显示3#空压机读取的数据
 void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> dryer)
 {
     if(compressor.size() == 35){
@@ -1404,14 +1822,15 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         quint16 hostCurrent = compressor.at(8);//主电机电流 Ic
         quint16 T1 = compressor.at(11);//T1
         quint16 T2 = compressor.at(12);//T2
+        quint16 P1 = compressor.at(13);//P1
         quint16 P2 = compressor.at(14);//P2
         quint16 runMode1 = compressor.at(21);//运行状态 1 （注 1）
         quint16 runMode2 = compressor.at(22);//运行状态 2 （注 2）
         quint16 runMode3 = compressor.at(23);//运行状态 3 （注 3）
         quint16 pressureDiff = compressor.at(25);//加载压差
         quint16 uninstallPressure = compressor.at(26);//卸载压力
-        saveWarning(runMode1, 3,1);
-        saveWarning(runMode2, 3,2);
+//        saveWarning(runMode1, 3,1);
+//        saveWarning(runMode2, 3,2);
         QVector<bool> aa = dec2BinTrans(runMode3);
         //主界面
         if(aa.at(9)){
@@ -1431,7 +1850,8 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         }
         ui->powerStatus3->setText(aa.at(8) ? "上电" : "断电");//电源
         ui->powerStatus3->setStyleSheet(aa.at(8) ? "color:#336600;" : "color:#990000;");
-        ui->ventingPressure3->setText(QString::number(P2/142.0,'f',2));//排气压力
+        ui->P1_3->setText(QString::number(P1/145.0,'f',2));//P1
+        ui->ventingPressure3->setText(QString::number(P2/145.0,'f',2));//排气压力
         ui->ventingT3->setText(QString::number(T1));//排气温度
         ui->runningT3->setText(QString::number(runTimeL));//运行时间
         ui->hostA3->setText(QString::number(hostCurrent));//主机电流
@@ -1440,13 +1860,13 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         //设备状态
         ui->compressorRunState3->setText(aa.at(9) ? "运行中" : "停止");//运行状态
         ui->compressorRunState3->setStyleSheet(aa.at(9) ? "color:#336600;" : "color:#990000;");
-        ui->pressureDiff3->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
-        ui->uninstallPressure3->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
+        ui->pressureDiff3->setText(QString::number(pressureDiff/145.0,'f',2));//加载压差
+        ui->uninstallPressure3->setText(QString::number(uninstallPressure/145.0,'f',2));//卸载压力
         //设备控制
         ui->compressorBtn3->setIcon(aa.at(9) ? QIcon(":/images/images/btncheckon2.png") : QIcon(":/images/images/btncheckoff2.png"));
         compressorSwitch3 = aa.at(9) ? true : false;
-        ui->controlPressureDiff3->setText(QString::number(pressureDiff/142.0,'f',2));//加载压差
-        ui->controlUninstallPressure3->setText(QString::number(uninstallPressure/142.0,'f',2));//卸载压力
+        ui->controlPressureDiff3->setText(QString::number(pressureDiff/145.0,'f',2));//加载压差
+        ui->controlUninstallPressure3->setText(QString::number(uninstallPressure/145.0,'f',2));//卸载压力
     }
     if(dryer.size() == 17){
         quint16 runHint = dryer.at(0);//运行提示
@@ -1461,24 +1881,24 @@ void MainWindow::dealCompressor3(QVector<quint16> compressor, QVector<quint16> d
         quint16 dewPointT = dryer.at(14);//露点温度
         quint16 runTimeH = dryer.at(15);//运行计时（时）
         quint16 runTimeM = dryer.at(16);//运行计时（分）
-        if(faultHint){
-            saveWarningDryer(3,1);
-        }
-        if(phaseOrderFault){
-            saveWarningDryer(3,2);
-        }
-        if(overloadSave){
-            saveWarningDryer(3,3);
-        }
-        if(dewPointProbeFault){
-            saveWarningDryer(3,4);
-        }
-        if(faultWarn){
-            saveWarningDryer(3,5);
-        }
-        if(faultStop){
-            saveWarningDryer(3,6);
-        }
+//        if(faultHint){
+//            saveWarningDryer(3,1);
+//        }
+//        if(phaseOrderFault){
+//            saveWarningDryer(3,2);
+//        }
+//        if(overloadSave){
+//            saveWarningDryer(3,3);
+//        }
+//        if(dewPointProbeFault){
+//            saveWarningDryer(3,4);
+//        }
+//        if(faultWarn){
+//            saveWarningDryer(3,5);
+//        }
+//        if(faultStop){
+//            saveWarningDryer(3,6);
+//        }
 
         //主界面
         ui->valveState3->setText(runHint ? "运行中" : "停机状态");//阀门状态
@@ -1517,7 +1937,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "高压侧报警";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(1)){
         switch (runState) {
@@ -1531,7 +1952,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "316 报警停机";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(2)){
         switch (runState) {
@@ -1545,7 +1967,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(3)){
         switch (runState) {
@@ -1559,7 +1982,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(4)){
         switch (runState) {
@@ -1573,7 +1997,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "T1 LOW";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(5)){
         switch (runState) {
@@ -1587,7 +2012,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "温度传感器故障";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(6)){
         switch (runState) {
@@ -1601,7 +2027,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "压力传感器故障";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(7)){
         switch (runState) {
@@ -1615,7 +2042,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "210 报警停机";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(8)){
         switch (runState) {
@@ -1629,7 +2057,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "电源";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(9)){
         switch (runState) {
@@ -1644,6 +2073,7 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             break;
         }
         dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(10)){
         switch (runState) {
@@ -1657,7 +2087,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "加载";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(11)){
         switch (runState) {
@@ -1671,7 +2102,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "满载";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(12)){
         switch (runState) {
@@ -1685,7 +2117,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "轻故障";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(13)){
         switch (runState) {
@@ -1699,7 +2132,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "重故障";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(14)){
         switch (runState) {
@@ -1713,7 +2147,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
     if(aa.at(15)){
         switch (runState) {
@@ -1727,7 +2162,8 @@ void MainWindow::saveWarning(quint16 warningInfo, int compressorNo,int runState)
             warning.info = "";
             break;
         }
-        dataOper.saveWarningInfo(warning);
+//        dataOper.saveWarningInfo(warning);
+        warnings.push_back(warning);
     }
 }
 //存储冷干机报警信息
@@ -1757,7 +2193,8 @@ void MainWindow::saveWarningDryer(int dryerNo, int runState)
         warning.info = "故障停机";
         break;
     }
-    dataOper.saveWarningInfo(warning);
+//    dataOper.saveWarningInfo(warning);
+    warnings.push_back(warning);
 }
 
 
@@ -2199,6 +2636,402 @@ void MainWindow::unlockUiOperation()
     ui->stopDryer3->setEnabled(true);
 }
 
+void MainWindow::int_to_float(quint16 a,quint16 b, float &buffer_,QString analyticalModel_)
+{
+    uint *pTemp=(uint *)&buffer_;
+    unsigned int chTemp[4];//a,b,c,d
+    chTemp[0]=a&0xff;
+    chTemp[1]=(a>>8)&0xff;
+    chTemp[2]=b&0xff;
+    chTemp[3]=(b>>8)&0xff;
+    //这是ABCD
+    if(analyticalModel_ =="ABCD")
+    {
+        *pTemp=((chTemp[1]<<24)&0xff000000)|((chTemp[0]<<16)&0xff0000)|((chTemp[3]<<8)&0xff00)|(chTemp[2]&0xff);
+    }
+    else if(analyticalModel_ == "CDAB")
+    {
+        *pTemp=((chTemp[3]<<24)&0xff000000)|((chTemp[2]<<16)&0xff0000)|((chTemp[1]<<8)&0xff00)|(chTemp[0]&0xff);
+    }
+    else if(analyticalModel_ == "BADC")
+    {
+        *pTemp=((chTemp[0]<<24)&0xff000000)|((chTemp[1]<<16)&0xff0000)|((chTemp[2]<<8)&0xff00)|(chTemp[3]&0xff);
+    }
+    else//DCBA
+    {
+        *pTemp=((chTemp[2]<<24)&0xff000000)|((chTemp[3]<<16)&0xff0000)|((chTemp[0]<<8)&0xff00)|(chTemp[1]&0xff);
+    }
+}
 
+
+//删除历史数据
+void MainWindow::on_deleteBtn_clicked()
+{
+    if(ui->deleteLine->text().isEmpty()){
+        QMessageBox::information(this, "提示", "输入保留天数！","确定");
+        return;
+    }
+    QMessageBox msgBox;
+    msgBox.setText("删除提示");
+    msgBox.setWindowTitle("删除提示");
+    msgBox.setInformativeText("是否确定删除选择的数据，此操作不可逆！");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    int ret = msgBox.exec();
+    switch (ret) {
+    case QMessageBox::Yes:
+        deleteDataSure();
+        break;
+    case QMessageBox::No:
+        break;
+    default:
+        break;
+    }
+}
+void MainWindow::deleteDataSure()
+{
+     int day = ui->deleteLine->text().toInt();
+
+     QString defineTime = this->getDefineTimeByDay(-day);
+
+     if(ui->checkBox->isChecked()){
+         if(dataOper.deleteGrabDataInfo("Compressor1",defineTime)){
+             QMessageBox::information(this, "提示", "删除1号空压机数据成功！","确定");
+             ui->checkBox->setChecked(false);
+         }
+     }
+     if(ui->checkBox_2->isChecked()){
+         if(dataOper.deleteGrabDataInfo("Compressor2",defineTime)){
+             QMessageBox::information(this, "提示", "删除2号空压机数据成功！","确定");
+             ui->checkBox_2->setChecked(false);
+         }
+     }
+     if(ui->checkBox_3->isChecked()){
+         if(dataOper.deleteGrabDataInfo("Compressor3",defineTime)){
+             QMessageBox::information(this, "提示", "删除3号空压机数据成功！","确定");
+             ui->checkBox_3->setChecked(false);
+         }
+     }
+     if(ui->checkBox_4->isChecked()){
+         if(dataOper.deleteGrabDataInfo("dryer1",defineTime)){
+             QMessageBox::information(this, "提示", "删除1号冷干机数据成功！","确定");
+             ui->checkBox_4->setChecked(false);
+         }
+     }
+     if(ui->checkBox_6->isChecked()){
+         if(dataOper.deleteGrabDataInfo("dryer2",defineTime)){
+             QMessageBox::information(this, "提示", "删除2号冷干机数据成功！","确定");
+             ui->checkBox_6->setChecked(false);
+         }
+     }
+     if(ui->checkBox_7->isChecked()){
+         if(dataOper.deleteGrabDataInfo("dryer3",defineTime)){
+             QMessageBox::information(this, "提示", "删除3号冷干机数据成功！","确定");
+             ui->checkBox_7->setChecked(false);
+         }
+     }
+     if(ui->checkBox_5->isChecked()){
+         if(dataOper.deleteWarningDataInfo(defineTime)){
+             QMessageBox::information(this, "提示", "删除设备警告数据成功！","确定");
+             ui->checkBox_5->setChecked(false);
+         }
+     }
+     if(ui->checkBox_8->isChecked()){
+         if(dataOper.deleteLogDataInfo(defineTime)){
+             QMessageBox::information(this, "提示", "删除日志数据成功！","确定");
+             ui->checkBox_8->setChecked(false);
+         }
+     }
+     ui->deleteLine->clear();
+}
+
+
+
+void MainWindow::saveBatchTimingData(QVector<quint16> buffer_)
+{
+    QDateTime storageTime = QDateTime::currentDateTime();
+
+    Compressor compressor1;
+    Compressor compressor2;
+    Compressor compressor3;
+    Dryer dryer1;
+    Dryer dryer2;
+    Dryer dryer3;
+
+    compressor1.runTimeL = buffer_.at(25);//累计运行时间 L
+    compressor1.runTimeH = buffer_.at(26);//累计运行时间 H
+    compressor1.loadTimeL = buffer_.at(27);//累计加载时间 L
+    compressor1.loadTimeH = buffer_.at(28);//累计加载时间 H
+    compressor1.electricityType = buffer_.at(29);//机型（电流类型）
+    compressor1.airDemand = buffer_.at(30);//供气量
+    compressor1.jointControlMode = buffer_.at(31);//联控模式
+    compressor1.voltageDeviation = buffer_.at(32);//电压偏差
+    compressor1.hostCurrent = buffer_.at(33);//主电机电流 Ic
+    compressor1.dewPointTemperature = buffer_.at(34);//露点温度 Td
+    compressor1.EnvironmentalTemperature = buffer_.at(35);//环境温度
+    compressor1.T1 = buffer_.at(36);//T1
+    compressor1.T2 = buffer_.at(37);//T2
+    compressor1.P1 = buffer_.at(38);//P1
+    compressor1.P2 = buffer_.at(39);//P2
+    compressor1.T3 = buffer_.at(40);//T3
+    compressor1.T4 = buffer_.at(41);//T4
+    compressor1.P3 = buffer_.at(42);//P3
+    compressor1.P4 = buffer_.at(43);//P4
+    compressor1.T5 = buffer_.at(44);//T5
+    compressor1.T6 = buffer_.at(45);//T6
+    compressor1.runMode1 = buffer_.at(46);//运行状态 1 （注 1）
+    compressor1.runMode2 = buffer_.at(47);//运行状态 2 （注 2）
+    compressor1.runMode3 = buffer_.at(48);//运行状态 3 （注 3）
+    compressor1.dp1 = buffer_.at(49);//dp1（06－3－13 >v2.49）
+    compressor1.pressureDiff = buffer_.at(50);//加载压差
+    compressor1.uninstallPressure = buffer_.at(51);//卸载压力
+    compressor1.MaxManifoldPressure = buffer_.at(52);//最高总管压力
+    compressor1.MinManifoldPressure = buffer_.at(53);//最低总管压力
+    compressor1.MinimalPressure = buffer_.at(54);//最低压力
+    compressor1.StartLoadDelayTime = buffer_.at(55);//启动加载延时时间
+    compressor1.StopTime = buffer_.at(56);//卸载停机时间
+    compressor1.OrderTime = buffer_.at(57);//顺序时间
+    compressor1.RotateTime = buffer_.at(58);//轮换时间
+    compressor1.TransitionTime = buffer_.at(59);//Y-△转换时间
+    compressor1.date = storageTime;//存储时间
+
+    compressors1.push_back(compressor1);
+
+    compressor2.runTimeL = buffer_.at(75);//累计运行时间 L
+    compressor2.runTimeH = buffer_.at(76);//累计运行时间 H
+    compressor2.loadTimeL = buffer_.at(77);//累计加载时间 L
+    compressor2.loadTimeH = buffer_.at(78);//累计加载时间 H
+    compressor2.electricityType = buffer_.at(79);//机型（电流类型）
+    compressor2.airDemand = buffer_.at(80);//供气量
+    compressor2.jointControlMode = buffer_.at(81);//联控模式
+    compressor2.voltageDeviation = buffer_.at(82);//电压偏差
+    compressor2.hostCurrent = buffer_.at(83);//主电机电流 Ic
+    compressor2.dewPointTemperature = buffer_.at(84);//露点温度 Td
+    compressor2.EnvironmentalTemperature = buffer_.at(85);//环境温度
+    compressor2.T1 = buffer_.at(86);//T1
+    compressor2.T2 = buffer_.at(87);//T2
+    compressor2.P1 = buffer_.at(88);//P1
+    compressor2.P2 = buffer_.at(89);//P2
+    compressor2.T3 = buffer_.at(90);//T3
+    compressor2.T4 = buffer_.at(91);//T4
+    compressor2.P3 = buffer_.at(92);//P3
+    compressor2.P4 = buffer_.at(93);//P4
+    compressor2.T5 = buffer_.at(94);//T5
+    compressor2.T6 = buffer_.at(95);//T6
+    compressor2.runMode1 = buffer_.at(96);//运行状态 1 （注 1）
+    compressor2.runMode2 = buffer_.at(97);//运行状态 2 （注 2）
+    compressor2.runMode3 = buffer_.at(98);//运行状态 3 （注 3）
+    compressor2.dp1 = buffer_.at(99);//dp1（06－3－13 >v2.49）
+    compressor2.pressureDiff = buffer_.at(100);//加载压差
+    compressor2.uninstallPressure = buffer_.at(101);//卸载压力
+    compressor2.MaxManifoldPressure = buffer_.at(102);//最高总管压力
+    compressor2.MinManifoldPressure = buffer_.at(103);//最低总管压力
+    compressor2.MinimalPressure = buffer_.at(104);//最低压力
+    compressor2.StartLoadDelayTime = buffer_.at(105);//启动加载延时时间
+    compressor2.StopTime = buffer_.at(106);//卸载停机时间
+    compressor2.OrderTime = buffer_.at(107);//顺序时间
+    compressor2.RotateTime = buffer_.at(108);//轮换时间
+    compressor2.TransitionTime = buffer_.at(109);//Y-△转换时间
+    compressor2.date = storageTime;//存储时间
+
+    compressors2.push_back(compressor2);
+
+    compressor3.runTimeL = buffer_.at(125);//累计运行时间 L
+    compressor3.runTimeH = buffer_.at(126);//累计运行时间 H
+    compressor3.loadTimeL = buffer_.at(127);//累计加载时间 L
+    compressor3.loadTimeH = buffer_.at(128);//累计加载时间 H
+    compressor3.electricityType = buffer_.at(129);//机型（电流类型）
+    compressor3.airDemand = buffer_.at(130);//供气量
+    compressor3.jointControlMode = buffer_.at(131);//联控模式
+    compressor3.voltageDeviation = buffer_.at(132);//电压偏差
+    compressor3.hostCurrent = buffer_.at(133);//主电机电流 Ic
+    compressor3.dewPointTemperature = buffer_.at(134);//露点温度 Td
+    compressor3.EnvironmentalTemperature = buffer_.at(135);//环境温度
+    compressor3.T1 = buffer_.at(136);//T1
+    compressor3.T2 = buffer_.at(137);//T2
+    compressor3.P1 = buffer_.at(138);//P1
+    compressor3.P2 = buffer_.at(139);//P2
+    compressor3.T3 = buffer_.at(140);//T3
+    compressor3.T4 = buffer_.at(141);//T4
+    compressor3.P3 = buffer_.at(142);//P3
+    compressor3.P4 = buffer_.at(143);//P4
+    compressor3.T5 = buffer_.at(144);//T5
+    compressor3.T6 = buffer_.at(145);//T6
+    compressor3.runMode1 = buffer_.at(146);//运行状态 1 （注 1）
+    compressor3.runMode2 = buffer_.at(147);//运行状态 2 （注 2）
+    compressor3.runMode3 = buffer_.at(148);//运行状态 3 （注 3）
+    compressor3.dp1 = buffer_.at(149);//dp1（06－3－13 >v2.49）
+    compressor3.pressureDiff = buffer_.at(150);//加载压差
+    compressor3.uninstallPressure = buffer_.at(151);//卸载压力
+    compressor3.MaxManifoldPressure = buffer_.at(152);//最高总管压力
+    compressor3.MinManifoldPressure = buffer_.at(153);//最低总管压力
+    compressor3.MinimalPressure = buffer_.at(154);//最低压力
+    compressor3.StartLoadDelayTime = buffer_.at(155);//启动加载延时时间
+    compressor3.StopTime = buffer_.at(156);//卸载停机时间
+    compressor3.OrderTime = buffer_.at(157);//顺序时间
+    compressor3.RotateTime = buffer_.at(158);//轮换时间
+    compressor3.TransitionTime = buffer_.at(159);//Y-△转换时间
+    compressor3.date = storageTime;//存储时间
+
+    compressors3.push_back(compressor3);
+
+    dryer1.runHint = buffer_.at(175);//运行提示
+    dryer1.faultHint = buffer_.at(176);//故障提示 1
+    dryer1.compressor = buffer_.at(177);//压缩机
+    dryer1.drainer = buffer_.at(178);//排水器
+    dryer1.phaseOrderFault = buffer_.at(179);//相序故障 2
+    dryer1.overloadSave = buffer_.at(180);//故障保护 3
+    dryer1.sysHighVoltage = buffer_.at(181);//系统高压
+    dryer1.sysLowVoltage = buffer_.at(182);//系统低压
+    dryer1.dewPointProbeFault = buffer_.at(183);//露点探头故障 4
+    dryer1.dewPointH = buffer_.at(184);//露点偏高
+    dryer1.dewPointL = buffer_.at(185);//露点偏低
+    dryer1.faultWarn = buffer_.at(186);//故障报警 5
+    dryer1.faultStop = buffer_.at(187);//故障停机 6
+    dryer1.countDown = buffer_.at(188);//倒计时
+    dryer1.dewPointT = buffer_.at(189);//露点温度
+    dryer1.runTimeH = buffer_.at(190);//运行计时（时）
+    dryer1.runTimeM = buffer_.at(191);//运行计时（分）
+    dryer1.date = storageTime;//存储时间
+
+    dryers1.push_back(dryer1);
+
+    dryer2.runHint = buffer_.at(225);//运行提示
+    dryer2.faultHint = buffer_.at(226);//故障提示 1
+    dryer2.compressor = buffer_.at(227);//压缩机
+    dryer2.drainer = buffer_.at(228);//排水器
+    dryer2.phaseOrderFault = buffer_.at(229);//相序故障 2
+    dryer2.overloadSave = buffer_.at(230);//故障保护 3
+    dryer2.sysHighVoltage = buffer_.at(231);//系统高压
+    dryer2.sysLowVoltage = buffer_.at(232);//系统低压
+    dryer2.dewPointProbeFault = buffer_.at(233);//露点探头故障 4
+    dryer2.dewPointH = buffer_.at(234);//露点偏高
+    dryer2.dewPointL = buffer_.at(235);//露点偏低
+    dryer2.faultWarn = buffer_.at(236);//故障报警 5
+    dryer2.faultStop = buffer_.at(237);//故障停机 6
+    dryer2.countDown = buffer_.at(238);//倒计时
+    dryer2.dewPointT = buffer_.at(239);//露点温度
+    dryer2.runTimeH = buffer_.at(240);//运行计时（时）
+    dryer2.runTimeM = buffer_.at(241);//运行计时（分）
+    dryer2.date = storageTime;//存储时间
+
+    dryers2.push_back(dryer2);
+
+    dryer3.runHint = buffer_.at(275);//运行提示
+    dryer3.faultHint = buffer_.at(276);//故障提示 1
+    dryer3.compressor = buffer_.at(277);//压缩机
+    dryer3.drainer = buffer_.at(278);//排水器
+    dryer3.phaseOrderFault = buffer_.at(279);//相序故障 2
+    dryer3.overloadSave = buffer_.at(280);//故障保护 3
+    dryer3.sysHighVoltage = buffer_.at(281);//系统高压
+    dryer3.sysLowVoltage = buffer_.at(282);//系统低压
+    dryer3.dewPointProbeFault = buffer_.at(283);//露点探头故障 4
+    dryer3.dewPointH = buffer_.at(284);//露点偏高
+    dryer3.dewPointL = buffer_.at(285);//露点偏低
+    dryer3.faultWarn = buffer_.at(286);//故障报警 5
+    dryer3.faultStop = buffer_.at(287);//故障停机 6
+    dryer3.countDown = buffer_.at(288);//倒计时
+    dryer3.dewPointT = buffer_.at(289);//露点温度
+    dryer3.runTimeH = buffer_.at(290);//运行计时（时）
+    dryer3.runTimeM = buffer_.at(291);//运行计时（分）
+    dryer3.date = storageTime;//存储时间
+
+    dryers3.push_back(dryer3);
+
+    //存储 空压机 报警数据
+
+
+    saveWarning(buffer_.at(46), 1,1);
+    saveWarning(buffer_.at(47), 1,2);
+
+    saveWarning(buffer_.at(96), 2,1);
+    saveWarning(buffer_.at(97), 2,2);
+
+    saveWarning(buffer_.at(146), 3,1);
+    saveWarning(buffer_.at(147), 3,2);
+
+
+    if(buffer_.at(176)){
+        saveWarningDryer(1,1);
+    }
+    if(buffer_.at(179)){
+        saveWarningDryer(1,2);
+    }
+    if(buffer_.at(180)){
+        saveWarningDryer(1,3);
+    }
+    if(buffer_.at(183)){
+        saveWarningDryer(1,4);
+    }
+    if(buffer_.at(186)){
+        saveWarningDryer(1,5);
+    }
+    if(buffer_.at(187)){
+        saveWarningDryer(1,6);
+    }
+
+
+
+    if(buffer_.at(226)){
+        saveWarningDryer(2,1);
+    }
+    if(buffer_.at(229)){
+        saveWarningDryer(2,2);
+    }
+    if(buffer_.at(230)){
+        saveWarningDryer(2,3);
+    }
+    if(buffer_.at(233)){
+        saveWarningDryer(2,4);
+    }
+    if(buffer_.at(236)){
+        saveWarningDryer(2,5);
+    }
+    if(buffer_.at(237)){
+        saveWarningDryer(2,6);
+    }
+
+
+
+    if(buffer_.at(276)){
+        saveWarningDryer(3,1);
+    }
+    if(buffer_.at(279)){
+        saveWarningDryer(3,2);
+    }
+    if(buffer_.at(280)){
+        saveWarningDryer(3,3);
+    }
+    if(buffer_.at(283)){
+        saveWarningDryer(3,4);
+    }
+    if(buffer_.at(286)){
+        saveWarningDryer(3,5);
+    }
+    if(buffer_.at(287)){
+        saveWarningDryer(3,6);
+    }
+}
+
+
+void MainWindow::saveData(vector<Compressor> c1,vector<Compressor> c2,vector<Compressor> c3,
+                          vector<Dryer> d1,vector<Dryer> d2,vector<Dryer> d3,vector<Warning> w)
+{
+    if(storageInterval2 == STORE_TIME2){
+        isStoreData = false;
+        storageInterval2 = 0;
+        if(dataOper.saveData(c1,c2,c3,d1,d2,d3,w)){
+            compressors1.clear();
+            compressors2.clear();
+            compressors3.clear();
+            dryers1.clear();
+            dryers2.clear();
+            dryers3.clear();
+            warnings.clear();
+            isStoreData = true;
+        }
+    }
+    storageInterval2 += READ_TIME;
+}
 
 

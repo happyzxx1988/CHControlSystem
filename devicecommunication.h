@@ -84,6 +84,8 @@ signals:
 
     void readEquipmentStatusInfo();
 
+    void readFloat32Signal_S();
+
 
 private:
     QModbusClient *modbusDevice;
@@ -102,30 +104,17 @@ public:
     void setUninstallPressureAndPressureDiff1(int uninstallPressure,int pressureDiff);
     void setUninstallPressureAndPressureDiff2(int uninstallPressure,int pressureDiff);
     void setUninstallPressureAndPressureDiff3(int uninstallPressure,int pressureDiff);
-    void readCompressor(QVector<quint16> &compressor1,
-                        QVector<quint16> &compressor2,
-                        QVector<quint16> &compressor3,
-                        QVector<quint16> &dryer1,
-                        QVector<quint16> &dryer2,
-                        QVector<quint16> &dryer3);
-
-    void readCompressor_old(QVector<quint16> &compressor1,
-                        QVector<quint16> &compressor2,
-                        QVector<quint16> &compressor3,
-                        QVector<quint16> &dryer1,
-                        QVector<quint16> &dryer2,
-                        QVector<quint16> &dryer3);
 
     void readCompressor1(QVector<quint16> &compressor1);
     void readCompressor2(QVector<quint16> &compressor2);
     void readCompressor3(QVector<quint16> &compressor3);
-    void dryer1(QVector<quint16> &dryer1);
+    void dryer1(QVector<quint16> &dryer1, QVector<quint16> &float2);
     void dryer2(QVector<quint16> &dryer2);
     void dryer3(QVector<quint16> &dryer3);
 
-    void readDryer(QVector<quint16> &dryer1, QVector<quint16> &dryer2, QVector<quint16> &dryer3);
-
     void readUint16(int address_, int count_, QVector<quint16> &buffer_);
+
+    void readFloat32(int address_,float &buffer_,QString analyticalModel_ = "ABCD");
 
     void writeAddress26();
     void writeAddress410(int val);

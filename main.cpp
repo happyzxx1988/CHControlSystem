@@ -3,6 +3,7 @@
 #include <QApplication>
 #include "login.h"
 #include <QDebug>
+#include "connection.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,18 @@ int main(int argc, char *argv[])
         return 0;
     }
     ss.release();// 临界区
+
+    if(!db_sqllitecreateConnection()){//sqllite连接数据库
+        return 0;
+    }
+
+
+//    init_mysql();
+//    if(!db_mysqlcreateConnection()){//mysql连接数据库
+//        return 0;
+//    }
+
+
 
 
     Login w;

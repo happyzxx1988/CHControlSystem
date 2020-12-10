@@ -4,6 +4,7 @@
 #include <QObject>
 #include <vector>
 #include "objectinfo.h"
+#include <QSqlDatabase>
 
 using namespace std;
 
@@ -38,12 +39,21 @@ public:
     void saveWarningInfo(Warning warning);
     void getCompressorInfo(vector<Compressor> &compressors, int CompressorNo, QString s_start, QString e_time);
 
-    void deleteGrabDataInfo(QString tableName,QString time);
-    void deleteLogDataInfo(QString time);
-    void deleteWarningDataInfo(QString time);
+    bool deleteGrabDataInfo(QString tableName,QString time);
+    bool deleteLogDataInfo(QString time);
+    bool deleteWarningDataInfo(QString time);
     void GetTotalRecordCount(QString tableName, int &totalRecordCount);
     void RecordQuery(int limitIndex,int pageRecordCount,QString tableName, vector<Compressor> &compressors,vector<Dryer> &dryers);
+
+    void RecordQuery_w(int limitIndex,int pageRecordCount, QString s_start,QString e_time,vector<Warning> &w);
+
+
     void getDryerInfo(vector<Dryer> &dryers, int DryerNo, QString s_start, QString e_time);
+
+    bool saveData(vector<Compressor> compressors1, vector<Compressor> compressors2, vector<Compressor> compressors3,
+                              vector<Dryer> dryers1, vector<Dryer> dryers2, vector<Dryer> dryers3, vector<Warning> warnings);
+
+
 
 
 
@@ -51,6 +61,8 @@ public:
 
 signals:
     void sendDataMessage(const QString& info);
+private:
+    QSqlDatabase db;
 
 };
 

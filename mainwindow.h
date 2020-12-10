@@ -13,6 +13,7 @@
 
 #define STATION_HOUSE   "102"        //站房102-3    201-对面-2   202-2
 #define STORE_TIME      60000      //储存读取数据的时间间隔  暂定1分钟
+#define STORE_TIME2     60000      //储存读取数据的时间间隔  5分钟存储一次  20201204 zxx
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -83,11 +84,23 @@ private slots:
 
     void on_loadDataBtn_2_clicked();
 
+    void on_deleteBtn_clicked();
+
+    void on_fristButton_2_clicked();
+
+    void on_prevButton_2_clicked();
+
+    void on_switchPageButton_2_clicked();
+
+    void on_nextButton_2_clicked();
+
+    void on_lastButton_2_clicked();
+
 private:
     void initForm();
     void clearTable(QTableWidget *table);
     void initTable();
-    void dealCompressor1(QVector<quint16> compressor, QVector<quint16> dryer);
+    void dealCompressor1(QVector<quint16> compressor, QVector<quint16> dryer, QVector<quint16> float2);
     void dealCompressor2(QVector<quint16> compressor, QVector<quint16> dryer);
     void dealCompressor3(QVector<quint16> compressor, QVector<quint16> dryer);
     void initChart();
@@ -103,12 +116,32 @@ private:
     void getInitEquipmentStatus();
 
     QString getDefineTimeByDay(int day);
+
     void GetTotalRecordCount();
     void GetPageCount();
     void initDatatable();
     void RecordQuery(int limitIndex);
     void UpdateStatus();
+
+
+    void GetTotalRecordCount_w();
+    void GetPageCount_w();
+    void initDatatable_w();
+    void RecordQuery_w(int limitIndex);
+    void UpdateStatus_w();
+
+
+
     bool radioButtonIsChecked();
+
+    void int_to_float(quint16 a,quint16 b, float &buffer_,QString analyticalModel_ = "ABCD");
+
+    void deleteDataSure();
+
+    void saveBatchTimingData(QVector<quint16> buffer_);
+
+    void saveData(vector<Compressor> c1, vector<Compressor> c2, vector<Compressor> c3,
+                              vector<Dryer> d1, vector<Dryer> d2, vector<Dryer> d3, vector<Warning> w);
 
 private:
     Ui::MainWindow *ui;
@@ -128,7 +161,9 @@ private:
     bool compressorSwitch2;
     bool compressorSwitch3;
     AppCore appcore;
+
     int storageInterval;//存储读取数据的时间间隔
+    int storageInterval2;//存储读取数据的时间间隔
     int READ_TIME;
     QTimer compressorTimer;
     QTimer timer;
@@ -142,6 +177,14 @@ private:
     bool dryerIsShowWarning1;
     bool dryerIsShowWarning2;
     bool dryerIsShowWarning3;
+
+    bool isGetEquipmentStatus;
+    bool isFristGetEquipmentStatus1;
+    bool isFristGetEquipmentStatus2;
+    bool isFristGetEquipmentStatus3;
+    bool isFristGetEquipmentStatus4;
+    bool isFristGetEquipmentStatus5;
+    bool isFristGetEquipmentStatus6;
 
     WarningHintDialog *warningHintDialog;
 
@@ -172,6 +215,19 @@ private:
 
     QLabel        *m_valueLabel2;
 
+    //批量存储空压机、冷干机采集数据，批量存储空压机、冷干机报警数据
+
+    vector<Compressor> compressors1;
+    vector<Compressor> compressors2;
+    vector<Compressor> compressors3;
+    vector<Dryer> dryers1;
+    vector<Dryer> dryers2;
+    vector<Dryer> dryers3;
+
+    vector<Warning> warnings;
+
+    bool isStoreData;
+
 
 
 
@@ -180,7 +236,13 @@ private:
     int       totalPage;    //总页数
     int       totalRecrodCount;     //总记录数
     int       PageRecordCount;      //每页记录数
-    QString tableName;
+    QString   tableName;
+
+    //报警数据  table 分页处理
+    int       currentPage_w;      //当前页
+    int       totalPage_w;    //总页数
+    int       totalRecrodCount_w;     //总记录数
+    int       PageRecordCount_w;      //每页记录数
 
 };
 

@@ -102,13 +102,13 @@ QToolButton{
           <widget class="QLabel" name="sys_name">
            <property name="minimumSize">
             <size>
-             <width>200</width>
+             <width>300</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>200</width>
+             <width>300</width>
              <height>16777215</height>
             </size>
            </property>
@@ -272,6 +272,100 @@ QToolButton{
          <string/>
         </property>
         <layout class="QGridLayout" name="gridLayout_21">
+         <item row="4" column="0">
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>系统报警</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>用户管理</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>变化曲线</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QPushButton" name="pushButton_8">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>历史数据</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QPushButton" name="pushButton_2">
            <property name="minimumSize">
@@ -372,8 +466,8 @@ QToolButton{
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QPushButton" name="pushButton_5">
+         <item row="8" column="0">
+          <widget class="QPushButton" name="pushButton_9">
            <property name="minimumSize">
             <size>
              <width>100</width>
@@ -387,82 +481,7 @@ QToolButton{
             </size>
            </property>
            <property name="text">
-            <string>系统报警</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="autoExclusive">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QPushButton" name="pushButton_7">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>用户管理</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="autoExclusive">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QPushButton" name="pushButton_6">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>变化曲线</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="autoExclusive">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QPushButton" name="pushButton_8">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>历史数据</string>
+            <string>数据管理</string>
            </property>
           </widget>
          </item>
@@ -475,7 +494,7 @@ QToolButton{
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>8</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="main_p">
          <layout class="QVBoxLayout" name="verticalLayout_15" stretch="1">
@@ -528,6 +547,71 @@ QToolButton{
                   <widget class="QPushButton" name="connectPLCBtn">
                    <property name="text">
                     <string>连接</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_14">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="F_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>瞬时流量：</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="F_labelV">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="F_label2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>累计流量：</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="F_labelV2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
                    </property>
                   </widget>
                  </item>
@@ -631,12 +715,12 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="2" column="0">
+                 <item row="3" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_36">
                    <item>
                     <widget class="QLabel" name="label_58">
                      <property name="text">
-                      <string>排气压力:</string>
+                      <string>P2:</string>
                      </property>
                     </widget>
                    </item>
@@ -668,7 +752,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="3" column="0">
+                 <item row="4" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_37">
                    <item>
                     <widget class="QLabel" name="label_59">
@@ -705,7 +789,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="4" column="0">
+                 <item row="5" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_40">
                    <item>
                     <widget class="QLabel" name="label_62">
@@ -742,7 +826,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="5" column="0">
+                 <item row="6" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_39">
                    <item>
                     <widget class="QLabel" name="label_60">
@@ -779,7 +863,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_41">
                    <item>
                     <widget class="QLabel" name="label_63">
@@ -816,7 +900,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="7" column="0">
+                 <item row="8" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_38">
                    <item>
                     <widget class="QLabel" name="label_61">
@@ -848,6 +932,37 @@ QToolButton{
                      </property>
                      <property name="text">
                       <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_99">
+                   <item>
+                    <widget class="QLabel" name="label_160">
+                     <property name="text">
+                      <string>P1:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="P1_1">
+                     <property name="text">
+                      <string>23.89</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_162">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
                      </property>
                     </widget>
                    </item>
@@ -930,12 +1045,12 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="2" column="0">
+                 <item row="3" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_43">
                    <item>
                     <widget class="QLabel" name="label_73">
                      <property name="text">
-                      <string>排气压力:</string>
+                      <string>P2:</string>
                      </property>
                     </widget>
                    </item>
@@ -964,7 +1079,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="3" column="0">
+                 <item row="4" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_44">
                    <item>
                     <widget class="QLabel" name="label_75">
@@ -998,7 +1113,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="4" column="0">
+                 <item row="5" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_47">
                    <item>
                     <widget class="QLabel" name="label_81">
@@ -1032,7 +1147,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="5" column="0">
+                 <item row="6" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_46">
                    <item>
                     <widget class="QLabel" name="label_79">
@@ -1066,7 +1181,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_48">
                    <item>
                     <widget class="QLabel" name="label_83">
@@ -1100,7 +1215,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="7" column="0">
+                 <item row="8" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_45">
                    <item>
                     <widget class="QLabel" name="label_77">
@@ -1129,6 +1244,37 @@ QToolButton{
                      </property>
                      <property name="text">
                       <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_100">
+                   <item>
+                    <widget class="QLabel" name="label_163">
+                     <property name="text">
+                      <string>P1:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="P1_2">
+                     <property name="text">
+                      <string>23.89</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_165">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
                      </property>
                     </widget>
                    </item>
@@ -1211,12 +1357,12 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="2" column="0">
+                 <item row="3" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_50">
                    <item>
                     <widget class="QLabel" name="label_87">
                      <property name="text">
-                      <string>排气压力:</string>
+                      <string>P2:</string>
                      </property>
                     </widget>
                    </item>
@@ -1245,7 +1391,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="3" column="0">
+                 <item row="4" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_51">
                    <item>
                     <widget class="QLabel" name="label_89">
@@ -1279,7 +1425,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="4" column="0">
+                 <item row="5" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_54">
                    <item>
                     <widget class="QLabel" name="label_95">
@@ -1313,7 +1459,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="5" column="0">
+                 <item row="6" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_53">
                    <item>
                     <widget class="QLabel" name="label_93">
@@ -1347,7 +1493,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_55">
                    <item>
                     <widget class="QLabel" name="label_97">
@@ -1381,7 +1527,7 @@ QToolButton{
                    </item>
                   </layout>
                  </item>
-                 <item row="7" column="0">
+                 <item row="8" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_52">
                    <item>
                     <widget class="QLabel" name="label_91">
@@ -1410,6 +1556,37 @@ QToolButton{
                      </property>
                      <property name="text">
                       <string>(h)</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_101">
+                   <item>
+                    <widget class="QLabel" name="label_166">
+                     <property name="text">
+                      <string>P1:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="P1_3">
+                     <property name="text">
+                      <string>23.89</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_168">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>(Mpa)</string>
                      </property>
                     </widget>
                    </item>
@@ -3859,15 +4036,6 @@ QToolButton{
         </widget>
         <widget class="QWidget" name="sys_warning">
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
           <item>
            <widget class="QGroupBox" name="groupBox_2">
             <property name="title">
@@ -3957,6 +4125,369 @@ QToolButton{
           <item>
            <widget class="QTableWidget" name="warningTable"/>
           </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_33">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_102">
+             <item>
+              <spacer name="horizontalSpacer_17">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>272</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_103">
+               <item>
+                <widget class="QPushButton" name="fristButton_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>首页</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="prevButton_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>60</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>上一页</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_104">
+                 <item>
+                  <widget class="QLabel" name="label_161">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>显示</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="pageRecordCount_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>10</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>20</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>30</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>40</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_105">
+                 <item>
+                  <widget class="QLabel" name="label_164">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>转到第</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="switchPageLineEdit_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_167">
+                   <property name="minimumSize">
+                    <size>
+                     <width>15</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>页</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QPushButton" name="switchPageButton_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>跳转</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_106">
+                 <item>
+                  <widget class="QLabel" name="label_169">
+                   <property name="minimumSize">
+                    <size>
+                     <width>15</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>共</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="totalPage_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_170">
+                   <property name="minimumSize">
+                    <size>
+                     <width>15</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>页</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_107">
+                 <item>
+                  <widget class="QLabel" name="label_171">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>当前第</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="currentPage_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_172">
+                   <property name="minimumSize">
+                    <size>
+                     <width>15</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>15</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>页</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QPushButton" name="nextButton_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>60</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>60</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>下一页</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="lastButton_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>末页</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="runningChart_p">
@@ -3998,7 +4529,7 @@ QToolButton{
                <item>
                 <widget class="QLabel" name="label_17">
                  <property name="text">
-                  <string>开始时间</string>
+                  <string>结束时间</string>
                  </property>
                 </widget>
                </item>
@@ -4629,7 +5160,7 @@ QToolButton{
                <item>
                 <widget class="QLabel" name="label_158">
                  <property name="text">
-                  <string>开始时间</string>
+                  <string>结束时间</string>
                  </property>
                 </widget>
                </item>
@@ -4745,6 +5276,143 @@ QToolButton{
           </item>
           <item row="2" column="0">
            <widget class="QChartView" name="dewPointTWidget" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="data_managemant">
+         <layout class="QVBoxLayout" name="verticalLayout_18">
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_17" stretch="1,7">
+            <item>
+             <widget class="QGroupBox" name="groupBox_32">
+              <property name="title">
+               <string/>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_96">
+               <item>
+                <spacer name="horizontalSpacer_15">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_159">
+                 <property name="text">
+                  <string>输入保留数据天数：</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="deleteLine"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="deleteBtn">
+                 <property name="text">
+                  <string>删除</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_16">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_31">
+              <property name="title">
+               <string/>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_26">
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="checkBox">
+                 <property name="text">
+                  <string>1#空压机采集数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="checkBox_4">
+                 <property name="text">
+                  <string>1#冷干机采集数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="checkBox_2">
+                 <property name="text">
+                  <string>2#空压机采集数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="checkBox_6">
+                 <property name="text">
+                  <string>2#冷干机采集数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="checkBox_3">
+                 <property name="text">
+                  <string>3#空压机采集数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="checkBox_7">
+                 <property name="text">
+                  <string>3#冷干机采集数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QCheckBox" name="checkBox_5">
+                 <property name="text">
+                  <string>警告数据</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="checkBox_8">
+                 <property name="text">
+                  <string>日志数据</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
